@@ -1,0 +1,48 @@
+root:create_trader:1746:2012-08-07 21:41:18,224 INFO broker_id=2030,investor_id=,passwd=
+root:read_min_as_list:66:2012-08-07 21:41:18,224 ERROR 文件打开错误，文件名=data/IF1209/history.txt,错误信息=[Errno 2] No such file or directory: 'data/IF1209/history.txt'
+root:read_min_as_list:66:2012-08-07 21:41:18,224 ERROR 文件打开错误，文件名=data/IF1209/20120807_min.txt,错误信息=[Errno 2] No such file or directory: 'data/IF1209/20120807_min.txt'
+ctp.TraderSpiDelegate:OnFrontConnected:362:2012-08-07 21:41:18,631 INFO TD:trader front connected
+ctp.TraderSpiDelegate:login:354:2012-08-07 21:41:18,631 INFO try login...
+ctp.TraderSpiDelegate:OnRspUserLogin:373:2012-08-07 21:41:18,895 INFO TD:trader login
+ctp.TraderSpiDelegate:OnRspUserLogin:376:2012-08-07 21:41:18,895 WARNING TD:trader login failed, errMsg=综合交易平台：不合法的登录
+ctp.MdSpiDelegate:OnFrontConnected:233:2012-08-07 21:41:21,693 INFO MD:front connected
+ctp.MdSpiDelegate:OnRspUserLogin:241:2012-08-07 21:41:21,974 INFO MD:user login,info:<错误信息:No Error,错误代码:0>,rid:0,is_last:1
+ctp.MdSpiDelegate:OnRspUserLogin:249:2012-08-07 21:41:21,974 INFO MD:get today's trading day:''
+root:RtnTick:971:2012-08-07 21:41:22,302 INFO trader not logging,try login.......
+ctp.TraderSpiDelegate:login:354:2012-08-07 21:41:22,302 INFO try login...
+ctp.TraderSpiDelegate:OnRspUserLogin:373:2012-08-07 21:41:22,599 INFO TD:trader login
+ctp.TraderSpiDelegate:OnRspUserLogin:376:2012-08-07 21:41:22,599 WARNING TD:trader login failed, errMsg=综合交易平台：不合法的登录
+root:RtnTick:971:2012-08-07 21:41:24,834 INFO trader not logging,try login.......
+ctp.TraderSpiDelegate:login:354:2012-08-07 21:41:24,834 INFO try login...
+ctp.TraderSpiDelegate:OnRspUserLogin:373:2012-08-07 21:41:25,052 INFO TD:trader login
+ctp.TraderSpiDelegate:OnRspUserLogin:376:2012-08-07 21:41:25,052 WARNING TD:trader login failed, errMsg=综合交易平台：不合法的登录
+root:create_trader:1746:2012-08-07 21:41:32,943 INFO broker_id=2030,investor_id=,passwd=
+root:read_min_as_list:66:2012-08-07 21:41:32,943 ERROR 文件打开错误，文件名=data/IF1209/history.txt,错误信息=[Errno 2] No such file or directory: 'data/IF1209/history.txt'
+root:read_min_as_list:66:2012-08-07 21:41:32,959 ERROR 文件打开错误，文件名=data/IF1209/20120807_min.txt,错误信息=[Errno 2] No such file or directory: 'data/IF1209/20120807_min.txt'
+ctp.MdSpiDelegate:OnFrontConnected:233:2012-08-07 21:41:33,318 INFO MD:front connected
+ctp.MdSpiDelegate:OnRspUserLogin:241:2012-08-07 21:41:34,318 INFO MD:user login,info:<错误信息:No Error,错误代码:0>,rid:0,is_last:1
+ctp.MdSpiDelegate:OnRspUserLogin:249:2012-08-07 21:41:34,318 INFO MD:get today's trading day:''
+ctp.TraderSpiDelegate:OnFrontConnected:362:2012-08-07 21:41:36,318 INFO TD:trader front connected
+ctp.TraderSpiDelegate:login:354:2012-08-07 21:41:36,318 INFO try login...
+ctp.TraderSpiDelegate:OnRspUserLogin:373:2012-08-07 21:41:36,615 INFO TD:trader login
+ctp.TraderSpiDelegate:OnRspUserLogin:376:2012-08-07 21:41:36,615 WARNING TD:trader login failed, errMsg=综合交易平台：不合法的登录
+root:RtnTick:971:2012-08-07 21:41:36,818 INFO trader not logging,try login.......
+ctp.TraderSpiDelegate:login:354:2012-08-07 21:41:36,818 INFO try login...
+root:check:17:2012-08-07 21:41:36,818 INFO in check,2141:47:500
+ctp.TraderSpiDelegate:OnRspUserLogin:373:2012-08-07 21:41:37,115 INFO TD:trader login
+ctp.TraderSpiDelegate:OnRspUserLogin:376:2012-08-07 21:41:37,115 WARNING TD:trader login failed, errMsg=综合交易平台：不合法的登录
+root:RtnTick:971:2012-08-07 21:41:39,286 INFO trader not logging,try login.......
+ctp.TraderSpiDelegate:login:354:2012-08-07 21:41:39,286 INFO try login...
+root:check:17:2012-08-07 21:41:39,286 INFO in check,2141:50:0
+ctp.TraderSpiDelegate:OnRspUserLogin:373:2012-08-07 21:41:39,584 INFO TD:trader login
+ctp.TraderSpiDelegate:OnRspUserLogin:376:2012-08-07 21:41:39,584 WARNING TD:trader login failed, errMsg=综合交易平台：不合法的登录
+root:RtnTick:971:2012-08-07 21:41:40,193 INFO trader not logging,try login.......
+ctp.TraderSpiDelegate:login:354:2012-08-07 21:41:40,193 INFO try login...
+root:check:17:2012-08-07 21:41:40,193 INFO in check,2141:51:0
+ctp.TraderSpiDelegate:OnRspUserLogin:373:2012-08-07 21:41:40,411 INFO TD:trader login
+ctp.TraderSpiDelegate:OnRspUserLogin:376:2012-08-07 21:41:40,411 WARNING TD:trader login failed, errMsg=综合交易平台：不合法的登录
+root:RtnTick:971:2012-08-07 21:41:41,224 INFO trader not logging,try login.......
+ctp.TraderSpiDelegate:login:354:2012-08-07 21:41:41,224 INFO try login...
+root:check:17:2012-08-07 21:41:41,224 INFO in check,2141:52:0
+ctp.TraderSpiDelegate:OnRspUserLogin:373:2012-08-07 21:41:41,443 INFO TD:trader login
+ctp.TraderSpiDelegate:OnRspUserLogin:376:2012-08-07 21:41:41,443 WARNING TD:trader login failed, errMsg=综合交易平台：不合法的登录

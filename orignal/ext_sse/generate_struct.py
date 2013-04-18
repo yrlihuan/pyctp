@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 """
 
 import codecs
+import parse_struct
 
 def generate_py(struct_name, datas, f):
     fields = datas[struct_name]['fields']
@@ -111,13 +112,26 @@ def generate_hpp(struct_name, datas, f):
     f.write("%s * from_%s(PyObject * p);\n" % (struct_name, struct_name))
 
 
-def generate_interface(locale='utf-8'):
-    import parse_struct
-    datas,enums = parse_struct.parse("../ctp/api/trade/linux64/public/ThostFtdcUserApiDataType.h",
-                               '../ctp/api/trade/linux64/public/ThostFtdcUserApiStruct.h',locale)
-    
+def generate_l2_interface(locale='utf-8'):
+    datas,enums = parse_struct.parse("../ctp_sse/api/trade/linux64/public/ThostFtdcLevel2UserApiDataType.h",
+                                     '../ctp_sse/api/trade/linux64/public/ThostFtdcLevel2UserApiStruct.h',
+                                     locale)
 #generate python
     f=codecs.open("UserApiStruct.py", "w", "utf-8")
+
+
+def generate_interface(h_types,     # .h file that defines types
+                       h_structs,   # .h file that defines structs
+                       py_types,    # output file
+                       py_structs,  # output file
+                       basename_wrapper, # the basename of output cpp files. e.g., basename_wrapper = 'struct', then struct.h, struct.cpp will be generated
+                       locale="utf-8"):
+    datas,enums = parse_struct.parse(h_types,
+                                     h_structs,
+                                     locale)
+    
+#generate python
+    f=codecs.open(py_structs, "w", "utf-8")
     f.write(u'#-*- coding=utf-8 -*-\n')
     f.write(u'"""\n'+__doc__+'"""\n')
     f.write(u"""
@@ -131,7 +145,7 @@ def generate_interface(locale='utf-8'):
 
     f.close()
 #generate datatype for python
-    f=codecs.open("UserApiType.py", "w", "utf-8")
+    f=codecs.open(py_types, "w", "utf-8")
     f.write(u'#-*- coding=utf-8 -*-\n')
     f.write(u'"""\n'+__doc__+'"""\n')
     f.write(u"""
@@ -146,13 +160,13 @@ def generate_interface(locale='utf-8'):
 
 
 #generate cpp
-    f=codecs.open("struct.cpp", "w", "utf-8")
+    f=codecs.open("%s.cpp" % basename_wrapper, "w", "utf-8")
     f.write(u"/*"+__doc__+'*/\n')
     f.write(u"""
 //This file is auto generated! Please don't edit directly.
 """)
     f.write(u"""
-#include "struct.h"
+#include "%s.h"
 
 static PyObject * mod=NULL;
 PyObject * register_struct(PyObject * self, PyObject * args){
@@ -160,12 +174,12 @@ PyObject * register_struct(PyObject * self, PyObject * args){
   Py_INCREF(Py_None);
   return Py_None;
 }
-""")
+""" % basename_wrapper)
     for i in datas: generate_cpp(i, datas, f)
     f.close()
 
 #generate hpp
-    f=codecs.open("struct.h", "w", "utf-8")
+    f=codecs.open("%s.h" % basename_wrapper, "w", "utf-8")
     f.write(u"/*"+__doc__+'*/\n')
     f.write(u"""
 //This file is auto generated! Please don't edit directly.
@@ -182,14 +196,25 @@ PyObject * register_struct(PyObject * self, PyObject * args){
 #include <Python.h>
 #endif
 
-#include "ThostFtdcUserApiStruct.h"
+#include "%s"
 
 PyObject * register_struct(PyObject * self, PyObject * args);
-""")
+""" % h_structs)
     for i in datas: generate_hpp(i, datas, f)
 
     f.write(u"#endif\n")
     f.close()
 
 # generate_interface(locale='gbk')    ##上期直接下载的文件是gbk编码
-generate_interface(locale='utf-8')    #编码已转换
+
+h_types = '../ctp_sse/api/trade/linux64/public/ThostFtdcUserApiDataTypeSSE.h'
+h_structs = '../ctp_sse/api/trade/linux64/public/ThostFtdcUserApiStructSSE.h'
+py_types = 'UserApiStruct.py'
+py_structs = 'UserApiType.py'
+basename_wrapper = 'struct'
+generate_interface(h_types,
+                   h_structs,
+                   py_types,
+                   py_structs,
+                   basename_wrapper,
+                   locale='utf-8')    #编码已转换

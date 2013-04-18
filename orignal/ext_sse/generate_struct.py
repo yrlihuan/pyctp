@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #-*- coding=utf-8 -*-
 """
 A wrapper for CTP's Api library

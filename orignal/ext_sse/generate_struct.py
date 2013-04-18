@@ -217,4 +217,16 @@ generate_interface(h_types,
                    py_types,
                    py_structs,
                    basename_wrapper,
-                   locale='utf-8')    #编码已转换
+                   locale='utf-8')
+
+h_types = '../ctp_sse/api/trade/linux64/public/ThostFtdcLevel2UserApiDataType.h'
+h_structs = '../ctp_sse/api/trade/linux64/public/ThostFtdcLevel2UserApiStruct.h'
+py_types = 'Level2ApiStruct.py'
+py_structs = 'Level2ApiType.py'
+basename_wrapper = 'l2struct'
+generate_interface(h_types,
+                   h_structs,
+                   py_types,
+                   py_structs,
+                   basename_wrapper,
+                   locale='utf-8')

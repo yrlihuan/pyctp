@@ -2,3 +2,7 @@ UserApiStruct.py
 UserApiType.py
 struct.cpp
 struct.h
+l2struct.cpp
+l2struct.h
+Level2ApiStruct.py
+Level2ApiType.py

@@ -146,7 +146,8 @@ def parse(fn1, fn2,locale='utf-8'):
 
 if __name__=="__main__":
     p=Parse("../inc/ThostFtdcUserApiDataType.h",
-            "../inc/ThostFtdcUserApiStruct.h",locale='gbk') ##上期直接下载的文件是gbk编码
+            #"../inc/ThostFtdcUserApiStruct.h",locale='gbk') ##上期直接下载的文件是gbk编码
+            "../inc/ThostFtdcUserApiStruct.h",locale='utf-8') #编码已经转换成utf8
     from pprint import pprint
     print "enumeration:",
     pprint(p.get_enumeration())

@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 02110-1301 USA
 */
 
+
 //#include <Python.h>
 #ifdef _DEBUG
 #undef _DEBUG   //links to pythonxx.lib
@@ -31,7 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #include <Python.h>
 #endif
 
-#include "ThostFtdcMdApi.h"
+#include "ThostFtdcMdApiSSE.h"
 #include "wrapper_Md.h"
 #include "struct.h"
 
@@ -55,15 +56,15 @@ static PyObject* create_MdApi(PyObject* self, PyObject *args)
   bool IsUsingUdp;
 
   PyArg_ParseTuple(args, "sb", &flowpath, &IsUsingUdp);
-  void *p = CThostFtdcMdApi::CreateFtdcMdApi(flowpath, IsUsingUdp);
+  void *p = CZQThostFtdcMdApi::CreateFtdcMdApi(flowpath, IsUsingUdp);
   return PyInt_FromLong((long)p);
 }
 
 
 static PyObject* Md_ReqUserLogout(PyObject * self, PyObject * args){
-  CThostFtdcMdApi * user = (CThostFtdcMdApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+  CZQThostFtdcMdApi * user = (CZQThostFtdcMdApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * py_pUserLogout = PyTuple_GET_ITEM(args, 1);
-  CThostFtdcUserLogoutField* pUserLogout = from_CThostFtdcUserLogoutField(py_pUserLogout);
+  CZQThostFtdcUserLogoutField* pUserLogout = from_CZQThostFtdcUserLogoutField(py_pUserLogout);
   PyObject * py_nRequestID = PyTuple_GET_ITEM(args, 2);
   int nRequestID = PyInt_AsLong(py_nRequestID);
   PyObject * ret = Py_BuildValue("i", user->ReqUserLogout(pUserLogout, nRequestID));
@@ -72,14 +73,14 @@ static PyObject* Md_ReqUserLogout(PyObject * self, PyObject * args){
 }
 
 static PyObject* Md_Join(PyObject * self, PyObject * args){
-  CThostFtdcMdApi * user = (CThostFtdcMdApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+  CZQThostFtdcMdApi * user = (CZQThostFtdcMdApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * ret = Py_BuildValue("i", user->Join());
   return ret;
 }
 
 static PyObject * Md_UnSubscribeMarketData(PyObject* self, PyObject * args)
 {
-  CThostFtdcMdApi * user = (CThostFtdcMdApi *)PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+  CZQThostFtdcMdApi * user = (CZQThostFtdcMdApi *)PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * instruments = PyTuple_GET_ITEM(args, 1);
 
   int l = PySequence_Length(instruments);
@@ -88,7 +89,11 @@ static PyObject * Md_UnSubscribeMarketData(PyObject* self, PyObject * args)
   for (i=0; i<l; i++){
     pp[i] = PyString_AsString(PySequence_GetItem(instruments, i));
   }
-  user->UnSubscribeMarketData(pp, l);
+
+  PyObject *pyExchangeId = PyTuple_GET_ITEM(args, 2);
+  char *pszExchangeId = PyString_AsString(pyExchangeId);
+
+  user->UnSubscribeMarketData(pp, l, pszExchangeId);
   
   free(pp);
 
@@ -97,7 +102,7 @@ static PyObject * Md_UnSubscribeMarketData(PyObject* self, PyObject * args)
 }
 
 static PyObject* Md_RegisterFront(PyObject * self, PyObject * args){
-  CThostFtdcMdApi * user = (CThostFtdcMdApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+  CZQThostFtdcMdApi * user = (CZQThostFtdcMdApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * py_pszFrontAddress = PyTuple_GET_ITEM(args, 1);
   char* pszFrontAddress = PyString_AsString(py_pszFrontAddress);
   user->RegisterFront(pszFrontAddress);
@@ -108,7 +113,7 @@ static PyObject* Md_RegisterFront(PyObject * self, PyObject * args){
 }
 
 static PyObject* Md_Init(PyObject * self, PyObject * args){
-  CThostFtdcMdApi * user = (CThostFtdcMdApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+  CZQThostFtdcMdApi * user = (CZQThostFtdcMdApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   user->Init();
 
 
@@ -117,9 +122,9 @@ static PyObject* Md_Init(PyObject * self, PyObject * args){
 }
 
 static PyObject* Md_ReqUserLogin(PyObject * self, PyObject * args){
-  CThostFtdcMdApi * user = (CThostFtdcMdApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+  CZQThostFtdcMdApi * user = (CZQThostFtdcMdApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * py_pReqUserLoginField = PyTuple_GET_ITEM(args, 1);
-  CThostFtdcReqUserLoginField* pReqUserLoginField = from_CThostFtdcReqUserLoginField(py_pReqUserLoginField);
+  CZQThostFtdcReqUserLoginField* pReqUserLoginField = from_CZQThostFtdcReqUserLoginField(py_pReqUserLoginField);
   PyObject * py_nRequestID = PyTuple_GET_ITEM(args, 2);
   int nRequestID = PyInt_AsLong(py_nRequestID);
   PyObject * ret = Py_BuildValue("i", user->ReqUserLogin(pReqUserLoginField, nRequestID));
@@ -128,7 +133,7 @@ static PyObject* Md_ReqUserLogin(PyObject * self, PyObject * args){
 }
 
 static PyObject* Md_Release(PyObject * self, PyObject * args){
-  CThostFtdcMdApi * user = (CThostFtdcMdApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+  CZQThostFtdcMdApi * user = (CZQThostFtdcMdApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   user->Release();
 
 
@@ -137,14 +142,14 @@ static PyObject* Md_Release(PyObject * self, PyObject * args){
 }
 
 static PyObject* Md_GetTradingDay(PyObject * self, PyObject * args){
-  CThostFtdcMdApi * user = (CThostFtdcMdApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+  CZQThostFtdcMdApi * user = (CZQThostFtdcMdApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * ret = Py_BuildValue("s", user->GetTradingDay());
   return ret;
 }
 
 static PyObject * Md_SubscribeMarketData(PyObject* self, PyObject * args)
 {
-  CThostFtdcMdApi * user = (CThostFtdcMdApi *)PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+  CZQThostFtdcMdApi * user = (CZQThostFtdcMdApi *)PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * instruments = PyTuple_GET_ITEM(args, 1);
 
   int l = PySequence_Length(instruments);
@@ -153,7 +158,11 @@ static PyObject * Md_SubscribeMarketData(PyObject* self, PyObject * args)
   for (i=0; i<l; i++){
     pp[i] = PyString_AsString(PySequence_GetItem(instruments, i));
   }
-  user->SubscribeMarketData(pp, l);
+
+  PyObject *pyExchangeId = PyTuple_GET_ITEM(args, 2);
+  char *pszExchangeId = PyString_AsString(pyExchangeId);
+
+  user->SubscribeMarketData(pp, l, pszExchangeId);
   
   free(pp);
 
@@ -162,9 +171,9 @@ static PyObject * Md_SubscribeMarketData(PyObject* self, PyObject * args)
 }
 
 static PyObject* Md_RegisterSpi(PyObject * self, PyObject * args){
-  CThostFtdcMdApi * user = (CThostFtdcMdApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+  CZQThostFtdcMdApi * user = (CZQThostFtdcMdApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * py_pSpi = PyTuple_GET_ITEM(args, 1);
-  CThostFtdcMdSpi* pSpi = new MySpiWrapper(py_pSpi);
+  CZQThostFtdcMdSpi* pSpi = new MySpiWrapper(py_pSpi);
   user->RegisterSpi(pSpi);
 
 

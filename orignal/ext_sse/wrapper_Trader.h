@@ -34,85 +34,41 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #include <Python.h>
 #endif
 
-#include "ThostFtdcTraderApi.h"
+#include "ThostFtdcTraderApiSSE.h"
 
-class MySpiWrapper : public CThostFtdcTraderSpi
+class MySpiWrapper : public CZQThostFtdcTraderSpi
 {
  public:
   MySpiWrapper(PyObject * parent);
 
-  virtual void OnRtnChangeAccountByBank(CThostFtdcChangeAccountField* pChangeAccount);
-  virtual void OnRspQryInstrument(CThostFtdcInstrumentField* pInstrument, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnErrRtnFutureToBankByFuture(CThostFtdcReqTransferField* pReqTransfer, CThostFtdcRspInfoField* pRspInfo);
-  virtual void OnRspQryInstrumentMarginRate(CThostFtdcInstrumentMarginRateField* pInstrumentMarginRate, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspQryInstrument(CZQThostFtdcInstrumentField* pInstrument, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
   virtual void OnFrontDisconnected(int nReason);
-  virtual void OnRspQryExchange(CThostFtdcExchangeField* pExchange, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspOrderAction(CThostFtdcInputOrderActionField* pInputOrderAction, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnErrRtnRepealBankToFutureByFutureManual(CThostFtdcReqRepealField* pReqRepeal, CThostFtdcRspInfoField* pRspInfo);
-  virtual void OnErrRtnBankToFutureByFuture(CThostFtdcReqTransferField* pReqTransfer, CThostFtdcRspInfoField* pRspInfo);
-  virtual void OnRtnFromFutureToBankByBank(CThostFtdcRspTransferField* pRspTransfer);
-  virtual void OnRspQryInvestor(CThostFtdcInvestorField* pInvestor, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspRemoveParkedOrder(CThostFtdcRemoveParkedOrderField* pRemoveParkedOrder, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspQryTransferBank(CThostFtdcTransferBankField* pTransferBank, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspQryBrokerTradingAlgos(CThostFtdcBrokerTradingAlgosField* pBrokerTradingAlgos, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspQrySettlementInfo(CThostFtdcSettlementInfoField* pSettlementInfo, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRtnRepealFromFutureToBankByBank(CThostFtdcRspRepealField* pRspRepeal);
-  virtual void OnRtnOpenAccountByBank(CThostFtdcOpenAccountField* pOpenAccount);
-  virtual void OnRspError(CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspQryCFMMCTradingAccountKey(CThostFtdcCFMMCTradingAccountKeyField* pCFMMCTradingAccountKey, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspUserLogin(CThostFtdcRspUserLoginField* pRspUserLogin, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRtnRepealFromFutureToBankByFuture(CThostFtdcRspRepealField* pRspRepeal);
-  virtual void OnRspParkedOrderAction(CThostFtdcParkedOrderActionField* pParkedOrderAction, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnErrRtnOrderAction(CThostFtdcOrderActionField* pOrderAction, CThostFtdcRspInfoField* pRspInfo);
-  virtual void OnRtnCancelAccountByBank(CThostFtdcCancelAccountField* pCancelAccount);
-  virtual void OnRtnInstrumentStatus(CThostFtdcInstrumentStatusField* pInstrumentStatus);
-  virtual void OnRspQryContractBank(CThostFtdcContractBankField* pContractBank, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspOrderInsert(CThostFtdcInputOrderField* pInputOrder, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspQryEWarrantOffset(CThostFtdcEWarrantOffsetField* pEWarrantOffset, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspUserPasswordUpdate(CThostFtdcUserPasswordUpdateField* pUserPasswordUpdate, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspParkedOrderInsert(CThostFtdcParkedOrderField* pParkedOrder, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRtnTradingNotice(CThostFtdcTradingNoticeInfoField* pTradingNoticeInfo);
-  virtual void OnRspFromBankToFutureByFuture(CThostFtdcReqTransferField* pReqTransfer, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspQryInvestorPositionCombineDetail(CThostFtdcInvestorPositionCombineDetailField* pInvestorPositionCombineDetail, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspFromFutureToBankByFuture(CThostFtdcReqTransferField* pReqTransfer, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspQryExchange(CZQThostFtdcExchangeField* pExchange, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspOrderAction(CZQThostFtdcInputOrderActionField* pInputOrderAction, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspQryInvestorPositionDetail(CZQThostFtdcInvestorPositionDetailField* pInvestorPositionDetail, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspError(CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspUserLogin(CZQThostFtdcRspUserLoginField* pRspUserLogin, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnErrRtnOrderAction(CZQThostFtdcOrderActionField* pOrderAction, CZQThostFtdcRspInfoField* pRspInfo);
+  virtual void OnRtnInstrumentStatus(CZQThostFtdcInstrumentStatusField* pInstrumentStatus);
+  virtual void OnRspOrderInsert(CZQThostFtdcInputOrderField* pInputOrder, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspUserPasswordUpdate(CZQThostFtdcUserPasswordUpdateField* pUserPasswordUpdate, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
   virtual void OnHeartBeatWarning(int nTimeLapse);
-  virtual void OnErrRtnQueryBankBalanceByFuture(CThostFtdcReqQueryAccountField* pReqQueryAccount, CThostFtdcRspInfoField* pRspInfo);
-  virtual void OnRspQryAccountregister(CThostFtdcAccountregisterField* pAccountregister, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspQryTradingCode(CThostFtdcTradingCodeField* pTradingCode, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRtnErrorConditionalOrder(CThostFtdcErrorConditionalOrderField* pErrorConditionalOrder);
-  virtual void OnRtnFromBankToFutureByFuture(CThostFtdcRspTransferField* pRspTransfer);
-  virtual void OnRspQrySettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField* pSettlementInfoConfirm, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRtnQueryBankBalanceByFuture(CThostFtdcNotifyQueryAccountField* pNotifyQueryAccount);
-  virtual void OnRtnOrder(CThostFtdcOrderField* pOrder);
-  virtual void OnRspQryTransferSerial(CThostFtdcTransferSerialField* pTransferSerial, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspQryInvestorPosition(CThostFtdcInvestorPositionField* pInvestorPosition, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspUserLogout(CThostFtdcUserLogoutField* pUserLogout, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnErrRtnRepealFutureToBankByFutureManual(CThostFtdcReqRepealField* pReqRepeal, CThostFtdcRspInfoField* pRspInfo);
-  virtual void OnRspQryInvestorPositionDetail(CThostFtdcInvestorPositionDetailField* pInvestorPositionDetail, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRtnFromBankToFutureByBank(CThostFtdcRspTransferField* pRspTransfer);
-  virtual void OnRspQryParkedOrderAction(CThostFtdcParkedOrderActionField* pParkedOrderAction, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspQryBrokerTradingParams(CThostFtdcBrokerTradingParamsField* pBrokerTradingParams, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspQryParkedOrder(CThostFtdcParkedOrderField* pParkedOrder, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspQueryBankAccountMoneyByFuture(CThostFtdcReqQueryAccountField* pReqQueryAccount, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspQueryMaxOrderVolume(CThostFtdcQueryMaxOrderVolumeField* pQueryMaxOrderVolume, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRtnTrade(CThostFtdcTradeField* pTrade);
-  virtual void OnErrRtnOrderInsert(CThostFtdcInputOrderField* pInputOrder, CThostFtdcRspInfoField* pRspInfo);
-  virtual void OnRspQryTradingNotice(CThostFtdcTradingNoticeField* pTradingNotice, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRtnRepealFromBankToFutureByFuture(CThostFtdcRspRepealField* pRspRepeal);
-  virtual void OnRspQryNotice(CThostFtdcNoticeField* pNotice, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspQryTradingAccount(CThostFtdcTradingAccountField* pTradingAccount, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspTradingAccountPasswordUpdate(CThostFtdcTradingAccountPasswordUpdateField* pTradingAccountPasswordUpdate, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRtnRepealFromFutureToBankByFutureManual(CThostFtdcRspRepealField* pRspRepeal);
-  virtual void OnRspSettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField* pSettlementInfoConfirm, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRtnRepealFromBankToFutureByFutureManual(CThostFtdcRspRepealField* pRspRepeal);
-  virtual void OnRtnFromFutureToBankByFuture(CThostFtdcRspTransferField* pRspTransfer);
-  virtual void OnRspQryDepthMarketData(CThostFtdcDepthMarketDataField* pDepthMarketData, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspRemoveParkedOrderAction(CThostFtdcRemoveParkedOrderActionField* pRemoveParkedOrderAction, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspQryTradingCode(CZQThostFtdcTradingCodeField* pTradingCode, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspQryInvestorPosition(CZQThostFtdcInvestorPositionField* pInvestorPosition, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspUserLogout(CZQThostFtdcUserLogoutField* pUserLogout, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspQryInvestor(CZQThostFtdcInvestorField* pInvestor, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspAuthenticate(CZQThostFtdcRspAuthenticateField* pRspAuthenticateField, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspQueryMaxOrderVolume(CZQThostFtdcQueryMaxOrderVolumeField* pQueryMaxOrderVolume, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRtnTrade(CZQThostFtdcTradeField* pTrade);
+  virtual void OnErrRtnOrderInsert(CZQThostFtdcInputOrderField* pInputOrder, CZQThostFtdcRspInfoField* pRspInfo);
+  virtual void OnRspQryTradingAccount(CZQThostFtdcTradingAccountField* pTradingAccount, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspTradingAccountPasswordUpdate(CZQThostFtdcTradingAccountPasswordUpdateField* pTradingAccountPasswordUpdate, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRtnOrder(CZQThostFtdcOrderField* pOrder);
+  virtual void OnRspQryDepthMarketData(CZQThostFtdcDepthMarketDataField* pDepthMarketData, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
   virtual void OnFrontConnected();
-  virtual void OnRspQryInstrumentCommissionRate(CThostFtdcInstrumentCommissionRateField* pInstrumentCommissionRate, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRtnRepealFromBankToFutureByBank(CThostFtdcRspRepealField* pRspRepeal);
-  virtual void OnRspQryOrder(CThostFtdcOrderField* pOrder, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspQryTrade(CThostFtdcTradeField* pTrade, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspQryInstrumentCommissionRate(CZQThostFtdcInstrumentCommissionRateField* pInstrumentCommissionRate, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspQryOrder(CZQThostFtdcOrderField* pOrder, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspQryTrade(CZQThostFtdcTradeField* pTrade, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
 
  private:
   PyObject * py_spi;

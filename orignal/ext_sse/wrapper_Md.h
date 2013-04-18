@@ -34,21 +34,21 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #include <Python.h>
 #endif
 
-#include "ThostFtdcMdApi.h"
+#include "ThostFtdcMdApiSSE.h"
 
-class MySpiWrapper : public CThostFtdcMdSpi
+class MySpiWrapper : public CZQThostFtdcMdSpi
 {
  public:
   MySpiWrapper(PyObject * parent);
 
   virtual void OnFrontDisconnected(int nReason);
-  virtual void OnRspUserLogout(CThostFtdcUserLogoutField* pUserLogout, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRtnDepthMarketData(CThostFtdcDepthMarketDataField* pDepthMarketData);
-  virtual void OnRspSubMarketData(CThostFtdcSpecificInstrumentField* pSpecificInstrument, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspUnSubMarketData(CThostFtdcSpecificInstrumentField* pSpecificInstrument, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspUserLogout(CZQThostFtdcUserLogoutField* pUserLogout, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRtnDepthMarketData(CZQThostFtdcDepthMarketDataField* pDepthMarketData);
+  virtual void OnRspSubMarketData(CZQThostFtdcSpecificInstrumentField* pSpecificInstrument, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspUnSubMarketData(CZQThostFtdcSpecificInstrumentField* pSpecificInstrument, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
   virtual void OnHeartBeatWarning(int nTimeLapse);
-  virtual void OnRspError(CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual void OnRspUserLogin(CThostFtdcRspUserLoginField* pRspUserLogin, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspError(CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
+  virtual void OnRspUserLogin(CZQThostFtdcRspUserLoginField* pRspUserLogin, CZQThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
   virtual void OnFrontConnected();
 
  private:

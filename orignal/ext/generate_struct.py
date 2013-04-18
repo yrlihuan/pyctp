@@ -22,6 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 02110-1301 USA
 """
 
+import codecs
+
 def generate_py(struct_name, datas, f):
     fields = datas[struct_name]['fields']
     f.write(u"class %s:\n" % struct_name)
@@ -110,11 +112,11 @@ def generate_hpp(struct_name, datas, f):
 
 def generate_interface(locale='utf-8'):
     import parse_struct
-    datas,enums = parse_struct.parse("../inc/ThostFtdcUserApiDataType.h",
-                               '../inc/ThostFtdcUserApiStruct.h',locale)
+    datas,enums = parse_struct.parse("../ctp/api/trade/linux64/public/ThostFtdcUserApiDataType.h",
+                               '../ctp/api/trade/linux64/public/ThostFtdcUserApiStruct.h',locale)
     
 #generate python
-    f=file("UserApiStruct.py", "w")
+    f=codecs.open("UserApiStruct.py", "w", "utf-8")
     f.write(u'#-*- coding=utf-8 -*-\n')
     f.write(u'"""\n'+__doc__+'"""\n')
     f.write(u"""
@@ -128,7 +130,7 @@ def generate_interface(locale='utf-8'):
 
     f.close()
 #generate datatype for python
-    f=file("UserApiType.py", "w")
+    f=codecs.open("UserApiType.py", "w", "utf-8")
     f.write(u'#-*- coding=utf-8 -*-\n')
     f.write(u'"""\n'+__doc__+'"""\n')
     f.write(u"""
@@ -143,7 +145,7 @@ def generate_interface(locale='utf-8'):
 
 
 #generate cpp
-    f=file("struct.cpp", "w")
+    f=codecs.open("struct.cpp", "w", "utf-8")
     f.write(u"/*"+__doc__+'*/\n')
     f.write(u"""
 //This file is auto generated! Please don't edit directly.
@@ -162,7 +164,7 @@ PyObject * register_struct(PyObject * self, PyObject * args){
     f.close()
 
 #generate hpp
-    f=file("struct.h", "w")
+    f=codecs.open("struct.h", "w", "utf-8")
     f.write(u"/*"+__doc__+'*/\n')
     f.write(u"""
 //This file is auto generated! Please don't edit directly.
@@ -188,4 +190,5 @@ PyObject * register_struct(PyObject * self, PyObject * args);
     f.write(u"#endif\n")
     f.close()
 
-generate_interface(locale='gbk')    ##上期直接下载的文件是gbk编码
+# generate_interface(locale='gbk')    ##上期直接下载的文件是gbk编码
+generate_interface(locale='utf-8')    #编码已转换

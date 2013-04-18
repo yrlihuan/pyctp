@@ -1,10 +1,10 @@
 /////////////////////////////////////////////////////////////////////////
-///@system Level2ĞĞÇéAPI
-///@company ÉÏº£ÆÚ»õĞÅÏ¢¼¼ÊõÓĞÏŞ¹«Ë¾
+///@system Level2è¡Œæƒ…API
+///@company ä¸Šæµ·æœŸè´§ä¿¡æ¯æŠ€æœ¯æœ‰é™å…¬å¸
 ///@file ThostFtdcUserApiStruct.h
-///@brief ¶¨ÒåÁË¿Í»§¶Ë½Ó¿ÚÊ¹ÓÃµÄÒµÎñÊı¾İ½á¹¹
+///@brief å®šä¹‰äº†å®¢æˆ·ç«¯æ¥å£ä½¿ç”¨çš„ä¸šåŠ¡æ•°æ®ç»“æ„
 ///@history 
-///20060106	ÕÔºèê»		´´½¨¸ÃÎÄ¼ş
+///20060106	èµµé¸¿æ˜Š		åˆ›å»ºè¯¥æ–‡ä»¶
 /////////////////////////////////////////////////////////////////////////
 #ifndef THOST_FTDCLEVEL2STRUCT_H
 #define THOST_FTDCLEVEL2STRUCT_H
@@ -13,668 +13,668 @@
 
 _LEVEL2_NS_BEGIN_
 
-///ÏìÓ¦ĞÅÏ¢
+///å“åº”ä¿¡æ¯
 struct CThostFtdcRspInfoField
 {
-	///´íÎó´úÂë
+	///é”™è¯¯ä»£ç 
 	TThostFtdcErrorIDType	ErrorID;
-	///´íÎóĞÅÏ¢
+	///é”™è¯¯ä¿¡æ¯
 	TThostFtdcErrorMsgType	ErrorMsg;
 };
 
-///ĞÅÏ¢·Ö·¢
+///ä¿¡æ¯åˆ†å‘
 struct CThostFtdcDisseminationField
 {
-	///ĞòÁĞÏµÁĞºÅ
+	///åºåˆ—ç³»åˆ—å·
 	TThostFtdcSequenceSeriesType	SequenceSeries;
-	///ĞòÁĞºÅ
+	///åºåˆ—å·
 	TThostFtdcSequenceNoType	SequenceNo;
 };
 
-///ÓÃ»§µÇÂ¼ÇëÇó
+///ç”¨æˆ·ç™»å½•è¯·æ±‚
 struct CThostFtdcReqUserLoginField
 {
-	///½»Ò×ÈÕ
+	///äº¤æ˜“æ—¥
 	TThostFtdcDateType	TradingDay;
-	///¾­¼Í¹«Ë¾´úÂë
+	///ç»çºªå…¬å¸ä»£ç 
 	TThostFtdcBrokerIDType	BrokerID;
-	///ÓÃ»§´úÂë
+	///ç”¨æˆ·ä»£ç 
 	TThostFtdcUserIDType	UserID;
-	///ÃÜÂë
+	///å¯†ç 
 	TThostFtdcPasswordType	Password;
-	///ÓÃ»§¶Ë²úÆ·ĞÅÏ¢
+	///ç”¨æˆ·ç«¯äº§å“ä¿¡æ¯
 	TThostFtdcProductInfoType	UserProductInfo;
-	///½Ó¿Ú¶Ë²úÆ·ĞÅÏ¢
+	///æ¥å£ç«¯äº§å“ä¿¡æ¯
 	TThostFtdcProductInfoType	InterfaceProductInfo;
-	///Ğ­ÒéĞÅÏ¢
+	///åè®®ä¿¡æ¯
 	TThostFtdcProtocolInfoType	ProtocolInfo;
-	///MacµØÖ·
+	///Macåœ°å€
 	TThostFtdcMacAddressType	MacAddress;
-	///¶¯Ì¬ÃÜÂë
+	///åŠ¨æ€å¯†ç 
 	TThostFtdcPasswordType	OneTimePassword;
-	///ÖÕ¶ËIPµØÖ·
+	///ç»ˆç«¯IPåœ°å€
 	TThostFtdcIPAddressType	ClientIPAddress;
 };
 
-///ÓÃ»§µÇÂ¼Ó¦´ğ
+///ç”¨æˆ·ç™»å½•åº”ç­”
 struct CThostFtdcRspUserLoginField
 {
-	///½»Ò×ÈÕ
+	///äº¤æ˜“æ—¥
 	TThostFtdcDateType	TradingDay;
-	///µÇÂ¼³É¹¦Ê±¼ä
+	///ç™»å½•æˆåŠŸæ—¶é—´
 	TThostFtdcTimeType	LoginTime;
-	///¾­¼Í¹«Ë¾´úÂë
+	///ç»çºªå…¬å¸ä»£ç 
 	TThostFtdcBrokerIDType	BrokerID;
-	///ÓÃ»§´úÂë
+	///ç”¨æˆ·ä»£ç 
 	TThostFtdcUserIDType	UserID;
-	///½»Ò×ÏµÍ³Ãû³Æ
+	///äº¤æ˜“ç³»ç»Ÿåç§°
 	TThostFtdcSystemNameType	SystemName;
-	///Ç°ÖÃ±àºÅ
+	///å‰ç½®ç¼–å·
 	TThostFtdcFrontIDType	FrontID;
-	///»á»°±àºÅ
+	///ä¼šè¯ç¼–å·
 	TThostFtdcSessionIDType	SessionID;
-	///ÉÏÖ¤ËùÊ±¼ä
+	///ä¸Šè¯æ‰€æ—¶é—´
 	TThostFtdcTimeType	SSETime;
-	///ÉîÖ¤ËùÊ±¼ä
+	///æ·±è¯æ‰€æ—¶é—´
 	TThostFtdcTimeType	SZETime;
 };
 
-///ÓÃ»§µÇ³öÇëÇó
+///ç”¨æˆ·ç™»å‡ºè¯·æ±‚
 struct CThostFtdcUserLogoutField
 {
-	///¾­¼Í¹«Ë¾´úÂë
+	///ç»çºªå…¬å¸ä»£ç 
 	TThostFtdcBrokerIDType	BrokerID;
-	///ÓÃ»§´úÂë
+	///ç”¨æˆ·ä»£ç 
 	TThostFtdcUserIDType	UserID;
 };
 
-///ÓÃ»§»á»°
+///ç”¨æˆ·ä¼šè¯
 struct CThostFtdcUserSessionRefField
 {
-	///Ç°ÖÃ±àºÅ
+	///å‰ç½®ç¼–å·
 	TThostFtdcFrontIDType	FrontID;
-	///»á»°±àºÅ
+	///ä¼šè¯ç¼–å·
 	TThostFtdcSessionIDType	SessionID;
 };
 
-///¿Í»§¶ËÈÏÖ¤ÇëÇó
+///å®¢æˆ·ç«¯è®¤è¯è¯·æ±‚
 struct CThostFtdcReqAuthenticateField
 {
-	///¾­¼Í¹«Ë¾´úÂë
+	///ç»çºªå…¬å¸ä»£ç 
 	TThostFtdcBrokerIDType	BrokerID;
-	///ÓÃ»§´úÂë
+	///ç”¨æˆ·ä»£ç 
 	TThostFtdcUserIDType	UserID;
-	///ÓÃ»§¶Ë²úÆ·ĞÅÏ¢
+	///ç”¨æˆ·ç«¯äº§å“ä¿¡æ¯
 	TThostFtdcProductInfoType	UserProductInfo;
-	///ÈÏÖ¤Âë
+	///è®¤è¯ç 
 	TThostFtdcAuthCodeType	AuthCode;
 };
 
-///¿Í»§¶ËÈÏÖ¤ÏìÓ¦
+///å®¢æˆ·ç«¯è®¤è¯å“åº”
 struct CThostFtdcRspAuthenticateField
 {
-	///¾­¼Í¹«Ë¾´úÂë
+	///ç»çºªå…¬å¸ä»£ç 
 	TThostFtdcBrokerIDType	BrokerID;
-	///ÓÃ»§´úÂë
+	///ç”¨æˆ·ä»£ç 
 	TThostFtdcUserIDType	UserID;
-	///ÓÃ»§¶Ë²úÆ·ĞÅÏ¢
+	///ç”¨æˆ·ç«¯äº§å“ä¿¡æ¯
 	TThostFtdcProductInfoType	UserProductInfo;
 };
 
-///¿Í»§¶ËÈÏÖ¤ĞÅÏ¢
+///å®¢æˆ·ç«¯è®¤è¯ä¿¡æ¯
 struct CThostFtdcAuthenticationInfoField
 {
-	///¾­¼Í¹«Ë¾´úÂë
+	///ç»çºªå…¬å¸ä»£ç 
 	TThostFtdcBrokerIDType	BrokerID;
-	///ÓÃ»§´úÂë
+	///ç”¨æˆ·ä»£ç 
 	TThostFtdcUserIDType	UserID;
-	///ÓÃ»§¶Ë²úÆ·ĞÅÏ¢
+	///ç”¨æˆ·ç«¯äº§å“ä¿¡æ¯
 	TThostFtdcProductInfoType	UserProductInfo;
-	///ÈÏÖ¤ĞÅÏ¢
+	///è®¤è¯ä¿¡æ¯
 	TThostFtdcAuthInfoType	AuthInfo;
-	///ÊÇ·ñÎªÈÏÖ¤½á¹û
+	///æ˜¯å¦ä¸ºè®¤è¯ç»“æœ
 	TThostFtdcBoolType	IsResult;
 };
 
-///ÓÃ»§ĞÅÏ¢
+///ç”¨æˆ·ä¿¡æ¯
 struct CThostFtdcLevel2UserField
 {
-	///ÓÃ»§´úÂë
+	///ç”¨æˆ·ä»£ç 
 	TThostFtdcUserIDType	UserID;
-	///ÓÃ»§Ãû³Æ
+	///ç”¨æˆ·åç§°
 	TThostFtdcUserNameType	UserName;
-	///ÃÜÂë
+	///å¯†ç 
 	TThostFtdcPasswordType	Password;
-	///ÆôÓÃÈÕÆÚ
+	///å¯ç”¨æ—¥æœŸ
 	TThostFtdcDateType	EffectiveDate;
 };
 
-///Ö¸¶¨µÄÖ¤È¯
+///æŒ‡å®šçš„è¯åˆ¸
 struct CThostFtdcSpecificSecurityField
 {
-	///Ö¤È¯´úÂë
+	///è¯åˆ¸ä»£ç 
 	TThostFtdcSecurityIDType	SecurityID;
-	///½»Ò×Ëù´úÂë
+	///äº¤æ˜“æ‰€ä»£ç 
 	TThostFtdcExchangeIDType	ExchangeID;
 };
 
-///Level2ĞĞÇé
+///Level2è¡Œæƒ…
 struct CThostFtdcLevel2MarketDataField
 {
-	///½»Ò×ÈÕ
+	///äº¤æ˜“æ—¥
 	TThostFtdcDateType	TradingDay;
-	///Ê±¼ä´Á
+	///æ—¶é—´æˆ³
 	TThostFtdcTimeType	DataTimeStamp;
-	///½»Ò×Ëù´úÂë
+	///äº¤æ˜“æ‰€ä»£ç 
 	TThostFtdcExchangeIDType	ExchangeID;
-	///Ö¤È¯´úÂë
+	///è¯åˆ¸ä»£ç 
 	TThostFtdcSecurityIDType	SecurityID;
-	///×òÊÕÅÌ¼Û
+	///æ˜¨æ”¶ç›˜ä»·
 	TThostFtdcPriceType	PreClosePx;
-	///½ñ¿ªÅÌ¼Û
+	///ä»Šå¼€ç›˜ä»·
 	TThostFtdcPriceType	OpenPx;
-	///×î¸ß¼Û
+	///æœ€é«˜ä»·
 	TThostFtdcPriceType	HighPx;
-	///×îµÍ¼Û
+	///æœ€ä½ä»·
 	TThostFtdcPriceType	LowPx;
-	///ÏÖ¼Û
+	///ç°ä»·
 	TThostFtdcPriceType	LastPx;
-	///ÊÕÅÌ¼Û
+	///æ”¶ç›˜ä»·
 	TThostFtdcPriceType	ClosePx;
-	///³É½»±ÊÊı
+	///æˆäº¤ç¬”æ•°
 	TThostFtdcVolumeType	NumTrades;
-	///³É½»×ÜÁ¿
+	///æˆäº¤æ€»é‡
 	TThostFtdcLargeVolumeType	TotalVolumeTrade;
-	///³É½»×Ü½ğ¶î
+	///æˆäº¤æ€»é‡‘é¢
 	TThostFtdcMoneyType	TotalValueTrade;
-	///Î¯ÍĞÂòÈë×ÜÁ¿
+	///å§”æ‰˜ä¹°å…¥æ€»é‡
 	TThostFtdcLargeVolumeType	TotalBidQty;
-	///¼ÓÈ¨Æ½¾ùÎ¯Âò¼Û
+	///åŠ æƒå¹³å‡å§”ä¹°ä»·
 	TThostFtdcPriceType	WeightedAvgBidPx;
-	///Õ®È¯¼ÓÈ¨Æ½¾ùÎ¯Âò¼Û
+	///å€ºåˆ¸åŠ æƒå¹³å‡å§”ä¹°ä»·
 	TThostFtdcPriceType	AltWeightedAvgBidPx;
-	///Î¯ÍĞÂô³ö×ÜÁ¿
+	///å§”æ‰˜å–å‡ºæ€»é‡
 	TThostFtdcLargeVolumeType	TotalOfferQty;
-	///¼ÓÈ¨Æ½¾ùÎ¯Âô¼Û
+	///åŠ æƒå¹³å‡å§”å–ä»·
 	TThostFtdcPriceType	WeightedAvgOfferPx;
-	///Õ®È¯¼ÓÈ¨Æ½¾ùÎ¯Âô¼Û¸ñ
+	///å€ºåˆ¸åŠ æƒå¹³å‡å§”å–ä»·æ ¼
 	TThostFtdcPriceType	AltWeightedAvgOfferPx;
-	///¾»Öµ¹ÀÖµ
+	///å‡€å€¼ä¼°å€¼
 	TThostFtdcPriceType	IOPV;
-	///µ½ÆÚÊÕÒæÂÊ
+	///åˆ°æœŸæ”¶ç›Šç‡
 	TThostFtdcRatioType	YieldToMaturity;
-	///È¨Ö¤Ö´ĞĞ×ÜÊıÁ¿
+	///æƒè¯æ‰§è¡Œæ€»æ•°é‡
 	TThostFtdcLargeVolumeType	TotalWarrantExecQty;
-	///È¨Ö¤µøÍ£¼Û¸ñ
+	///æƒè¯è·Œåœä»·æ ¼
 	TThostFtdcPriceType	WarLowerPx;
-	///È¨Ö¤ÕÇÍ£¼Û¸ñ
+	///æƒè¯æ¶¨åœä»·æ ¼
 	TThostFtdcPriceType	WarUpperPx;
-	///Âò¼ÛÉî¶È
+	///ä¹°ä»·æ·±åº¦
 	TThostFtdcPriceLevelType	BidPriceLevel;
-	///ÉêÂò¼ÛÒ»
+	///ç”³ä¹°ä»·ä¸€
 	TThostFtdcPriceType	BidPx1;
-	///ÉêÂòÁ¿Ò»
+	///ç”³ä¹°é‡ä¸€
 	TThostFtdcVolumeType	BidOrderQty1;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊıÒ»
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°ä¸€
 	TThostFtdcVolumeType	BidNumOrder1;
-	///ÉêÂò¼Û¶ş
+	///ç”³ä¹°ä»·äºŒ
 	TThostFtdcPriceType	BidPx2;
-	///ÉêÂòÁ¿¶ş
+	///ç”³ä¹°é‡äºŒ
 	TThostFtdcVolumeType	BidOrderQty2;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊı¶ş
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°äºŒ
 	TThostFtdcVolumeType	BidNumOrder2;
-	///ÉêÂò¼ÛÈı
+	///ç”³ä¹°ä»·ä¸‰
 	TThostFtdcPriceType	BidPx3;
-	///ÉêÂòÁ¿Èı
+	///ç”³ä¹°é‡ä¸‰
 	TThostFtdcVolumeType	BidOrderQty3;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊıÈı
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°ä¸‰
 	TThostFtdcVolumeType	BidNumOrder3;
-	///ÉêÂò¼ÛËÄ
+	///ç”³ä¹°ä»·å››
 	TThostFtdcPriceType	BidPx4;
-	///ÉêÂòÁ¿ËÄ
+	///ç”³ä¹°é‡å››
 	TThostFtdcVolumeType	BidOrderQty4;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊıËÄ
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°å››
 	TThostFtdcVolumeType	BidNumOrder4;
-	///ÉêÂò¼ÛÎå
+	///ç”³ä¹°ä»·äº”
 	TThostFtdcPriceType	BidPx5;
-	///ÉêÂòÁ¿Îå
+	///ç”³ä¹°é‡äº”
 	TThostFtdcVolumeType	BidOrderQty5;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊıÎå
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°äº”
 	TThostFtdcVolumeType	BidNumOrder5;
-	///ÉêÂò¼ÛÁù
+	///ç”³ä¹°ä»·å…­
 	TThostFtdcPriceType	BidPx6;
-	///ÉêÂòÁ¿Áù
+	///ç”³ä¹°é‡å…­
 	TThostFtdcVolumeType	BidOrderQty6;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊıÁù
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°å…­
 	TThostFtdcVolumeType	BidNumOrder6;
-	///ÉêÂò¼ÛÆß
+	///ç”³ä¹°ä»·ä¸ƒ
 	TThostFtdcPriceType	BidPx7;
-	///ÉêÂòÁ¿Æß
+	///ç”³ä¹°é‡ä¸ƒ
 	TThostFtdcVolumeType	BidOrderQty7;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊıÆß
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°ä¸ƒ
 	TThostFtdcVolumeType	BidNumOrder7;
-	///ÉêÂò¼Û°Ë
+	///ç”³ä¹°ä»·å…«
 	TThostFtdcPriceType	BidPx8;
-	///ÉêÂòÁ¿°Ë
+	///ç”³ä¹°é‡å…«
 	TThostFtdcVolumeType	BidOrderQty8;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊı°Ë
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°å…«
 	TThostFtdcVolumeType	BidNumOrder8;
-	///ÉêÂò¼Û¾Å
+	///ç”³ä¹°ä»·ä¹
 	TThostFtdcPriceType	BidPx9;
-	///ÉêÂòÁ¿¾Å
+	///ç”³ä¹°é‡ä¹
 	TThostFtdcVolumeType	BidOrderQty9;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊı¾Å
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°ä¹
 	TThostFtdcVolumeType	BidNumOrder9;
-	///ÉêÂò¼ÛÊ®
+	///ç”³ä¹°ä»·å
 	TThostFtdcPriceType	BidPxA;
-	///ÉêÂòÁ¿Ê®
+	///ç”³ä¹°é‡å
 	TThostFtdcVolumeType	BidOrderQtyA;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊıÊ®
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°å
 	TThostFtdcVolumeType	BidNumOrderA;
-	///Âô¼ÛÉî¶È
+	///å–ä»·æ·±åº¦
 	TThostFtdcPriceLevelType	OfferPriceLevel;
-	///ÉêÂô¼ÛÒ»
+	///ç”³å–ä»·ä¸€
 	TThostFtdcPriceType	OfferPx1;
-	///ÉêÂôÁ¿Ò»
+	///ç”³å–é‡ä¸€
 	TThostFtdcVolumeType	OfferOrderQty1;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊıÒ»
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°ä¸€
 	TThostFtdcVolumeType	OfferNumOrder1;
-	///ÉêÂô¼Û¶ş
+	///ç”³å–ä»·äºŒ
 	TThostFtdcPriceType	OfferPx2;
-	///ÉêÂôÁ¿¶ş
+	///ç”³å–é‡äºŒ
 	TThostFtdcVolumeType	OfferOrderQty2;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊı¶ş
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°äºŒ
 	TThostFtdcVolumeType	OfferNumOrder2;
-	///ÉêÂô¼ÛÈı
+	///ç”³å–ä»·ä¸‰
 	TThostFtdcPriceType	OfferPx3;
-	///ÉêÂôÁ¿Èı
+	///ç”³å–é‡ä¸‰
 	TThostFtdcVolumeType	OfferOrderQty3;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊıÈı
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°ä¸‰
 	TThostFtdcVolumeType	OfferNumOrder3;
-	///ÉêÂô¼ÛËÄ
+	///ç”³å–ä»·å››
 	TThostFtdcPriceType	OfferPx4;
-	///ÉêÂôÁ¿ËÄ
+	///ç”³å–é‡å››
 	TThostFtdcVolumeType	OfferOrderQty4;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊıËÄ
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°å››
 	TThostFtdcVolumeType	OfferNumOrder4;
-	///ÉêÂô¼ÛÎå
+	///ç”³å–ä»·äº”
 	TThostFtdcPriceType	OfferPx5;
-	///ÉêÂôÁ¿Îå
+	///ç”³å–é‡äº”
 	TThostFtdcVolumeType	OfferOrderQty5;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊıÎå
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°äº”
 	TThostFtdcVolumeType	OfferNumOrder5;
-	///ÉêÂô¼ÛÁù
+	///ç”³å–ä»·å…­
 	TThostFtdcPriceType	OfferPx6;
-	///ÉêÂôÁ¿Áù
+	///ç”³å–é‡å…­
 	TThostFtdcVolumeType	OfferOrderQty6;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊıÁù
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°å…­
 	TThostFtdcVolumeType	OfferNumOrder6;
-	///ÉêÂô¼ÛÆß
+	///ç”³å–ä»·ä¸ƒ
 	TThostFtdcPriceType	OfferPx7;
-	///ÉêÂôÁ¿Æß
+	///ç”³å–é‡ä¸ƒ
 	TThostFtdcVolumeType	OfferOrderQty7;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊıÆß
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°ä¸ƒ
 	TThostFtdcVolumeType	OfferNumOrder7;
-	///ÉêÂô¼Û°Ë
+	///ç”³å–ä»·å…«
 	TThostFtdcPriceType	OfferPx8;
-	///ÉêÂôÁ¿°Ë
+	///ç”³å–é‡å…«
 	TThostFtdcVolumeType	OfferOrderQty8;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊı°Ë
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°å…«
 	TThostFtdcVolumeType	OfferNumOrder8;
-	///ÉêÂô¼Û¾Å
+	///ç”³å–ä»·ä¹
 	TThostFtdcPriceType	OfferPx9;
-	///ÉêÂôÁ¿¾Å
+	///ç”³å–é‡ä¹
 	TThostFtdcVolumeType	OfferOrderQty9;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊı¾Å
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°ä¹
 	TThostFtdcVolumeType	OfferNumOrder9;
-	///ÉêÂô¼ÛÊ®
+	///ç”³å–ä»·å
 	TThostFtdcPriceType	OfferPxA;
-	///ÉêÂôÁ¿Ê®
+	///ç”³å–é‡å
 	TThostFtdcVolumeType	OfferOrderQtyA;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊıÊ®
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°å
 	TThostFtdcVolumeType	OfferNumOrderA;
 };
 
-///Level2ĞĞÇé¸üĞÂÊ±¼äÊôĞÔ
+///Level2è¡Œæƒ…æ›´æ–°æ—¶é—´å±æ€§
 struct CThostFtdcL2MarketDataUpdateTimeField
 {
-	///½»Ò×ÈÕ
+	///äº¤æ˜“æ—¥
 	TThostFtdcDateType	TradingDay;
-	///Ê±¼ä´Á
+	///æ—¶é—´æˆ³
 	TThostFtdcTimeType	DataTimeStamp;
-	///½»Ò×Ëù´úÂë
+	///äº¤æ˜“æ‰€ä»£ç 
 	TThostFtdcExchangeIDType	ExchangeID;
-	///Ö¤È¯´úÂë
+	///è¯åˆ¸ä»£ç 
 	TThostFtdcSecurityIDType	SecurityID;
 };
 
-///Level2ĞĞÇéÉêÂòÒ»ÊôĞÔ
+///Level2è¡Œæƒ…ç”³ä¹°ä¸€å±æ€§
 struct CThostFtdcL2MarketDataBid1Field
 {
-	///ÉêÂò¼ÛÒ»
+	///ç”³ä¹°ä»·ä¸€
 	TThostFtdcPriceType	BidPx1;
-	///ÉêÂòÁ¿Ò»
+	///ç”³ä¹°é‡ä¸€
 	TThostFtdcVolumeType	BidOrderQty1;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊıÒ»
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°ä¸€
 	TThostFtdcVolumeType	BidNumOrder1;
 };
 
-///Level2ĞĞÇéÉêÂôÒ»ÊôĞÔ
+///Level2è¡Œæƒ…ç”³å–ä¸€å±æ€§
 struct CThostFtdcL2MarketDataOffer1Field
 {
-	///ÉêÂô¼ÛÒ»
+	///ç”³å–ä»·ä¸€
 	TThostFtdcPriceType	OfferPx1;
-	///ÉêÂôÁ¿Ò»
+	///ç”³å–é‡ä¸€
 	TThostFtdcVolumeType	OfferOrderQty1;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊıÒ»
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°ä¸€
 	TThostFtdcVolumeType	OfferNumOrder1;
 };
 
-///Level2ĞĞÇéÉêÂò¶şÊôĞÔ
+///Level2è¡Œæƒ…ç”³ä¹°äºŒå±æ€§
 struct CThostFtdcL2MarketDataBid2Field
 {
-	///ÉêÂò¼Û¶ş
+	///ç”³ä¹°ä»·äºŒ
 	TThostFtdcPriceType	BidPx2;
-	///ÉêÂòÁ¿¶ş
+	///ç”³ä¹°é‡äºŒ
 	TThostFtdcVolumeType	BidOrderQty2;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊı¶ş
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°äºŒ
 	TThostFtdcVolumeType	BidNumOrder2;
 };
 
-///Level2ĞĞÇéÉêÂô¶şÊôĞÔ
+///Level2è¡Œæƒ…ç”³å–äºŒå±æ€§
 struct CThostFtdcL2MarketDataOffer2Field
 {
-	///ÉêÂô¼Û¶ş
+	///ç”³å–ä»·äºŒ
 	TThostFtdcPriceType	OfferPx2;
-	///ÉêÂôÁ¿¶ş
+	///ç”³å–é‡äºŒ
 	TThostFtdcVolumeType	OfferOrderQty2;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊı¶ş
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°äºŒ
 	TThostFtdcVolumeType	OfferNumOrder2;
 };
 
-///Level2ĞĞÇéÉêÂòÈıÊôĞÔ
+///Level2è¡Œæƒ…ç”³ä¹°ä¸‰å±æ€§
 struct CThostFtdcL2MarketDataBid3Field
 {
-	///ÉêÂò¼ÛÈı
+	///ç”³ä¹°ä»·ä¸‰
 	TThostFtdcPriceType	BidPx3;
-	///ÉêÂòÁ¿Èı
+	///ç”³ä¹°é‡ä¸‰
 	TThostFtdcVolumeType	BidOrderQty3;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊıÈı
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°ä¸‰
 	TThostFtdcVolumeType	BidNumOrder3;
 };
 
-///Level2ĞĞÇéÉêÂôÈıÊôĞÔ
+///Level2è¡Œæƒ…ç”³å–ä¸‰å±æ€§
 struct CThostFtdcL2MarketDataOffer3Field
 {
-	///ÉêÂô¼ÛÈı
+	///ç”³å–ä»·ä¸‰
 	TThostFtdcPriceType	OfferPx3;
-	///ÉêÂôÁ¿Èı
+	///ç”³å–é‡ä¸‰
 	TThostFtdcVolumeType	OfferOrderQty3;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊıÈı
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°ä¸‰
 	TThostFtdcVolumeType	OfferNumOrder3;
 };
 
-///Level2ĞĞÇéÉêÂòËÄÊôĞÔ
+///Level2è¡Œæƒ…ç”³ä¹°å››å±æ€§
 struct CThostFtdcL2MarketDataBid4Field
 {
-	///ÉêÂò¼ÛËÄ
+	///ç”³ä¹°ä»·å››
 	TThostFtdcPriceType	BidPx4;
-	///ÉêÂòÁ¿ËÄ
+	///ç”³ä¹°é‡å››
 	TThostFtdcVolumeType	BidOrderQty4;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊıËÄ
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°å››
 	TThostFtdcVolumeType	BidNumOrder4;
 };
 
-///Level2ĞĞÇéÉêÂôËÄÊôĞÔ
+///Level2è¡Œæƒ…ç”³å–å››å±æ€§
 struct CThostFtdcL2MarketDataOffer4Field
 {
-	///ÉêÂô¼ÛËÄ
+	///ç”³å–ä»·å››
 	TThostFtdcPriceType	OfferPx4;
-	///ÉêÂôÁ¿ËÄ
+	///ç”³å–é‡å››
 	TThostFtdcVolumeType	OfferOrderQty4;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊıËÄ
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°å››
 	TThostFtdcVolumeType	OfferNumOrder4;
 };
 
-///Level2ĞĞÇéÉêÂòÎåÊôĞÔ
+///Level2è¡Œæƒ…ç”³ä¹°äº”å±æ€§
 struct CThostFtdcL2MarketDataBid5Field
 {
-	///ÉêÂò¼ÛÎå
+	///ç”³ä¹°ä»·äº”
 	TThostFtdcPriceType	BidPx5;
-	///ÉêÂòÁ¿Îå
+	///ç”³ä¹°é‡äº”
 	TThostFtdcVolumeType	BidOrderQty5;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊıÎå
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°äº”
 	TThostFtdcVolumeType	BidNumOrder5;
 };
 
-///Level2ĞĞÇéÉêÂôÎåÊôĞÔ
+///Level2è¡Œæƒ…ç”³å–äº”å±æ€§
 struct CThostFtdcL2MarketDataOffer5Field
 {
-	///ÉêÂô¼ÛÎå
+	///ç”³å–ä»·äº”
 	TThostFtdcPriceType	OfferPx5;
-	///ÉêÂôÁ¿Îå
+	///ç”³å–é‡äº”
 	TThostFtdcVolumeType	OfferOrderQty5;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊıÎå
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°äº”
 	TThostFtdcVolumeType	OfferNumOrder5;
 };
 
-///Level2ĞĞÇéÉêÂòÁùÊôĞÔ
+///Level2è¡Œæƒ…ç”³ä¹°å…­å±æ€§
 struct CThostFtdcL2MarketDataBid6Field
 {
-	///ÉêÂò¼ÛÁù
+	///ç”³ä¹°ä»·å…­
 	TThostFtdcPriceType	BidPx6;
-	///ÉêÂòÁ¿Áù
+	///ç”³ä¹°é‡å…­
 	TThostFtdcVolumeType	BidOrderQty6;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊıÁù
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°å…­
 	TThostFtdcVolumeType	BidNumOrder6;
 };
 
-///Level2ĞĞÇéÉêÂôÁùÊôĞÔ
+///Level2è¡Œæƒ…ç”³å–å…­å±æ€§
 struct CThostFtdcL2MarketDataOffer6Field
 {
-	///ÉêÂô¼ÛÁù
+	///ç”³å–ä»·å…­
 	TThostFtdcPriceType	OfferPx6;
-	///ÉêÂôÁ¿Áù
+	///ç”³å–é‡å…­
 	TThostFtdcVolumeType	OfferOrderQty6;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊıÁù
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°å…­
 	TThostFtdcVolumeType	OfferNumOrder6;
 };
 
-///Level2ĞĞÇéÉêÂòÆßÊôĞÔ
+///Level2è¡Œæƒ…ç”³ä¹°ä¸ƒå±æ€§
 struct CThostFtdcL2MarketDataBid7Field
 {
-	///ÉêÂò¼ÛÆß
+	///ç”³ä¹°ä»·ä¸ƒ
 	TThostFtdcPriceType	BidPx7;
-	///ÉêÂòÁ¿Æß
+	///ç”³ä¹°é‡ä¸ƒ
 	TThostFtdcVolumeType	BidOrderQty7;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊıÆß
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°ä¸ƒ
 	TThostFtdcVolumeType	BidNumOrder7;
 };
 
-///Level2ĞĞÇéÉêÂôÆßÊôĞÔ
+///Level2è¡Œæƒ…ç”³å–ä¸ƒå±æ€§
 struct CThostFtdcL2MarketDataOffer7Field
 {
-	///ÉêÂô¼ÛÆß
+	///ç”³å–ä»·ä¸ƒ
 	TThostFtdcPriceType	OfferPx7;
-	///ÉêÂôÁ¿Æß
+	///ç”³å–é‡ä¸ƒ
 	TThostFtdcVolumeType	OfferOrderQty7;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊıÆß
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°ä¸ƒ
 	TThostFtdcVolumeType	OfferNumOrder7;
 };
 
-///Level2ĞĞÇéÉêÂò°ËÊôĞÔ
+///Level2è¡Œæƒ…ç”³ä¹°å…«å±æ€§
 struct CThostFtdcL2MarketDataBid8Field
 {
-	///ÉêÂò¼Û°Ë
+	///ç”³ä¹°ä»·å…«
 	TThostFtdcPriceType	BidPx8;
-	///ÉêÂòÁ¿°Ë
+	///ç”³ä¹°é‡å…«
 	TThostFtdcVolumeType	BidOrderQty8;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊı°Ë
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°å…«
 	TThostFtdcVolumeType	BidNumOrder8;
 };
 
-///Level2ĞĞÇéÉêÂô°ËÊôĞÔ
+///Level2è¡Œæƒ…ç”³å–å…«å±æ€§
 struct CThostFtdcL2MarketDataOffer8Field
 {
-	///ÉêÂô¼Û°Ë
+	///ç”³å–ä»·å…«
 	TThostFtdcPriceType	OfferPx8;
-	///ÉêÂôÁ¿°Ë
+	///ç”³å–é‡å…«
 	TThostFtdcVolumeType	OfferOrderQty8;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊı°Ë
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°å…«
 	TThostFtdcVolumeType	OfferNumOrder8;
 };
 
-///Level2ĞĞÇéÉêÂò¾ÅÊôĞÔ
+///Level2è¡Œæƒ…ç”³ä¹°ä¹å±æ€§
 struct CThostFtdcL2MarketDataBid9Field
 {
-	///ÉêÂò¼Û¾Å
+	///ç”³ä¹°ä»·ä¹
 	TThostFtdcPriceType	BidPx9;
-	///ÉêÂòÁ¿¾Å
+	///ç”³ä¹°é‡ä¹
 	TThostFtdcVolumeType	BidOrderQty9;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊı¾Å
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°ä¹
 	TThostFtdcVolumeType	BidNumOrder9;
 };
 
-///Level2ĞĞÇéÉêÂô¾ÅÊôĞÔ
+///Level2è¡Œæƒ…ç”³å–ä¹å±æ€§
 struct CThostFtdcL2MarketDataOffer9Field
 {
-	///ÉêÂô¼Û¾Å
+	///ç”³å–ä»·ä¹
 	TThostFtdcPriceType	OfferPx9;
-	///ÉêÂôÁ¿¾Å
+	///ç”³å–é‡ä¹
 	TThostFtdcVolumeType	OfferOrderQty9;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊı¾Å
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°ä¹
 	TThostFtdcVolumeType	OfferNumOrder9;
 };
 
-///Level2ĞĞÇéÉêÂòÊ®ÊôĞÔ
+///Level2è¡Œæƒ…ç”³ä¹°åå±æ€§
 struct CThostFtdcL2MarketDataBidAField
 {
-	///ÉêÂò¼ÛÊ®
+	///ç”³ä¹°ä»·å
 	TThostFtdcPriceType	BidPxA;
-	///ÉêÂòÁ¿Ê®
+	///ç”³ä¹°é‡å
 	TThostFtdcVolumeType	BidOrderQtyA;
-	///Êµ¼ÊÂò×ÜÎ¯ÍĞ±ÊÊıÊ®
+	///å®é™…ä¹°æ€»å§”æ‰˜ç¬”æ•°å
 	TThostFtdcVolumeType	BidNumOrderA;
 };
 
-///Level2ĞĞÇéÉêÂôÊ®ÊôĞÔ
+///Level2è¡Œæƒ…ç”³å–åå±æ€§
 struct CThostFtdcL2MarketDataOfferAField
 {
-	///ÉêÂô¼ÛÊ®
+	///ç”³å–ä»·å
 	TThostFtdcPriceType	OfferPxA;
-	///ÉêÂôÁ¿Ê®
+	///ç”³å–é‡å
 	TThostFtdcVolumeType	OfferOrderQtyA;
-	///Êµ¼ÊÂô×ÜÎ¯ÍĞ±ÊÊıÊ®
+	///å®é™…å–æ€»å§”æ‰˜ç¬”æ•°å
 	TThostFtdcVolumeType	OfferNumOrderA;
 };
 
-///Level2³É½»ĞÅÏ¢
+///Level2æˆäº¤ä¿¡æ¯
 struct CThostFtdcL2MarketDataTradedField
 {
-	///³É½»±ÊÊı
+	///æˆäº¤ç¬”æ•°
 	TThostFtdcVolumeType	NumTrades;
-	///³É½»×ÜÁ¿
+	///æˆäº¤æ€»é‡
 	TThostFtdcLargeVolumeType	TotalVolumeTrade;
-	///³É½»×Ü½ğ¶î
+	///æˆäº¤æ€»é‡‘é¢
 	TThostFtdcMoneyType	TotalValueTrade;
 };
 
-///Level2Î¯ÂòĞÅÏ¢
+///Level2å§”ä¹°ä¿¡æ¯
 struct CThostFtdcL2MarketDataBidOrderField
 {
-	///Î¯ÍĞÂòÈë×ÜÁ¿
+	///å§”æ‰˜ä¹°å…¥æ€»é‡
 	TThostFtdcLargeVolumeType	TotalBidQty;
-	///¼ÓÈ¨Æ½¾ùÎ¯Âò¼Û
+	///åŠ æƒå¹³å‡å§”ä¹°ä»·
 	TThostFtdcPriceType	WeightedAvgBidPx;
-	///Õ®È¯¼ÓÈ¨Æ½¾ùÎ¯Âò¼Û
+	///å€ºåˆ¸åŠ æƒå¹³å‡å§”ä¹°ä»·
 	TThostFtdcPriceType	AltWeightedAvgBidPx;
 };
 
-///Level2Î¯ÂôĞÅÏ¢
+///Level2å§”å–ä¿¡æ¯
 struct CThostFtdcL2MarketDataOfferOrderField
 {
-	///Î¯ÍĞÂô³ö×ÜÁ¿
+	///å§”æ‰˜å–å‡ºæ€»é‡
 	TThostFtdcLargeVolumeType	TotalOfferQty;
-	///¼ÓÈ¨Æ½¾ùÎ¯Âô¼Û
+	///åŠ æƒå¹³å‡å§”å–ä»·
 	TThostFtdcPriceType	WeightedAvgOfferPx;
-	///Õ®È¯¼ÓÈ¨Æ½¾ùÎ¯Âô¼Û¸ñ
+	///å€ºåˆ¸åŠ æƒå¹³å‡å§”å–ä»·æ ¼
 	TThostFtdcPriceType	AltWeightedAvgOfferPx;
 };
 
-///Level2È¨Ö¤ĞÅÏ¢
+///Level2æƒè¯ä¿¡æ¯
 struct CThostFtdcL2MarketDataWarrantField
 {
-	///È¨Ö¤Ö´ĞĞ×ÜÊıÁ¿
+	///æƒè¯æ‰§è¡Œæ€»æ•°é‡
 	TThostFtdcLargeVolumeType	TotalWarrantExecQty;
-	///È¨Ö¤µøÍ£¼Û¸ñ
+	///æƒè¯è·Œåœä»·æ ¼
 	TThostFtdcPriceType	WarLowerPx;
-	///È¨Ö¤ÕÇÍ£¼Û¸ñ
+	///æƒè¯æ¶¨åœä»·æ ¼
 	TThostFtdcPriceType	WarUpperPx;
 };
 
-///Level2ĞĞÇé»ù±¾ĞÅÏ¢
+///Level2è¡Œæƒ…åŸºæœ¬ä¿¡æ¯
 struct CThostFtdcL2MarketDataBaseField
 {
-	///ÏÖ¼Û
+	///ç°ä»·
 	TThostFtdcPriceType	LastPx;
 };
 
-///Level2ĞĞÇé¾²Ì¬ÊôĞÔ
+///Level2è¡Œæƒ…é™æ€å±æ€§
 struct CThostFtdcL2MarketDataStaticField
 {
-	///×òÊÕÅÌ¼Û
+	///æ˜¨æ”¶ç›˜ä»·
 	TThostFtdcPriceType	PreClosePx;
-	///½ñ¿ªÅÌ¼Û
+	///ä»Šå¼€ç›˜ä»·
 	TThostFtdcPriceType	OpenPx;
-	///ÊÕÅÌ¼Û
+	///æ”¶ç›˜ä»·
 	TThostFtdcPriceType	ClosePx;
-	///×î¸ß¼Û
+	///æœ€é«˜ä»·
 	TThostFtdcPriceType	HighPx;
-	///×îµÍ¼Û
+	///æœ€ä½ä»·
 	TThostFtdcPriceType	LowPx;
-	///¾»Öµ¹ÀÖµ
+	///å‡€å€¼ä¼°å€¼
 	TThostFtdcPriceType	IOPV;
-	///µ½ÆÚÊÕÒæÂÊ
+	///åˆ°æœŸæ”¶ç›Šç‡
 	TThostFtdcRatioType	YieldToMaturity;
 };
 
-///Level2¼Û¸ñÉî¶ÈÊôĞÔ
+///Level2ä»·æ ¼æ·±åº¦å±æ€§
 struct CThostFtdcL2MarketDataPriceLevelField
 {
-	///Âò¼ÛÉî¶È
+	///ä¹°ä»·æ·±åº¦
 	TThostFtdcPriceLevelType	BidPriceLevel;
-	///Âô¼ÛÉî¶È
+	///å–ä»·æ·±åº¦
 	TThostFtdcPriceLevelType	OfferPriceLevel;
 };
 
-///Level2Ö¸ÊıĞĞÇé
+///Level2æŒ‡æ•°è¡Œæƒ…
 struct CThostFtdcNGTSIndexField
 {
-	///½»Ò×ÈÕ
+	///äº¤æ˜“æ—¥
 	TThostFtdcDateType	TradingDay;
-	///ĞĞÇéÊ±¼ä£¨Ãë£©
+	///è¡Œæƒ…æ—¶é—´ï¼ˆç§’ï¼‰
 	TThostFtdcTimeType	TimeStamp;
-	///½»Ò×Ëù´úÂë
+	///äº¤æ˜“æ‰€ä»£ç 
 	TThostFtdcExchangeIDType	ExchangeID;
-	///Ö¸Êı´úÂë
+	///æŒ‡æ•°ä»£ç 
 	TThostFtdcSecurityIDType	SecurityID;
-	///Ç°ÊÕÅÌÖ¸Êı
+	///å‰æ”¶ç›˜æŒ‡æ•°
 	TThostFtdcIndexType	PreCloseIndex;
-	///½ñ¿ªÅÌÖ¸Êı
+	///ä»Šå¼€ç›˜æŒ‡æ•°
 	TThostFtdcIndexType	OpenIndex;
-	///²ÎÓë¼ÆËãÏàÓ¦Ö¸ÊıµÄ³É½»½ğ¶î£¨Ôª£©
+	///å‚ä¸è®¡ç®—ç›¸åº”æŒ‡æ•°çš„æˆäº¤é‡‘é¢ï¼ˆå…ƒï¼‰
 	TThostFtdcMoneyType	TurnOver;
-	///×î¸ßÖ¸Êı
+	///æœ€é«˜æŒ‡æ•°
 	TThostFtdcIndexType	HighIndex;
-	///×îµÍÖ¸Êı
+	///æœ€ä½æŒ‡æ•°
 	TThostFtdcIndexType	LowIndex;
-	///×îĞÂÖ¸Êı
+	///æœ€æ–°æŒ‡æ•°
 	TThostFtdcIndexType	LastIndex;
-	///½ñÈÕÊÕÅÌÖ¸Êı
+	///ä»Šæ—¥æ”¶ç›˜æŒ‡æ•°
 	TThostFtdcIndexType	CloseIndex;
-	///³É½»Ê±¼ä
+	///æˆäº¤æ—¶é—´
 	TThostFtdcTimeType	TradeTime;
-	///²ÎÓë¼ÆËãÏàÓ¦Ö¸ÊıµÄ½»Ò×ÊıÁ¿£¨ÊÖ£©
+	///å‚ä¸è®¡ç®—ç›¸åº”æŒ‡æ•°çš„äº¤æ˜“æ•°é‡ï¼ˆæ‰‹ï¼‰
 	TThostFtdcLargeVolumeType	TotalVolumeTraded;
 };
 

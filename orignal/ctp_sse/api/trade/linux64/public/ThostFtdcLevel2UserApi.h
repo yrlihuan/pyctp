@@ -1,10 +1,10 @@
 /////////////////////////////////////////////////////////////////////////
-///@system LEVEL2ĞĞÇéAPI
-///@company ÉÏº£ÆÚ»õĞÅÏ¢¼¼ÊõÓĞÏŞ¹«Ë¾
+///@system LEVEL2è¡Œæƒ…API
+///@company ä¸Šæµ·æœŸè´§ä¿¡æ¯æŠ€æœ¯æœ‰é™å…¬å¸
 ///@file ThostFtdcLevel2UserApi.h
-///@brief ¶¨ÒåÁË¿Í»§¶Ë½Ó¿Ú
+///@brief å®šä¹‰äº†å®¢æˆ·ç«¯æ¥å£
 ///@history 
-///20060106	ÕÔºèê»		´´½¨¸ÃÎÄ¼ş
+///20060106	èµµé¸¿æ˜Š		åˆ›å»ºè¯¥æ–‡ä»¶
 /////////////////////////////////////////////////////////////////////////
 
 #ifndef THOST_FTDCLEVEL2USERAPI_H
@@ -27,95 +27,95 @@ class CThostFtdcLevel2UserSpi
 {
 public:
 	virtual ~CThostFtdcLevel2UserSpi() {};
-	///µ±¿Í»§¶ËÓë½»Ò×ºóÌ¨½¨Á¢ÆğÍ¨ĞÅÁ¬½ÓÊ±£¨»¹Î´µÇÂ¼Ç°£©£¬¸Ã·½·¨±»µ÷ÓÃ¡£
+	///å½“å®¢æˆ·ç«¯ä¸äº¤æ˜“åå°å»ºç«‹èµ·é€šä¿¡è¿æ¥æ—¶ï¼ˆè¿˜æœªç™»å½•å‰ï¼‰ï¼Œè¯¥æ–¹æ³•è¢«è°ƒç”¨ã€‚
 	virtual void OnFrontConnected(){};
 	
-	///µ±¿Í»§¶ËÓë½»Ò×ºóÌ¨Í¨ĞÅÁ¬½Ó¶Ï¿ªÊ±£¬¸Ã·½·¨±»µ÷ÓÃ¡£µ±·¢ÉúÕâ¸öÇé¿öºó£¬API»á×Ô¶¯ÖØĞÂÁ¬½Ó£¬¿Í»§¶Ë¿É²»×ö´¦Àí¡£
-	///@param nReason ´íÎóÔ­Òò
-	///        0x1001 ÍøÂç¶ÁÊ§°Ü
-	///        0x1002 ÍøÂçĞ´Ê§°Ü
-	///        0x2001 ½ÓÊÕĞÄÌø³¬Ê±
-	///        0x2002 ·¢ËÍĞÄÌøÊ§°Ü
-	///        0x2003 ÊÕµ½´íÎó±¨ÎÄ
+	///å½“å®¢æˆ·ç«¯ä¸äº¤æ˜“åå°é€šä¿¡è¿æ¥æ–­å¼€æ—¶ï¼Œè¯¥æ–¹æ³•è¢«è°ƒç”¨ã€‚å½“å‘ç”Ÿè¿™ä¸ªæƒ…å†µåï¼ŒAPIä¼šè‡ªåŠ¨é‡æ–°è¿æ¥ï¼Œå®¢æˆ·ç«¯å¯ä¸åšå¤„ç†ã€‚
+	///@param nReason é”™è¯¯åŸå› 
+	///        0x1001 ç½‘ç»œè¯»å¤±è´¥
+	///        0x1002 ç½‘ç»œå†™å¤±è´¥
+	///        0x2001 æ¥æ”¶å¿ƒè·³è¶…æ—¶
+	///        0x2002 å‘é€å¿ƒè·³å¤±è´¥
+	///        0x2003 æ”¶åˆ°é”™è¯¯æŠ¥æ–‡
 	virtual void OnFrontDisconnected(int nReason){};
 		
-	///ĞÄÌø³¬Ê±¾¯¸æ¡£µ±³¤Ê±¼äÎ´ÊÕµ½±¨ÎÄÊ±£¬¸Ã·½·¨±»µ÷ÓÃ¡£
-	///@param nTimeLapse ¾àÀëÉÏ´Î½ÓÊÕ±¨ÎÄµÄÊ±¼ä
+	///å¿ƒè·³è¶…æ—¶è­¦å‘Šã€‚å½“é•¿æ—¶é—´æœªæ”¶åˆ°æŠ¥æ–‡æ—¶ï¼Œè¯¥æ–¹æ³•è¢«è°ƒç”¨ã€‚
+	///@param nTimeLapse è·ç¦»ä¸Šæ¬¡æ¥æ”¶æŠ¥æ–‡çš„æ—¶é—´
 	virtual void OnHeartBeatWarning(int nTimeLapse){};
 	
-	///¿Í»§¶ËÈÏÖ¤ÏìÓ¦
+	///å®¢æˆ·ç«¯è®¤è¯å“åº”
 	//virtual void OnRspAuthenticate(CThostFtdcRspAuthenticateField *pRspAuthenticateField, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 	
 
-	///µÇÂ¼ÇëÇóÏìÓ¦
+	///ç™»å½•è¯·æ±‚å“åº”
 	virtual void OnRspUserLogin(CThostFtdcRspUserLoginField *pRspUserLogin, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///µÇ³öÇëÇóÏìÓ¦
+	///ç™»å‡ºè¯·æ±‚å“åº”
 	virtual void OnRspUserLogout(CThostFtdcUserLogoutField *pUserLogout, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///´íÎóÓ¦´ğ
+	///é”™è¯¯åº”ç­”
 	virtual void OnRspError(CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///¶©ÔÄLevel2ĞĞÇéÓ¦´ğ
+	///è®¢é˜…Level2è¡Œæƒ…åº”ç­”
 	virtual void OnRspSubLevel2MarketData(CThostFtdcSpecificSecurityField *pSpecificSecurity, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///È¡Ïû¶©ÔÄLevel2ĞĞÇéÓ¦´ğ
+	///å–æ¶ˆè®¢é˜…Level2è¡Œæƒ…åº”ç­”
 	virtual void OnRspUnSubLevel2MarketData(CThostFtdcSpecificSecurityField *pSpecificSecurity, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///¶©ÔÄLevel2Ö¸ÊıĞĞÇéÓ¦´ğ
+	///è®¢é˜…Level2æŒ‡æ•°è¡Œæƒ…åº”ç­”
 	virtual void OnRspSubNGTSIndex(CThostFtdcSpecificSecurityField *pSpecificSecurity, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///È¡Ïû¶©ÔÄLevel2Ö¸ÊıĞĞÇéÓ¦´ğ
+	///å–æ¶ˆè®¢é˜…Level2æŒ‡æ•°è¡Œæƒ…åº”ç­”
 	virtual void OnRspUnSubNGTSIndex(CThostFtdcSpecificSecurityField *pSpecificSecurity, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///Level2ĞĞÇéÍ¨Öª
+	///Level2è¡Œæƒ…é€šçŸ¥
 	virtual void OnRtnLevel2MarketData(CThostFtdcLevel2MarketDataField *pLevel2MarketData) {};
 
-	///Level2Ö¸ÊıĞĞÇéÍ¨Öª
+	///Level2æŒ‡æ•°è¡Œæƒ…é€šçŸ¥
 	virtual void OnRtnNGTSIndex(CThostFtdcNGTSIndexField *pNGTSIndex) {};
 };
 
 class LEVEL2_USER_API_EXPORT CThostFtdcLevel2UserApi
 {
 public:
-	///´´½¨UserApi
-	///@param pszFlowPath ´æÖü¶©ÔÄĞÅÏ¢ÎÄ¼şµÄÄ¿Â¼£¬Ä¬ÈÏÎªµ±Ç°Ä¿Â¼
-	///@return ´´½¨³öµÄUserApi
+	///åˆ›å»ºUserApi
+	///@param pszFlowPath å­˜è´®è®¢é˜…ä¿¡æ¯æ–‡ä»¶çš„ç›®å½•ï¼Œé»˜è®¤ä¸ºå½“å‰ç›®å½•
+	///@return åˆ›å»ºå‡ºçš„UserApi
 	//modify for udp marketdata
 	static CThostFtdcLevel2UserApi *CreateFtdcLevel2UserApi(const char *pszFlowPath = "", const bool bIsUsingUdp=false);
 	
-	///É¾³ı½Ó¿Ú¶ÔÏó±¾Éí
-	///@remark ²»ÔÙÊ¹ÓÃ±¾½Ó¿Ú¶ÔÏóÊ±,µ÷ÓÃ¸Ãº¯ÊıÉ¾³ı½Ó¿Ú¶ÔÏó
+	///åˆ é™¤æ¥å£å¯¹è±¡æœ¬èº«
+	///@remark ä¸å†ä½¿ç”¨æœ¬æ¥å£å¯¹è±¡æ—¶,è°ƒç”¨è¯¥å‡½æ•°åˆ é™¤æ¥å£å¯¹è±¡
 	virtual void Release() = 0;
 	
-	///³õÊ¼»¯
-	///@remark ³õÊ¼»¯ÔËĞĞ»·¾³,Ö»ÓĞµ÷ÓÃºó,½Ó¿Ú²Å¿ªÊ¼¹¤×÷
+	///åˆå§‹åŒ–
+	///@remark åˆå§‹åŒ–è¿è¡Œç¯å¢ƒ,åªæœ‰è°ƒç”¨å,æ¥å£æ‰å¼€å§‹å·¥ä½œ
 	virtual void Init() = 0;
 	
-	///µÈ´ı½Ó¿ÚÏß³Ì½áÊøÔËĞĞ
-	///@return Ïß³ÌÍË³ö´úÂë
+	///ç­‰å¾…æ¥å£çº¿ç¨‹ç»“æŸè¿è¡Œ
+	///@return çº¿ç¨‹é€€å‡ºä»£ç 
 	virtual int Join() = 0;
 	
-	///»ñÈ¡µ±Ç°½»Ò×ÈÕ
-	///@retrun »ñÈ¡µ½µÄ½»Ò×ÈÕ
-	///@remark Ö»ÓĞµÇÂ¼³É¹¦ºó,²ÅÄÜµÃµ½ÕıÈ·µÄ½»Ò×ÈÕ
+	///è·å–å½“å‰äº¤æ˜“æ—¥
+	///@retrun è·å–åˆ°çš„äº¤æ˜“æ—¥
+	///@remark åªæœ‰ç™»å½•æˆåŠŸå,æ‰èƒ½å¾—åˆ°æ­£ç¡®çš„äº¤æ˜“æ—¥
 	virtual const char *GetTradingDay() = 0;
 	
-	///×¢²áÇ°ÖÃ»úÍøÂçµØÖ·
-	///@param pszFrontAddress£ºÇ°ÖÃ»úÍøÂçµØÖ·¡£
-	///@remark ÍøÂçµØÖ·µÄ¸ñÊ½Îª£º¡°protocol://ipaddress:port¡±£¬Èç£º¡±tcp://127.0.0.1:17001¡±¡£ 
-	///@remark ¡°tcp¡±´ú±í´«ÊäĞ­Òé£¬¡°127.0.0.1¡±´ú±í·şÎñÆ÷µØÖ·¡£¡±17001¡±´ú±í·şÎñÆ÷¶Ë¿ÚºÅ¡£
+	///æ³¨å†Œå‰ç½®æœºç½‘ç»œåœ°å€
+	///@param pszFrontAddressï¼šå‰ç½®æœºç½‘ç»œåœ°å€ã€‚
+	///@remark ç½‘ç»œåœ°å€çš„æ ¼å¼ä¸ºï¼šâ€œprotocol://ipaddress:portâ€ï¼Œå¦‚ï¼šâ€tcp://127.0.0.1:17001â€ã€‚ 
+	///@remark â€œtcpâ€ä»£è¡¨ä¼ è¾“åè®®ï¼Œâ€œ127.0.0.1â€ä»£è¡¨æœåŠ¡å™¨åœ°å€ã€‚â€17001â€ä»£è¡¨æœåŠ¡å™¨ç«¯å£å·ã€‚
 	virtual void RegisterFront(char *pszFrontAddress) = 0;
 	
-	///×¢²áÃû×Ö·şÎñÆ÷ÍøÂçµØÖ·
-	///@param pszNsAddress£ºÃû×Ö·şÎñÆ÷ÍøÂçµØÖ·¡£
-	///@remark ÍøÂçµØÖ·µÄ¸ñÊ½Îª£º¡°protocol://ipaddress:port¡±£¬Èç£º¡±tcp://127.0.0.1:12001¡±¡£ 
-	///@remark ¡°tcp¡±´ú±í´«ÊäĞ­Òé£¬¡°127.0.0.1¡±´ú±í·şÎñÆ÷µØÖ·¡£¡±12001¡±´ú±í·şÎñÆ÷¶Ë¿ÚºÅ¡£
-	///@remark RegisterNameServerÓÅÏÈÓÚRegisterFront
+	///æ³¨å†Œåå­—æœåŠ¡å™¨ç½‘ç»œåœ°å€
+	///@param pszNsAddressï¼šåå­—æœåŠ¡å™¨ç½‘ç»œåœ°å€ã€‚
+	///@remark ç½‘ç»œåœ°å€çš„æ ¼å¼ä¸ºï¼šâ€œprotocol://ipaddress:portâ€ï¼Œå¦‚ï¼šâ€tcp://127.0.0.1:12001â€ã€‚ 
+	///@remark â€œtcpâ€ä»£è¡¨ä¼ è¾“åè®®ï¼Œâ€œ127.0.0.1â€ä»£è¡¨æœåŠ¡å™¨åœ°å€ã€‚â€12001â€ä»£è¡¨æœåŠ¡å™¨ç«¯å£å·ã€‚
+	///@remark RegisterNameServerä¼˜å…ˆäºRegisterFront
 	//virtual void RegisterNameServer(char *pszNsAddress) = 0;
 	
-	///×¢²á»Øµ÷½Ó¿Ú
-	///@param pSpi ÅÉÉú×Ô»Øµ÷½Ó¿ÚÀàµÄÊµÀı
+	///æ³¨å†Œå›è°ƒæ¥å£
+	///@param pSpi æ´¾ç”Ÿè‡ªå›è°ƒæ¥å£ç±»çš„å®ä¾‹
 	virtual void RegisterSpi(CThostFtdcLevel2UserSpi *pSpi) = 0;
 	
 	virtual int SubscribeLevel2MarketData(CThostFtdcSpecificSecurityField *pSecurityList, int nCount) = 0;
@@ -126,21 +126,21 @@ public:
 
 	virtual int UnSubscribeNGTSIndex(CThostFtdcSpecificSecurityField *pSecurityList, int nCount) = 0;
 	
-	///¶©ÔÄ¹«¹²Á÷¡£
-	///@param nResumeType ¹«¹²Á÷ÖØ´«·½Ê½  
-	///        THOST_TERT_RESTART:´Ó±¾½»Ò×ÈÕ¿ªÊ¼ÖØ´«
-	///        THOST_TERT_RESUME:´ÓÉÏ´ÎÊÕµ½µÄĞø´«
-	///        THOST_TERT_QUICK:Ö»´«ËÍµÇÂ¼ºó¹«¹²Á÷µÄÄÚÈİ
-	///@remark ¸Ã·½·¨ÒªÔÚInit·½·¨Ç°µ÷ÓÃ¡£Èô²»µ÷ÓÃÔò²»»áÊÕµ½¹«¹²Á÷µÄÊı¾İ¡£
+	///è®¢é˜…å…¬å…±æµã€‚
+	///@param nResumeType å…¬å…±æµé‡ä¼ æ–¹å¼  
+	///        THOST_TERT_RESTART:ä»æœ¬äº¤æ˜“æ—¥å¼€å§‹é‡ä¼ 
+	///        THOST_TERT_RESUME:ä»ä¸Šæ¬¡æ”¶åˆ°çš„ç»­ä¼ 
+	///        THOST_TERT_QUICK:åªä¼ é€ç™»å½•åå…¬å…±æµçš„å†…å®¹
+	///@remark è¯¥æ–¹æ³•è¦åœ¨Initæ–¹æ³•å‰è°ƒç”¨ã€‚è‹¥ä¸è°ƒç”¨åˆ™ä¸ä¼šæ”¶åˆ°å…¬å…±æµçš„æ•°æ®ã€‚
 	virtual void SubscribePublicTopic(THOST_TE_RESUME_TYPE nResumeType) = 0;
 
-	///¿Í»§¶ËÈÏÖ¤ÇëÇó
+	///å®¢æˆ·ç«¯è®¤è¯è¯·æ±‚
 	//virtual int ReqAuthenticate(CThostFtdcReqAuthenticateField *pReqAuthenticateField, int nRequestID) = 0;
 	
-	///ÓÃ»§µÇÂ¼ÇëÇó
+	///ç”¨æˆ·ç™»å½•è¯·æ±‚
 	virtual int ReqUserLogin(CThostFtdcReqUserLoginField *pReqUserLoginField, int nRequestID) = 0;
 
-	///µÇ³öÇëÇó
+	///ç™»å‡ºè¯·æ±‚
 	virtual int ReqUserLogout(CThostFtdcUserLogoutField *pUserLogout, int nRequestID) = 0;
 protected:
 	~CThostFtdcLevel2UserApi(){};

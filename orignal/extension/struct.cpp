@@ -172,6 +172,26 @@ CThostFtdcQryInvestorPositionField * from_CThostFtdcQryInvestorPositionField(PyO
   return t;
 };
 
+//客户端认证响应
+PyObject * new_CThostFtdcRspAuthenticateField(CThostFtdcRspAuthenticateField * p){
+  if(p==NULL)
+      return Py_None;
+  return PyObject_CallMethod(mod, (char*)"CThostFtdcRspAuthenticateField", (char*)"sss",
+p->UserID, p->BrokerID, p->UserProductInfo);
+}
+CThostFtdcRspAuthenticateField * from_CThostFtdcRspAuthenticateField(PyObject * p){
+  CThostFtdcRspAuthenticateField *t = (CThostFtdcRspAuthenticateField *)calloc(1, sizeof(CThostFtdcRspAuthenticateField));
+  memset(t,0,sizeof(CThostFtdcRspAuthenticateField));
+  //用户代码
+  strcpy(t->UserID, PyString_AsString(PyObject_GetAttrString(p, "UserID")));
+  //经纪公司代码
+  strcpy(t->BrokerID, PyString_AsString(PyObject_GetAttrString(p, "BrokerID")));
+  //用户端产品信息
+  strcpy(t->UserProductInfo, PyString_AsString(PyObject_GetAttrString(p, "UserProductInfo")));
+
+  return t;
+};
+
 //验证期货资金密码和客户信息
 PyObject * new_CThostFtdcDepositResultInformField(CThostFtdcDepositResultInformField * p){
   if(p==NULL)
@@ -400,6 +420,7 @@ CThostFtdcReqQueryAccountField * from_CThostFtdcReqQueryAccountField(PyObject * 
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
@@ -454,8 +475,8 @@ CThostFtdcReqQueryAccountField * from_CThostFtdcReqQueryAccountField(PyObject * 
 PyObject * new_CThostFtdcCancelAccountField(CThostFtdcCancelAccountField * p){
   if(p==NULL)
       return Py_None;
-  return PyObject_CallMethod(mod, (char*)"CThostFtdcCancelAccountField", (char*)"csssscisssicssssisiciccssssssccsssssccscsssss",
-p->MoneyAccountStatus, p->BrokerBranchID, p->BankPassWord, p->Telephone, p->IdentifiedCardNo, p->VerifyCertNoFlag, p->TID, p->AccountID, p->BankAccount, p->Fax, p->InstallID, p->SecuPwdFlag, p->CustomerName, p->CountryCode, p->TradeCode, p->BankBranchID, p->SessionID, p->Address, p->PlateSerial, p->BankPwdFlag, p->ErrorID, p->CustType, p->Gender, p->BankID, p->BankSerial, p->OperNo, p->TradingDay, p->BankSecuAcc, p->BrokerID, p->CashExchangeCode, p->IdCardType, p->Password, p->MobilePhone, p->TradeDate, p->CurrencyID, p->ErrorMsg, p->BankAccType, p->LastFragment, p->ZipCode, p->BankSecuAccType, p->BrokerIDByBank, p->TradeTime, p->EMail, p->Digest, p->DeviceID);
+  return PyObject_CallMethod(mod, (char*)"CThostFtdcCancelAccountField", (char*)"csssscisssisssssisicicssssscsccsssssccscscsss",
+p->MoneyAccountStatus, p->BrokerBranchID, p->BankPassWord, p->Telephone, p->TradeTime, p->VerifyCertNoFlag, p->TID, p->AccountID, p->BankAccount, p->Fax, p->InstallID, p->CustomerName, p->CountryCode, p->TradeCode, p->BankSecuAcc, p->BankBranchID, p->SessionID, p->Address, p->PlateSerial, p->BankPwdFlag, p->ErrorID, p->CustType, p->IdentifiedCardNo, p->BankID, p->BankSerial, p->OperNo, p->TradingDay, p->Gender, p->BrokerID, p->CashExchangeCode, p->IdCardType, p->Password, p->MobilePhone, p->TradeDate, p->CurrencyID, p->ErrorMsg, p->BankAccType, p->LastFragment, p->ZipCode, p->BankSecuAccType, p->BrokerIDByBank, p->SecuPwdFlag, p->EMail, p->Digest, p->DeviceID);
 }
 CThostFtdcCancelAccountField * from_CThostFtdcCancelAccountField(PyObject * p){
   CThostFtdcCancelAccountField *t = (CThostFtdcCancelAccountField *)calloc(1, sizeof(CThostFtdcCancelAccountField));
@@ -471,8 +492,8 @@ CThostFtdcCancelAccountField * from_CThostFtdcCancelAccountField(PyObject * p){
   strcpy(t->BankPassWord, PyString_AsString(PyObject_GetAttrString(p, "BankPassWord")));
   //电话号码
   strcpy(t->Telephone, PyString_AsString(PyObject_GetAttrString(p, "Telephone")));
-  //证件号码
-  strcpy(t->IdentifiedCardNo, PyString_AsString(PyObject_GetAttrString(p, "IdentifiedCardNo")));
+  //交易时间
+  strcpy(t->TradeTime, PyString_AsString(PyObject_GetAttrString(p, "TradeTime")));
   //验证客户证件号码标志
   //enum类型
   //THOST_FTDC_YNI_No -> '1', 否
@@ -488,18 +509,14 @@ CThostFtdcCancelAccountField * from_CThostFtdcCancelAccountField(PyObject * p){
   strcpy(t->Fax, PyString_AsString(PyObject_GetAttrString(p, "Fax")));
   //安装编号
   t->InstallID =   PyInt_AsLong(PyObject_GetAttrString(p, "InstallID"));
-  //期货资金密码核对标志
-  //enum类型
-  //THOST_FTDC_BPWDF_BlankCheck -> '1', 明文核对
-  //THOST_FTDC_BPWDF_NoCheck -> '0', 不核对
-  //THOST_FTDC_BPWDF_EncryptCheck -> '2', 密文核对
-  t->SecuPwdFlag =   PyString_AsString(PyObject_GetAttrString(p, "SecuPwdFlag"))[0];
   //客户姓名
   strcpy(t->CustomerName, PyString_AsString(PyObject_GetAttrString(p, "CustomerName")));
   //国家代码
   strcpy(t->CountryCode, PyString_AsString(PyObject_GetAttrString(p, "CountryCode")));
   //业务功能码
   strcpy(t->TradeCode, PyString_AsString(PyObject_GetAttrString(p, "TradeCode")));
+  //期货单位帐号
+  strcpy(t->BankSecuAcc, PyString_AsString(PyObject_GetAttrString(p, "BankSecuAcc")));
   //银行分支机构代码
   strcpy(t->BankBranchID, PyString_AsString(PyObject_GetAttrString(p, "BankBranchID")));
   //会话号
@@ -521,12 +538,8 @@ CThostFtdcCancelAccountField * from_CThostFtdcCancelAccountField(PyObject * p){
   //THOST_FTDC_CUSTT_Institution -> '1', 机构户
   //THOST_FTDC_CUSTT_Person -> '0', 自然人
   t->CustType =   PyString_AsString(PyObject_GetAttrString(p, "CustType"))[0];
-  //性别
-  //enum类型
-  //THOST_FTDC_GD_Unknown -> '0', 未知状态
-  //THOST_FTDC_GD_Female -> '2', 女
-  //THOST_FTDC_GD_Male -> '1', 男
-  t->Gender =   PyString_AsString(PyObject_GetAttrString(p, "Gender"))[0];
+  //证件号码
+  strcpy(t->IdentifiedCardNo, PyString_AsString(PyObject_GetAttrString(p, "IdentifiedCardNo")));
   //银行代码
   strcpy(t->BankID, PyString_AsString(PyObject_GetAttrString(p, "BankID")));
   //银行流水号
@@ -535,8 +548,12 @@ CThostFtdcCancelAccountField * from_CThostFtdcCancelAccountField(PyObject * p){
   strcpy(t->OperNo, PyString_AsString(PyObject_GetAttrString(p, "OperNo")));
   //交易系统日期
   strcpy(t->TradingDay, PyString_AsString(PyObject_GetAttrString(p, "TradingDay")));
-  //期货单位帐号
-  strcpy(t->BankSecuAcc, PyString_AsString(PyObject_GetAttrString(p, "BankSecuAcc")));
+  //性别
+  //enum类型
+  //THOST_FTDC_GD_Unknown -> '0', 未知状态
+  //THOST_FTDC_GD_Female -> '2', 女
+  //THOST_FTDC_GD_Male -> '1', 男
+  t->Gender =   PyString_AsString(PyObject_GetAttrString(p, "Gender"))[0];
   //期商代码
   strcpy(t->BrokerID, PyString_AsString(PyObject_GetAttrString(p, "BrokerID")));
   //汇钞标志
@@ -547,6 +564,7 @@ CThostFtdcCancelAccountField * from_CThostFtdcCancelAccountField(PyObject * p){
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
@@ -589,8 +607,12 @@ CThostFtdcCancelAccountField * from_CThostFtdcCancelAccountField(PyObject * p){
   t->BankSecuAccType =   PyString_AsString(PyObject_GetAttrString(p, "BankSecuAccType"))[0];
   //期货公司银行编码
   strcpy(t->BrokerIDByBank, PyString_AsString(PyObject_GetAttrString(p, "BrokerIDByBank")));
-  //交易时间
-  strcpy(t->TradeTime, PyString_AsString(PyObject_GetAttrString(p, "TradeTime")));
+  //期货资金密码核对标志
+  //enum类型
+  //THOST_FTDC_BPWDF_BlankCheck -> '1', 明文核对
+  //THOST_FTDC_BPWDF_NoCheck -> '0', 不核对
+  //THOST_FTDC_BPWDF_EncryptCheck -> '2', 密文核对
+  t->SecuPwdFlag =   PyString_AsString(PyObject_GetAttrString(p, "SecuPwdFlag"))[0];
   //电子邮件
   strcpy(t->EMail, PyString_AsString(PyObject_GetAttrString(p, "EMail")));
   //摘要
@@ -852,28 +874,24 @@ CThostFtdcExchangeOrderActionErrorField * from_CThostFtdcExchangeOrderActionErro
   return t;
 };
 
-//经纪公司可提资金算法表
-PyObject * new_CThostFtdcInvestorWithdrawAlgorithmField(CThostFtdcInvestorWithdrawAlgorithmField * p){
+//客户端认证请求
+PyObject * new_CThostFtdcReqAuthenticateField(CThostFtdcReqAuthenticateField * p){
   if(p==NULL)
       return Py_None;
-  return PyObject_CallMethod(mod, (char*)"CThostFtdcInvestorWithdrawAlgorithmField", (char*)"sscd",
-p->InvestorID, p->BrokerID, p->InvestorRange, p->UsingRatio);
+  return PyObject_CallMethod(mod, (char*)"CThostFtdcReqAuthenticateField", (char*)"ssss",
+p->UserID, p->AuthCode, p->BrokerID, p->UserProductInfo);
 }
-CThostFtdcInvestorWithdrawAlgorithmField * from_CThostFtdcInvestorWithdrawAlgorithmField(PyObject * p){
-  CThostFtdcInvestorWithdrawAlgorithmField *t = (CThostFtdcInvestorWithdrawAlgorithmField *)calloc(1, sizeof(CThostFtdcInvestorWithdrawAlgorithmField));
-  memset(t,0,sizeof(CThostFtdcInvestorWithdrawAlgorithmField));
-  //投资者代码
-  strcpy(t->InvestorID, PyString_AsString(PyObject_GetAttrString(p, "InvestorID")));
+CThostFtdcReqAuthenticateField * from_CThostFtdcReqAuthenticateField(PyObject * p){
+  CThostFtdcReqAuthenticateField *t = (CThostFtdcReqAuthenticateField *)calloc(1, sizeof(CThostFtdcReqAuthenticateField));
+  memset(t,0,sizeof(CThostFtdcReqAuthenticateField));
+  //用户代码
+  strcpy(t->UserID, PyString_AsString(PyObject_GetAttrString(p, "UserID")));
+  //认证码
+  strcpy(t->AuthCode, PyString_AsString(PyObject_GetAttrString(p, "AuthCode")));
   //经纪公司代码
   strcpy(t->BrokerID, PyString_AsString(PyObject_GetAttrString(p, "BrokerID")));
-  //投资者范围
-  //enum类型
-  //THOST_FTDC_IR_All -> '1', 所有
-  //THOST_FTDC_IR_Group -> '2', 投资者组
-  //THOST_FTDC_IR_Single -> '3', 单一投资者
-  t->InvestorRange =   PyString_AsString(PyObject_GetAttrString(p, "InvestorRange"))[0];
-  //可提资金比例
-  t->UsingRatio =   PyFloat_AsDouble(PyObject_GetAttrString(p, "UsingRatio"));
+  //用户端产品信息
+  strcpy(t->UserProductInfo, PyString_AsString(PyObject_GetAttrString(p, "UserProductInfo")));
 
   return t;
 };
@@ -1043,6 +1061,7 @@ CThostFtdcSyncingInvestorField * from_CThostFtdcSyncingInvestorField(PyObject * 
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
@@ -1414,6 +1433,7 @@ CThostFtdcRspQueryAccountField * from_CThostFtdcRspQueryAccountField(PyObject * 
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
@@ -1488,8 +1508,8 @@ CThostFtdcQrySettlementInfoConfirmField * from_CThostFtdcQrySettlementInfoConfir
 PyObject * new_CThostFtdcOpenAccountField(CThostFtdcOpenAccountField * p){
   if(p==NULL)
       return Py_None;
-  return PyObject_CallMethod(mod, (char*)"CThostFtdcOpenAccountField", (char*)"csssscisssicssssisiciccssssssccsssssccscsssss",
-p->MoneyAccountStatus, p->BrokerBranchID, p->BankPassWord, p->Telephone, p->IdentifiedCardNo, p->VerifyCertNoFlag, p->TID, p->AccountID, p->BankAccount, p->Fax, p->InstallID, p->SecuPwdFlag, p->CustomerName, p->CountryCode, p->TradeCode, p->BankBranchID, p->SessionID, p->Address, p->PlateSerial, p->BankPwdFlag, p->ErrorID, p->CustType, p->Gender, p->BankID, p->BankSerial, p->OperNo, p->TradingDay, p->BankSecuAcc, p->BrokerID, p->CashExchangeCode, p->IdCardType, p->Password, p->MobilePhone, p->TradeDate, p->CurrencyID, p->ErrorMsg, p->BankAccType, p->LastFragment, p->ZipCode, p->BankSecuAccType, p->BrokerIDByBank, p->TradeTime, p->EMail, p->Digest, p->DeviceID);
+  return PyObject_CallMethod(mod, (char*)"CThostFtdcOpenAccountField", (char*)"csssscisssisssssisicicssssscsccsssssccscscsss",
+p->MoneyAccountStatus, p->BrokerBranchID, p->BankPassWord, p->Telephone, p->TradeTime, p->VerifyCertNoFlag, p->TID, p->AccountID, p->BankAccount, p->Fax, p->InstallID, p->CustomerName, p->CountryCode, p->TradeCode, p->BankSecuAcc, p->BankBranchID, p->SessionID, p->Address, p->PlateSerial, p->BankPwdFlag, p->ErrorID, p->CustType, p->IdentifiedCardNo, p->BankID, p->BankSerial, p->OperNo, p->TradingDay, p->Gender, p->BrokerID, p->CashExchangeCode, p->IdCardType, p->Password, p->MobilePhone, p->TradeDate, p->CurrencyID, p->ErrorMsg, p->BankAccType, p->LastFragment, p->ZipCode, p->BankSecuAccType, p->BrokerIDByBank, p->SecuPwdFlag, p->EMail, p->Digest, p->DeviceID);
 }
 CThostFtdcOpenAccountField * from_CThostFtdcOpenAccountField(PyObject * p){
   CThostFtdcOpenAccountField *t = (CThostFtdcOpenAccountField *)calloc(1, sizeof(CThostFtdcOpenAccountField));
@@ -1505,8 +1525,8 @@ CThostFtdcOpenAccountField * from_CThostFtdcOpenAccountField(PyObject * p){
   strcpy(t->BankPassWord, PyString_AsString(PyObject_GetAttrString(p, "BankPassWord")));
   //电话号码
   strcpy(t->Telephone, PyString_AsString(PyObject_GetAttrString(p, "Telephone")));
-  //证件号码
-  strcpy(t->IdentifiedCardNo, PyString_AsString(PyObject_GetAttrString(p, "IdentifiedCardNo")));
+  //交易时间
+  strcpy(t->TradeTime, PyString_AsString(PyObject_GetAttrString(p, "TradeTime")));
   //验证客户证件号码标志
   //enum类型
   //THOST_FTDC_YNI_No -> '1', 否
@@ -1522,18 +1542,14 @@ CThostFtdcOpenAccountField * from_CThostFtdcOpenAccountField(PyObject * p){
   strcpy(t->Fax, PyString_AsString(PyObject_GetAttrString(p, "Fax")));
   //安装编号
   t->InstallID =   PyInt_AsLong(PyObject_GetAttrString(p, "InstallID"));
-  //期货资金密码核对标志
-  //enum类型
-  //THOST_FTDC_BPWDF_BlankCheck -> '1', 明文核对
-  //THOST_FTDC_BPWDF_NoCheck -> '0', 不核对
-  //THOST_FTDC_BPWDF_EncryptCheck -> '2', 密文核对
-  t->SecuPwdFlag =   PyString_AsString(PyObject_GetAttrString(p, "SecuPwdFlag"))[0];
   //客户姓名
   strcpy(t->CustomerName, PyString_AsString(PyObject_GetAttrString(p, "CustomerName")));
   //国家代码
   strcpy(t->CountryCode, PyString_AsString(PyObject_GetAttrString(p, "CountryCode")));
   //业务功能码
   strcpy(t->TradeCode, PyString_AsString(PyObject_GetAttrString(p, "TradeCode")));
+  //期货单位帐号
+  strcpy(t->BankSecuAcc, PyString_AsString(PyObject_GetAttrString(p, "BankSecuAcc")));
   //银行分支机构代码
   strcpy(t->BankBranchID, PyString_AsString(PyObject_GetAttrString(p, "BankBranchID")));
   //会话号
@@ -1555,12 +1571,8 @@ CThostFtdcOpenAccountField * from_CThostFtdcOpenAccountField(PyObject * p){
   //THOST_FTDC_CUSTT_Institution -> '1', 机构户
   //THOST_FTDC_CUSTT_Person -> '0', 自然人
   t->CustType =   PyString_AsString(PyObject_GetAttrString(p, "CustType"))[0];
-  //性别
-  //enum类型
-  //THOST_FTDC_GD_Unknown -> '0', 未知状态
-  //THOST_FTDC_GD_Female -> '2', 女
-  //THOST_FTDC_GD_Male -> '1', 男
-  t->Gender =   PyString_AsString(PyObject_GetAttrString(p, "Gender"))[0];
+  //证件号码
+  strcpy(t->IdentifiedCardNo, PyString_AsString(PyObject_GetAttrString(p, "IdentifiedCardNo")));
   //银行代码
   strcpy(t->BankID, PyString_AsString(PyObject_GetAttrString(p, "BankID")));
   //银行流水号
@@ -1569,8 +1581,12 @@ CThostFtdcOpenAccountField * from_CThostFtdcOpenAccountField(PyObject * p){
   strcpy(t->OperNo, PyString_AsString(PyObject_GetAttrString(p, "OperNo")));
   //交易系统日期
   strcpy(t->TradingDay, PyString_AsString(PyObject_GetAttrString(p, "TradingDay")));
-  //期货单位帐号
-  strcpy(t->BankSecuAcc, PyString_AsString(PyObject_GetAttrString(p, "BankSecuAcc")));
+  //性别
+  //enum类型
+  //THOST_FTDC_GD_Unknown -> '0', 未知状态
+  //THOST_FTDC_GD_Female -> '2', 女
+  //THOST_FTDC_GD_Male -> '1', 男
+  t->Gender =   PyString_AsString(PyObject_GetAttrString(p, "Gender"))[0];
   //期商代码
   strcpy(t->BrokerID, PyString_AsString(PyObject_GetAttrString(p, "BrokerID")));
   //汇钞标志
@@ -1581,6 +1597,7 @@ CThostFtdcOpenAccountField * from_CThostFtdcOpenAccountField(PyObject * p){
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
@@ -1623,8 +1640,12 @@ CThostFtdcOpenAccountField * from_CThostFtdcOpenAccountField(PyObject * p){
   t->BankSecuAccType =   PyString_AsString(PyObject_GetAttrString(p, "BankSecuAccType"))[0];
   //期货公司银行编码
   strcpy(t->BrokerIDByBank, PyString_AsString(PyObject_GetAttrString(p, "BrokerIDByBank")));
-  //交易时间
-  strcpy(t->TradeTime, PyString_AsString(PyObject_GetAttrString(p, "TradeTime")));
+  //期货资金密码核对标志
+  //enum类型
+  //THOST_FTDC_BPWDF_BlankCheck -> '1', 明文核对
+  //THOST_FTDC_BPWDF_NoCheck -> '0', 不核对
+  //THOST_FTDC_BPWDF_EncryptCheck -> '2', 密文核对
+  t->SecuPwdFlag =   PyString_AsString(PyObject_GetAttrString(p, "SecuPwdFlag"))[0];
   //电子邮件
   strcpy(t->EMail, PyString_AsString(PyObject_GetAttrString(p, "EMail")));
   //摘要
@@ -2129,6 +2150,7 @@ CThostFtdcRspRepealField * from_CThostFtdcRspRepealField(PyObject * p){
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
@@ -2540,8 +2562,8 @@ CThostFtdcTransferQryBankReqField * from_CThostFtdcTransferQryBankReqField(PyObj
 PyObject * new_CThostFtdcReqChangeAccountField(CThostFtdcReqChangeAccountField * p){
   if(p==NULL)
       return Py_None;
-  return PyObject_CallMethod(mod, (char*)"CThostFtdcReqChangeAccountField", (char*)"cssssscisssicssssissicccsssscssssccsssss",
-p->MoneyAccountStatus, p->NewBankPassWord, p->BrokerBranchID, p->BankPassWord, p->Telephone, p->IdentifiedCardNo, p->VerifyCertNoFlag, p->TID, p->AccountID, p->BankAccount, p->Fax, p->InstallID, p->SecuPwdFlag, p->CustomerName, p->CountryCode, p->TradeCode, p->BankBranchID, p->SessionID, p->NewBankAccount, p->Address, p->PlateSerial, p->BankPwdFlag, p->CustType, p->Gender, p->BankID, p->BankSerial, p->TradingDay, p->BrokerID, p->IdCardType, p->Password, p->MobilePhone, p->TradeDate, p->CurrencyID, p->BankAccType, p->LastFragment, p->ZipCode, p->BrokerIDByBank, p->TradeTime, p->EMail, p->Digest);
+  return PyObject_CallMethod(mod, (char*)"CThostFtdcReqChangeAccountField", (char*)"cssssscisssissssissiccsssscscssssccsscss",
+p->MoneyAccountStatus, p->NewBankPassWord, p->BrokerBranchID, p->BankPassWord, p->Telephone, p->TradeTime, p->VerifyCertNoFlag, p->TID, p->AccountID, p->BankAccount, p->Fax, p->InstallID, p->CustomerName, p->CountryCode, p->TradeCode, p->BankBranchID, p->SessionID, p->NewBankAccount, p->Address, p->PlateSerial, p->BankPwdFlag, p->CustType, p->IdentifiedCardNo, p->BankID, p->BankSerial, p->TradingDay, p->Gender, p->BrokerID, p->IdCardType, p->Password, p->MobilePhone, p->TradeDate, p->CurrencyID, p->BankAccType, p->LastFragment, p->ZipCode, p->BrokerIDByBank, p->SecuPwdFlag, p->EMail, p->Digest);
 }
 CThostFtdcReqChangeAccountField * from_CThostFtdcReqChangeAccountField(PyObject * p){
   CThostFtdcReqChangeAccountField *t = (CThostFtdcReqChangeAccountField *)calloc(1, sizeof(CThostFtdcReqChangeAccountField));
@@ -2559,8 +2581,8 @@ CThostFtdcReqChangeAccountField * from_CThostFtdcReqChangeAccountField(PyObject 
   strcpy(t->BankPassWord, PyString_AsString(PyObject_GetAttrString(p, "BankPassWord")));
   //电话号码
   strcpy(t->Telephone, PyString_AsString(PyObject_GetAttrString(p, "Telephone")));
-  //证件号码
-  strcpy(t->IdentifiedCardNo, PyString_AsString(PyObject_GetAttrString(p, "IdentifiedCardNo")));
+  //交易时间
+  strcpy(t->TradeTime, PyString_AsString(PyObject_GetAttrString(p, "TradeTime")));
   //验证客户证件号码标志
   //enum类型
   //THOST_FTDC_YNI_No -> '1', 否
@@ -2576,12 +2598,6 @@ CThostFtdcReqChangeAccountField * from_CThostFtdcReqChangeAccountField(PyObject 
   strcpy(t->Fax, PyString_AsString(PyObject_GetAttrString(p, "Fax")));
   //安装编号
   t->InstallID =   PyInt_AsLong(PyObject_GetAttrString(p, "InstallID"));
-  //期货资金密码核对标志
-  //enum类型
-  //THOST_FTDC_BPWDF_BlankCheck -> '1', 明文核对
-  //THOST_FTDC_BPWDF_NoCheck -> '0', 不核对
-  //THOST_FTDC_BPWDF_EncryptCheck -> '2', 密文核对
-  t->SecuPwdFlag =   PyString_AsString(PyObject_GetAttrString(p, "SecuPwdFlag"))[0];
   //客户姓名
   strcpy(t->CustomerName, PyString_AsString(PyObject_GetAttrString(p, "CustomerName")));
   //国家代码
@@ -2609,23 +2625,26 @@ CThostFtdcReqChangeAccountField * from_CThostFtdcReqChangeAccountField(PyObject 
   //THOST_FTDC_CUSTT_Institution -> '1', 机构户
   //THOST_FTDC_CUSTT_Person -> '0', 自然人
   t->CustType =   PyString_AsString(PyObject_GetAttrString(p, "CustType"))[0];
-  //性别
-  //enum类型
-  //THOST_FTDC_GD_Unknown -> '0', 未知状态
-  //THOST_FTDC_GD_Female -> '2', 女
-  //THOST_FTDC_GD_Male -> '1', 男
-  t->Gender =   PyString_AsString(PyObject_GetAttrString(p, "Gender"))[0];
+  //证件号码
+  strcpy(t->IdentifiedCardNo, PyString_AsString(PyObject_GetAttrString(p, "IdentifiedCardNo")));
   //银行代码
   strcpy(t->BankID, PyString_AsString(PyObject_GetAttrString(p, "BankID")));
   //银行流水号
   strcpy(t->BankSerial, PyString_AsString(PyObject_GetAttrString(p, "BankSerial")));
   //交易系统日期
   strcpy(t->TradingDay, PyString_AsString(PyObject_GetAttrString(p, "TradingDay")));
+  //性别
+  //enum类型
+  //THOST_FTDC_GD_Unknown -> '0', 未知状态
+  //THOST_FTDC_GD_Female -> '2', 女
+  //THOST_FTDC_GD_Male -> '1', 男
+  t->Gender =   PyString_AsString(PyObject_GetAttrString(p, "Gender"))[0];
   //期商代码
   strcpy(t->BrokerID, PyString_AsString(PyObject_GetAttrString(p, "BrokerID")));
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
@@ -2660,8 +2679,12 @@ CThostFtdcReqChangeAccountField * from_CThostFtdcReqChangeAccountField(PyObject 
   strcpy(t->ZipCode, PyString_AsString(PyObject_GetAttrString(p, "ZipCode")));
   //期货公司银行编码
   strcpy(t->BrokerIDByBank, PyString_AsString(PyObject_GetAttrString(p, "BrokerIDByBank")));
-  //交易时间
-  strcpy(t->TradeTime, PyString_AsString(PyObject_GetAttrString(p, "TradeTime")));
+  //期货资金密码核对标志
+  //enum类型
+  //THOST_FTDC_BPWDF_BlankCheck -> '1', 明文核对
+  //THOST_FTDC_BPWDF_NoCheck -> '0', 不核对
+  //THOST_FTDC_BPWDF_EncryptCheck -> '2', 密文核对
+  t->SecuPwdFlag =   PyString_AsString(PyObject_GetAttrString(p, "SecuPwdFlag"))[0];
   //电子邮件
   strcpy(t->EMail, PyString_AsString(PyObject_GetAttrString(p, "EMail")));
   //摘要
@@ -2688,22 +2711,26 @@ CThostFtdcCommPhaseField * from_CThostFtdcCommPhaseField(PyObject * p){
   return t;
 };
 
-//查询交易员报盘机
-PyObject * new_CThostFtdcQryTraderOfferField(CThostFtdcQryTraderOfferField * p){
+//客户端认证信息
+PyObject * new_CThostFtdcAuthenticationInfoField(CThostFtdcAuthenticationInfoField * p){
   if(p==NULL)
       return Py_None;
-  return PyObject_CallMethod(mod, (char*)"CThostFtdcQryTraderOfferField", (char*)"sss",
-p->ExchangeID, p->TraderID, p->ParticipantID);
+  return PyObject_CallMethod(mod, (char*)"CThostFtdcAuthenticationInfoField", (char*)"ssiss",
+p->UserID, p->AuthInfo, p->IsResult, p->BrokerID, p->UserProductInfo);
 }
-CThostFtdcQryTraderOfferField * from_CThostFtdcQryTraderOfferField(PyObject * p){
-  CThostFtdcQryTraderOfferField *t = (CThostFtdcQryTraderOfferField *)calloc(1, sizeof(CThostFtdcQryTraderOfferField));
-  memset(t,0,sizeof(CThostFtdcQryTraderOfferField));
-  //交易所代码
-  strcpy(t->ExchangeID, PyString_AsString(PyObject_GetAttrString(p, "ExchangeID")));
-  //交易所交易员代码
-  strcpy(t->TraderID, PyString_AsString(PyObject_GetAttrString(p, "TraderID")));
-  //会员代码
-  strcpy(t->ParticipantID, PyString_AsString(PyObject_GetAttrString(p, "ParticipantID")));
+CThostFtdcAuthenticationInfoField * from_CThostFtdcAuthenticationInfoField(PyObject * p){
+  CThostFtdcAuthenticationInfoField *t = (CThostFtdcAuthenticationInfoField *)calloc(1, sizeof(CThostFtdcAuthenticationInfoField));
+  memset(t,0,sizeof(CThostFtdcAuthenticationInfoField));
+  //用户代码
+  strcpy(t->UserID, PyString_AsString(PyObject_GetAttrString(p, "UserID")));
+  //认证信息
+  strcpy(t->AuthInfo, PyString_AsString(PyObject_GetAttrString(p, "AuthInfo")));
+  //是否为认证结果
+  t->IsResult =   PyInt_AsLong(PyObject_GetAttrString(p, "IsResult"));
+  //经纪公司代码
+  strcpy(t->BrokerID, PyString_AsString(PyObject_GetAttrString(p, "BrokerID")));
+  //用户端产品信息
+  strcpy(t->UserProductInfo, PyString_AsString(PyObject_GetAttrString(p, "UserProductInfo")));
 
   return t;
 };
@@ -2741,8 +2768,8 @@ CThostFtdcTransferFutureToBankReqField * from_CThostFtdcTransferFutureToBankReqF
 PyObject * new_CThostFtdcReqCancelAccountField(CThostFtdcReqCancelAccountField * p){
   if(p==NULL)
       return Py_None;
-  return PyObject_CallMethod(mod, (char*)"CThostFtdcReqCancelAccountField", (char*)"csssscisssicssssisicccssssssccssssccscsssss",
-p->MoneyAccountStatus, p->BrokerBranchID, p->BankPassWord, p->Telephone, p->IdentifiedCardNo, p->VerifyCertNoFlag, p->TID, p->AccountID, p->BankAccount, p->Fax, p->InstallID, p->SecuPwdFlag, p->CustomerName, p->CountryCode, p->TradeCode, p->BankBranchID, p->SessionID, p->Address, p->PlateSerial, p->BankPwdFlag, p->CustType, p->Gender, p->BankID, p->BankSerial, p->OperNo, p->TradingDay, p->BankSecuAcc, p->BrokerID, p->CashExchangeCode, p->IdCardType, p->Password, p->MobilePhone, p->TradeDate, p->CurrencyID, p->BankAccType, p->LastFragment, p->ZipCode, p->BankSecuAccType, p->BrokerIDByBank, p->TradeTime, p->EMail, p->Digest, p->DeviceID);
+  return PyObject_CallMethod(mod, (char*)"CThostFtdcReqCancelAccountField", (char*)"csssscisssisssssisiccssssscsccssssccscscsss",
+p->MoneyAccountStatus, p->BrokerBranchID, p->BankPassWord, p->Telephone, p->TradeTime, p->VerifyCertNoFlag, p->TID, p->AccountID, p->BankAccount, p->Fax, p->InstallID, p->CustomerName, p->CountryCode, p->TradeCode, p->BankSecuAcc, p->BankBranchID, p->SessionID, p->Address, p->PlateSerial, p->BankPwdFlag, p->CustType, p->IdentifiedCardNo, p->BankID, p->BankSerial, p->OperNo, p->TradingDay, p->Gender, p->BrokerID, p->CashExchangeCode, p->IdCardType, p->Password, p->MobilePhone, p->TradeDate, p->CurrencyID, p->BankAccType, p->LastFragment, p->ZipCode, p->BankSecuAccType, p->BrokerIDByBank, p->SecuPwdFlag, p->EMail, p->Digest, p->DeviceID);
 }
 CThostFtdcReqCancelAccountField * from_CThostFtdcReqCancelAccountField(PyObject * p){
   CThostFtdcReqCancelAccountField *t = (CThostFtdcReqCancelAccountField *)calloc(1, sizeof(CThostFtdcReqCancelAccountField));
@@ -2758,8 +2785,8 @@ CThostFtdcReqCancelAccountField * from_CThostFtdcReqCancelAccountField(PyObject 
   strcpy(t->BankPassWord, PyString_AsString(PyObject_GetAttrString(p, "BankPassWord")));
   //电话号码
   strcpy(t->Telephone, PyString_AsString(PyObject_GetAttrString(p, "Telephone")));
-  //证件号码
-  strcpy(t->IdentifiedCardNo, PyString_AsString(PyObject_GetAttrString(p, "IdentifiedCardNo")));
+  //交易时间
+  strcpy(t->TradeTime, PyString_AsString(PyObject_GetAttrString(p, "TradeTime")));
   //验证客户证件号码标志
   //enum类型
   //THOST_FTDC_YNI_No -> '1', 否
@@ -2775,18 +2802,14 @@ CThostFtdcReqCancelAccountField * from_CThostFtdcReqCancelAccountField(PyObject 
   strcpy(t->Fax, PyString_AsString(PyObject_GetAttrString(p, "Fax")));
   //安装编号
   t->InstallID =   PyInt_AsLong(PyObject_GetAttrString(p, "InstallID"));
-  //期货资金密码核对标志
-  //enum类型
-  //THOST_FTDC_BPWDF_BlankCheck -> '1', 明文核对
-  //THOST_FTDC_BPWDF_NoCheck -> '0', 不核对
-  //THOST_FTDC_BPWDF_EncryptCheck -> '2', 密文核对
-  t->SecuPwdFlag =   PyString_AsString(PyObject_GetAttrString(p, "SecuPwdFlag"))[0];
   //客户姓名
   strcpy(t->CustomerName, PyString_AsString(PyObject_GetAttrString(p, "CustomerName")));
   //国家代码
   strcpy(t->CountryCode, PyString_AsString(PyObject_GetAttrString(p, "CountryCode")));
   //业务功能码
   strcpy(t->TradeCode, PyString_AsString(PyObject_GetAttrString(p, "TradeCode")));
+  //期货单位帐号
+  strcpy(t->BankSecuAcc, PyString_AsString(PyObject_GetAttrString(p, "BankSecuAcc")));
   //银行分支机构代码
   strcpy(t->BankBranchID, PyString_AsString(PyObject_GetAttrString(p, "BankBranchID")));
   //会话号
@@ -2806,12 +2829,8 @@ CThostFtdcReqCancelAccountField * from_CThostFtdcReqCancelAccountField(PyObject 
   //THOST_FTDC_CUSTT_Institution -> '1', 机构户
   //THOST_FTDC_CUSTT_Person -> '0', 自然人
   t->CustType =   PyString_AsString(PyObject_GetAttrString(p, "CustType"))[0];
-  //性别
-  //enum类型
-  //THOST_FTDC_GD_Unknown -> '0', 未知状态
-  //THOST_FTDC_GD_Female -> '2', 女
-  //THOST_FTDC_GD_Male -> '1', 男
-  t->Gender =   PyString_AsString(PyObject_GetAttrString(p, "Gender"))[0];
+  //证件号码
+  strcpy(t->IdentifiedCardNo, PyString_AsString(PyObject_GetAttrString(p, "IdentifiedCardNo")));
   //银行代码
   strcpy(t->BankID, PyString_AsString(PyObject_GetAttrString(p, "BankID")));
   //银行流水号
@@ -2820,8 +2839,12 @@ CThostFtdcReqCancelAccountField * from_CThostFtdcReqCancelAccountField(PyObject 
   strcpy(t->OperNo, PyString_AsString(PyObject_GetAttrString(p, "OperNo")));
   //交易系统日期
   strcpy(t->TradingDay, PyString_AsString(PyObject_GetAttrString(p, "TradingDay")));
-  //期货单位帐号
-  strcpy(t->BankSecuAcc, PyString_AsString(PyObject_GetAttrString(p, "BankSecuAcc")));
+  //性别
+  //enum类型
+  //THOST_FTDC_GD_Unknown -> '0', 未知状态
+  //THOST_FTDC_GD_Female -> '2', 女
+  //THOST_FTDC_GD_Male -> '1', 男
+  t->Gender =   PyString_AsString(PyObject_GetAttrString(p, "Gender"))[0];
   //期商代码
   strcpy(t->BrokerID, PyString_AsString(PyObject_GetAttrString(p, "BrokerID")));
   //汇钞标志
@@ -2832,6 +2855,7 @@ CThostFtdcReqCancelAccountField * from_CThostFtdcReqCancelAccountField(PyObject 
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
@@ -2872,8 +2896,12 @@ CThostFtdcReqCancelAccountField * from_CThostFtdcReqCancelAccountField(PyObject 
   t->BankSecuAccType =   PyString_AsString(PyObject_GetAttrString(p, "BankSecuAccType"))[0];
   //期货公司银行编码
   strcpy(t->BrokerIDByBank, PyString_AsString(PyObject_GetAttrString(p, "BrokerIDByBank")));
-  //交易时间
-  strcpy(t->TradeTime, PyString_AsString(PyObject_GetAttrString(p, "TradeTime")));
+  //期货资金密码核对标志
+  //enum类型
+  //THOST_FTDC_BPWDF_BlankCheck -> '1', 明文核对
+  //THOST_FTDC_BPWDF_NoCheck -> '0', 不核对
+  //THOST_FTDC_BPWDF_EncryptCheck -> '2', 密文核对
+  t->SecuPwdFlag =   PyString_AsString(PyObject_GetAttrString(p, "SecuPwdFlag"))[0];
   //电子邮件
   strcpy(t->EMail, PyString_AsString(PyObject_GetAttrString(p, "EMail")));
   //摘要
@@ -3364,8 +3392,8 @@ CThostFtdcQryExchangeOrderField * from_CThostFtdcQryExchangeOrderField(PyObject 
 PyObject * new_CThostFtdcChangeAccountField(CThostFtdcChangeAccountField * p){
   if(p==NULL)
       return Py_None;
-  return PyObject_CallMethod(mod, (char*)"CThostFtdcChangeAccountField", (char*)"cssssscisssicssssissiciccsssscsssssccsssss",
-p->MoneyAccountStatus, p->NewBankPassWord, p->BrokerBranchID, p->BankPassWord, p->Telephone, p->IdentifiedCardNo, p->VerifyCertNoFlag, p->TID, p->AccountID, p->BankAccount, p->Fax, p->InstallID, p->SecuPwdFlag, p->CustomerName, p->CountryCode, p->TradeCode, p->BankBranchID, p->SessionID, p->NewBankAccount, p->Address, p->PlateSerial, p->BankPwdFlag, p->ErrorID, p->CustType, p->Gender, p->BankID, p->BankSerial, p->TradingDay, p->BrokerID, p->IdCardType, p->Password, p->MobilePhone, p->TradeDate, p->CurrencyID, p->ErrorMsg, p->BankAccType, p->LastFragment, p->ZipCode, p->BrokerIDByBank, p->TradeTime, p->EMail, p->Digest);
+  return PyObject_CallMethod(mod, (char*)"CThostFtdcChangeAccountField", (char*)"cssssscisssissssissicicsssscscsssssccsscss",
+p->MoneyAccountStatus, p->NewBankPassWord, p->BrokerBranchID, p->BankPassWord, p->Telephone, p->TradeTime, p->VerifyCertNoFlag, p->TID, p->AccountID, p->BankAccount, p->Fax, p->InstallID, p->CustomerName, p->CountryCode, p->TradeCode, p->BankBranchID, p->SessionID, p->NewBankAccount, p->Address, p->PlateSerial, p->BankPwdFlag, p->ErrorID, p->CustType, p->IdentifiedCardNo, p->BankID, p->BankSerial, p->TradingDay, p->Gender, p->BrokerID, p->IdCardType, p->Password, p->MobilePhone, p->TradeDate, p->CurrencyID, p->ErrorMsg, p->BankAccType, p->LastFragment, p->ZipCode, p->BrokerIDByBank, p->SecuPwdFlag, p->EMail, p->Digest);
 }
 CThostFtdcChangeAccountField * from_CThostFtdcChangeAccountField(PyObject * p){
   CThostFtdcChangeAccountField *t = (CThostFtdcChangeAccountField *)calloc(1, sizeof(CThostFtdcChangeAccountField));
@@ -3383,8 +3411,8 @@ CThostFtdcChangeAccountField * from_CThostFtdcChangeAccountField(PyObject * p){
   strcpy(t->BankPassWord, PyString_AsString(PyObject_GetAttrString(p, "BankPassWord")));
   //电话号码
   strcpy(t->Telephone, PyString_AsString(PyObject_GetAttrString(p, "Telephone")));
-  //证件号码
-  strcpy(t->IdentifiedCardNo, PyString_AsString(PyObject_GetAttrString(p, "IdentifiedCardNo")));
+  //交易时间
+  strcpy(t->TradeTime, PyString_AsString(PyObject_GetAttrString(p, "TradeTime")));
   //验证客户证件号码标志
   //enum类型
   //THOST_FTDC_YNI_No -> '1', 否
@@ -3400,12 +3428,6 @@ CThostFtdcChangeAccountField * from_CThostFtdcChangeAccountField(PyObject * p){
   strcpy(t->Fax, PyString_AsString(PyObject_GetAttrString(p, "Fax")));
   //安装编号
   t->InstallID =   PyInt_AsLong(PyObject_GetAttrString(p, "InstallID"));
-  //期货资金密码核对标志
-  //enum类型
-  //THOST_FTDC_BPWDF_BlankCheck -> '1', 明文核对
-  //THOST_FTDC_BPWDF_NoCheck -> '0', 不核对
-  //THOST_FTDC_BPWDF_EncryptCheck -> '2', 密文核对
-  t->SecuPwdFlag =   PyString_AsString(PyObject_GetAttrString(p, "SecuPwdFlag"))[0];
   //客户姓名
   strcpy(t->CustomerName, PyString_AsString(PyObject_GetAttrString(p, "CustomerName")));
   //国家代码
@@ -3435,23 +3457,26 @@ CThostFtdcChangeAccountField * from_CThostFtdcChangeAccountField(PyObject * p){
   //THOST_FTDC_CUSTT_Institution -> '1', 机构户
   //THOST_FTDC_CUSTT_Person -> '0', 自然人
   t->CustType =   PyString_AsString(PyObject_GetAttrString(p, "CustType"))[0];
-  //性别
-  //enum类型
-  //THOST_FTDC_GD_Unknown -> '0', 未知状态
-  //THOST_FTDC_GD_Female -> '2', 女
-  //THOST_FTDC_GD_Male -> '1', 男
-  t->Gender =   PyString_AsString(PyObject_GetAttrString(p, "Gender"))[0];
+  //证件号码
+  strcpy(t->IdentifiedCardNo, PyString_AsString(PyObject_GetAttrString(p, "IdentifiedCardNo")));
   //银行代码
   strcpy(t->BankID, PyString_AsString(PyObject_GetAttrString(p, "BankID")));
   //银行流水号
   strcpy(t->BankSerial, PyString_AsString(PyObject_GetAttrString(p, "BankSerial")));
   //交易系统日期
   strcpy(t->TradingDay, PyString_AsString(PyObject_GetAttrString(p, "TradingDay")));
+  //性别
+  //enum类型
+  //THOST_FTDC_GD_Unknown -> '0', 未知状态
+  //THOST_FTDC_GD_Female -> '2', 女
+  //THOST_FTDC_GD_Male -> '1', 男
+  t->Gender =   PyString_AsString(PyObject_GetAttrString(p, "Gender"))[0];
   //期商代码
   strcpy(t->BrokerID, PyString_AsString(PyObject_GetAttrString(p, "BrokerID")));
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
@@ -3488,8 +3513,12 @@ CThostFtdcChangeAccountField * from_CThostFtdcChangeAccountField(PyObject * p){
   strcpy(t->ZipCode, PyString_AsString(PyObject_GetAttrString(p, "ZipCode")));
   //期货公司银行编码
   strcpy(t->BrokerIDByBank, PyString_AsString(PyObject_GetAttrString(p, "BrokerIDByBank")));
-  //交易时间
-  strcpy(t->TradeTime, PyString_AsString(PyObject_GetAttrString(p, "TradeTime")));
+  //期货资金密码核对标志
+  //enum类型
+  //THOST_FTDC_BPWDF_BlankCheck -> '1', 明文核对
+  //THOST_FTDC_BPWDF_NoCheck -> '0', 不核对
+  //THOST_FTDC_BPWDF_EncryptCheck -> '2', 密文核对
+  t->SecuPwdFlag =   PyString_AsString(PyObject_GetAttrString(p, "SecuPwdFlag"))[0];
   //电子邮件
   strcpy(t->EMail, PyString_AsString(PyObject_GetAttrString(p, "EMail")));
   //摘要
@@ -3683,6 +3712,7 @@ CThostFtdcReqTransferField * from_CThostFtdcReqTransferField(PyObject * p){
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
@@ -3763,6 +3793,7 @@ CThostFtdcVerifyFuturePasswordAndCustInfoField * from_CThostFtdcVerifyFuturePass
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
@@ -3940,168 +3971,28 @@ CThostFtdcQryInvestorGroupField * from_CThostFtdcQryInvestorGroupField(PyObject 
   return t;
 };
 
-//冲正请求
-PyObject * new_CThostFtdcReqRepealField(CThostFtdcReqRepealField * p){
+//经纪公司可提资金算法表
+PyObject * new_CThostFtdcInvestorWithdrawAlgorithmField(CThostFtdcInvestorWithdrawAlgorithmField * p){
   if(p==NULL)
       return Py_None;
-  return PyObject_CallMethod(mod, (char*)"CThostFtdcReqRepealField", (char*)"ssscisciissicsssisicicscsssssscccsdssdccisicsisdds",
-p->BrokerBranchID, p->UserID, p->BankPassWord, p->BankRepealFlag, p->RepealedTimes, p->TradeTime, p->VerifyCertNoFlag, p->TID, p->FutureRepealSerial, p->AccountID, p->BankAccount, p->InstallID, p->SecuPwdFlag, p->CustomerName, p->TradeCode, p->BankBranchID, p->SessionID, p->BankID, p->PlateSerial, p->BankPwdFlag, p->RequestID, p->CustType, p->IdentifiedCardNo, p->FeePayFlag, p->BankSerial, p->OperNo, p->TradingDay, p->BankSecuAcc, p->BrokerID, p->DeviceID, p->TransferStatus, p->BrokerRepealFlag, p->IdCardType, p->Password, p->FutureFetchAmount, p->TradeDate, p->CurrencyID, p->BrokerFee, p->BankAccType, p->LastFragment, p->FutureSerial, p->BankRepealSerial, p->RepealTimeInterval, p->BankSecuAccType, p->BrokerIDByBank, p->PlateRepealSerial, p->Message, p->CustFee, p->TradeAmount, p->Digest);
+  return PyObject_CallMethod(mod, (char*)"CThostFtdcInvestorWithdrawAlgorithmField", (char*)"sscd",
+p->InvestorID, p->BrokerID, p->InvestorRange, p->UsingRatio);
 }
-CThostFtdcReqRepealField * from_CThostFtdcReqRepealField(PyObject * p){
-  CThostFtdcReqRepealField *t = (CThostFtdcReqRepealField *)calloc(1, sizeof(CThostFtdcReqRepealField));
-  memset(t,0,sizeof(CThostFtdcReqRepealField));
-  //期商分支机构代码
-  strcpy(t->BrokerBranchID, PyString_AsString(PyObject_GetAttrString(p, "BrokerBranchID")));
-  //用户标识
-  strcpy(t->UserID, PyString_AsString(PyObject_GetAttrString(p, "UserID")));
-  //银行密码
-  strcpy(t->BankPassWord, PyString_AsString(PyObject_GetAttrString(p, "BankPassWord")));
-  //银行冲正标志
-  //enum类型
-  //THOST_FTDC_BRF_BankWaitingRepeal -> '1', 银行待自动冲正
-  //THOST_FTDC_BRF_BankNotNeedRepeal -> '0', 银行无需自动冲正
-  //THOST_FTDC_BRF_BankBeenRepealed -> '2', 银行已自动冲正
-  t->BankRepealFlag =   PyString_AsString(PyObject_GetAttrString(p, "BankRepealFlag"))[0];
-  //已经冲正次数
-  t->RepealedTimes =   PyInt_AsLong(PyObject_GetAttrString(p, "RepealedTimes"));
-  //交易时间
-  strcpy(t->TradeTime, PyString_AsString(PyObject_GetAttrString(p, "TradeTime")));
-  //验证客户证件号码标志
-  //enum类型
-  //THOST_FTDC_YNI_No -> '1', 否
-  //THOST_FTDC_YNI_Yes -> '0', 是
-  t->VerifyCertNoFlag =   PyString_AsString(PyObject_GetAttrString(p, "VerifyCertNoFlag"))[0];
-  //交易ID
-  t->TID =   PyInt_AsLong(PyObject_GetAttrString(p, "TID"));
-  //被冲正期货流水号
-  t->FutureRepealSerial =   PyInt_AsLong(PyObject_GetAttrString(p, "FutureRepealSerial"));
-  //投资者帐号
-  strcpy(t->AccountID, PyString_AsString(PyObject_GetAttrString(p, "AccountID")));
-  //银行帐号
-  strcpy(t->BankAccount, PyString_AsString(PyObject_GetAttrString(p, "BankAccount")));
-  //安装编号
-  t->InstallID =   PyInt_AsLong(PyObject_GetAttrString(p, "InstallID"));
-  //期货资金密码核对标志
-  //enum类型
-  //THOST_FTDC_BPWDF_BlankCheck -> '1', 明文核对
-  //THOST_FTDC_BPWDF_NoCheck -> '0', 不核对
-  //THOST_FTDC_BPWDF_EncryptCheck -> '2', 密文核对
-  t->SecuPwdFlag =   PyString_AsString(PyObject_GetAttrString(p, "SecuPwdFlag"))[0];
-  //客户姓名
-  strcpy(t->CustomerName, PyString_AsString(PyObject_GetAttrString(p, "CustomerName")));
-  //业务功能码
-  strcpy(t->TradeCode, PyString_AsString(PyObject_GetAttrString(p, "TradeCode")));
-  //银行分支机构代码
-  strcpy(t->BankBranchID, PyString_AsString(PyObject_GetAttrString(p, "BankBranchID")));
-  //会话号
-  t->SessionID =   PyInt_AsLong(PyObject_GetAttrString(p, "SessionID"));
-  //银行代码
-  strcpy(t->BankID, PyString_AsString(PyObject_GetAttrString(p, "BankID")));
-  //银期平台消息流水号
-  t->PlateSerial =   PyInt_AsLong(PyObject_GetAttrString(p, "PlateSerial"));
-  //银行密码标志
-  //enum类型
-  //THOST_FTDC_BPWDF_BlankCheck -> '1', 明文核对
-  //THOST_FTDC_BPWDF_NoCheck -> '0', 不核对
-  //THOST_FTDC_BPWDF_EncryptCheck -> '2', 密文核对
-  t->BankPwdFlag =   PyString_AsString(PyObject_GetAttrString(p, "BankPwdFlag"))[0];
-  //请求编号
-  t->RequestID =   PyInt_AsLong(PyObject_GetAttrString(p, "RequestID"));
-  //客户类型
-  //enum类型
-  //THOST_FTDC_CUSTT_Institution -> '1', 机构户
-  //THOST_FTDC_CUSTT_Person -> '0', 自然人
-  t->CustType =   PyString_AsString(PyObject_GetAttrString(p, "CustType"))[0];
-  //证件号码
-  strcpy(t->IdentifiedCardNo, PyString_AsString(PyObject_GetAttrString(p, "IdentifiedCardNo")));
-  //费用支付标志
-  //enum类型
-  //THOST_FTDC_FPF_BEN -> '0', 由受益方支付费用
-  //THOST_FTDC_FPF_SHA -> '2', 由发送方支付发起的费用，受益方支付接受的费用
-  //THOST_FTDC_FPF_OUR -> '1', 由发送方支付费用
-  t->FeePayFlag =   PyString_AsString(PyObject_GetAttrString(p, "FeePayFlag"))[0];
-  //银行流水号
-  strcpy(t->BankSerial, PyString_AsString(PyObject_GetAttrString(p, "BankSerial")));
-  //交易柜员
-  strcpy(t->OperNo, PyString_AsString(PyObject_GetAttrString(p, "OperNo")));
-  //交易系统日期
-  strcpy(t->TradingDay, PyString_AsString(PyObject_GetAttrString(p, "TradingDay")));
-  //期货单位帐号
-  strcpy(t->BankSecuAcc, PyString_AsString(PyObject_GetAttrString(p, "BankSecuAcc")));
-  //期商代码
+CThostFtdcInvestorWithdrawAlgorithmField * from_CThostFtdcInvestorWithdrawAlgorithmField(PyObject * p){
+  CThostFtdcInvestorWithdrawAlgorithmField *t = (CThostFtdcInvestorWithdrawAlgorithmField *)calloc(1, sizeof(CThostFtdcInvestorWithdrawAlgorithmField));
+  memset(t,0,sizeof(CThostFtdcInvestorWithdrawAlgorithmField));
+  //投资者代码
+  strcpy(t->InvestorID, PyString_AsString(PyObject_GetAttrString(p, "InvestorID")));
+  //经纪公司代码
   strcpy(t->BrokerID, PyString_AsString(PyObject_GetAttrString(p, "BrokerID")));
-  //渠道标志
-  strcpy(t->DeviceID, PyString_AsString(PyObject_GetAttrString(p, "DeviceID")));
-  //转账交易状态
+  //投资者范围
   //enum类型
-  //THOST_FTDC_TRFS_Normal -> '0', 正常
-  //THOST_FTDC_TRFS_Repealed -> '1', 被冲正
-  t->TransferStatus =   PyString_AsString(PyObject_GetAttrString(p, "TransferStatus"))[0];
-  //期商冲正标志
-  //enum类型
-  //THOST_FTDC_BRORF_BrokerNotNeedRepeal -> '0', 期商无需自动冲正
-  //THOST_FTDC_BRORF_BrokerBeenRepealed -> '2', 期商已自动冲正
-  //THOST_FTDC_BRORF_BrokerWaitingRepeal -> '1', 期商待自动冲正
-  t->BrokerRepealFlag =   PyString_AsString(PyObject_GetAttrString(p, "BrokerRepealFlag"))[0];
-  //证件类型
-  //enum类型
-  //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
-  //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
-  //THOST_FTDC_ICT_IDCard -> '1', 身份证
-  //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
-  //THOST_FTDC_ICT_OtherCard -> 'x', 其他证件
-  //THOST_FTDC_ICT_PoliceIDCard -> '3', 警官证
-  //THOST_FTDC_ICT_Passport -> '6', 护照
-  //THOST_FTDC_ICT_EID -> '0', 组织机构代码
-  //THOST_FTDC_ICT_HomeComingCard -> '8', 回乡证
-  //THOST_FTDC_ICT_HouseholdRegister -> '5', 户口簿
-  //THOST_FTDC_ICT_SoldierIDCard -> '4', 士兵证
-  t->IdCardType =   PyString_AsString(PyObject_GetAttrString(p, "IdCardType"))[0];
-  //期货密码
-  strcpy(t->Password, PyString_AsString(PyObject_GetAttrString(p, "Password")));
-  //期货可取金额
-  t->FutureFetchAmount =   PyFloat_AsDouble(PyObject_GetAttrString(p, "FutureFetchAmount"));
-  //交易日期
-  strcpy(t->TradeDate, PyString_AsString(PyObject_GetAttrString(p, "TradeDate")));
-  //币种代码
-  strcpy(t->CurrencyID, PyString_AsString(PyObject_GetAttrString(p, "CurrencyID")));
-  //应收期货公司费用
-  t->BrokerFee =   PyFloat_AsDouble(PyObject_GetAttrString(p, "BrokerFee"));
-  //银行帐号类型
-  //enum类型
-  //THOST_FTDC_BAT_SavingCard -> '2', 储蓄卡
-  //THOST_FTDC_BAT_CreditCard -> '3', 信用卡
-  //THOST_FTDC_BAT_BankBook -> '1', 银行存折
-  t->BankAccType =   PyString_AsString(PyObject_GetAttrString(p, "BankAccType"))[0];
-  //最后分片标志
-  //enum类型
-  //THOST_FTDC_LF_No -> '1', 不是最后分片
-  //THOST_FTDC_LF_Yes -> '0', 是最后分片
-  t->LastFragment =   PyString_AsString(PyObject_GetAttrString(p, "LastFragment"))[0];
-  //期货公司流水号
-  t->FutureSerial =   PyInt_AsLong(PyObject_GetAttrString(p, "FutureSerial"));
-  //被冲正银行流水号
-  strcpy(t->BankRepealSerial, PyString_AsString(PyObject_GetAttrString(p, "BankRepealSerial")));
-  //冲正时间间隔
-  t->RepealTimeInterval =   PyInt_AsLong(PyObject_GetAttrString(p, "RepealTimeInterval"));
-  //期货单位帐号类型
-  //enum类型
-  //THOST_FTDC_BAT_SavingCard -> '2', 储蓄卡
-  //THOST_FTDC_BAT_CreditCard -> '3', 信用卡
-  //THOST_FTDC_BAT_BankBook -> '1', 银行存折
-  t->BankSecuAccType =   PyString_AsString(PyObject_GetAttrString(p, "BankSecuAccType"))[0];
-  //期货公司银行编码
-  strcpy(t->BrokerIDByBank, PyString_AsString(PyObject_GetAttrString(p, "BrokerIDByBank")));
-  //被冲正平台流水号
-  t->PlateRepealSerial =   PyInt_AsLong(PyObject_GetAttrString(p, "PlateRepealSerial"));
-  //发送方给接收方的消息
-  strcpy(t->Message, PyString_AsString(PyObject_GetAttrString(p, "Message")));
-  //应收客户费用
-  t->CustFee =   PyFloat_AsDouble(PyObject_GetAttrString(p, "CustFee"));
-  //转帐金额
-  t->TradeAmount =   PyFloat_AsDouble(PyObject_GetAttrString(p, "TradeAmount"));
-  //摘要
-  strcpy(t->Digest, PyString_AsString(PyObject_GetAttrString(p, "Digest")));
+  //THOST_FTDC_IR_All -> '1', 所有
+  //THOST_FTDC_IR_Group -> '2', 投资者组
+  //THOST_FTDC_IR_Single -> '3', 单一投资者
+  t->InvestorRange =   PyString_AsString(PyObject_GetAttrString(p, "InvestorRange"))[0];
+  //可提资金比例
+  t->UsingRatio =   PyFloat_AsDouble(PyObject_GetAttrString(p, "UsingRatio"));
 
   return t;
 };
@@ -4609,8 +4500,11 @@ CThostFtdcLinkManField * from_CThostFtdcLinkManField(PyObject * p){
   memset(t,0,sizeof(CThostFtdcLinkManField));
   //联系人类型
   //enum类型
+  //THOST_FTDC_PST_LinkMan -> '7', 投资者联系人
+  //THOST_FTDC_PST_Corporation -> '6', 法人代表
   //THOST_FTDC_PST_Settlement -> '4', 结算单确认人
   //THOST_FTDC_PST_Open -> '2', 开户授权人
+  //THOST_FTDC_PST_Company -> '5', 法人
   //THOST_FTDC_PST_Order -> '1', 指定下单人
   //THOST_FTDC_PST_Fund -> '3', 资金调拨人
   t->PersonType =   PyString_AsString(PyObject_GetAttrString(p, "PersonType"))[0];
@@ -4633,6 +4527,7 @@ CThostFtdcLinkManField * from_CThostFtdcLinkManField(PyObject * p){
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
@@ -4986,9 +4881,9 @@ CThostFtdcUserRightsAssignField * from_CThostFtdcUserRightsAssignField(PyObject 
   memset(t,0,sizeof(CThostFtdcUserRightsAssignField));
   //用户代码
   strcpy(t->UserID, PyString_AsString(PyObject_GetAttrString(p, "UserID")));
-  //交易中心标识号
+  //交易中心代码
   t->DRIdentityID =   PyInt_AsLong(PyObject_GetAttrString(p, "DRIdentityID"));
-  //对应分配的经纪公司代码
+  //应用单元代码
   strcpy(t->BrokerID, PyString_AsString(PyObject_GetAttrString(p, "BrokerID")));
 
   return t;
@@ -5125,22 +5020,22 @@ CThostFtdcErrOrderActionField * from_CThostFtdcErrOrderActionField(PyObject * p)
   return t;
 };
 
-//经济公司是否有在本标示的交易权限
-PyObject * new_CThostFtdcBrokerUserRightAssignField(CThostFtdcBrokerUserRightAssignField * p){
+//查询交易员报盘机
+PyObject * new_CThostFtdcQryTraderOfferField(CThostFtdcQryTraderOfferField * p){
   if(p==NULL)
       return Py_None;
-  return PyObject_CallMethod(mod, (char*)"CThostFtdcBrokerUserRightAssignField", (char*)"isi",
-p->DRIdentityID, p->BrokerID, p->Tradeable);
+  return PyObject_CallMethod(mod, (char*)"CThostFtdcQryTraderOfferField", (char*)"sss",
+p->ExchangeID, p->TraderID, p->ParticipantID);
 }
-CThostFtdcBrokerUserRightAssignField * from_CThostFtdcBrokerUserRightAssignField(PyObject * p){
-  CThostFtdcBrokerUserRightAssignField *t = (CThostFtdcBrokerUserRightAssignField *)calloc(1, sizeof(CThostFtdcBrokerUserRightAssignField));
-  memset(t,0,sizeof(CThostFtdcBrokerUserRightAssignField));
-  //交易中心标识号
-  t->DRIdentityID =   PyInt_AsLong(PyObject_GetAttrString(p, "DRIdentityID"));
-  //经纪公司代码
-  strcpy(t->BrokerID, PyString_AsString(PyObject_GetAttrString(p, "BrokerID")));
-  //能否交易
-  t->Tradeable =   PyInt_AsLong(PyObject_GetAttrString(p, "Tradeable"));
+CThostFtdcQryTraderOfferField * from_CThostFtdcQryTraderOfferField(PyObject * p){
+  CThostFtdcQryTraderOfferField *t = (CThostFtdcQryTraderOfferField *)calloc(1, sizeof(CThostFtdcQryTraderOfferField));
+  memset(t,0,sizeof(CThostFtdcQryTraderOfferField));
+  //交易所代码
+  strcpy(t->ExchangeID, PyString_AsString(PyObject_GetAttrString(p, "ExchangeID")));
+  //交易所交易员代码
+  strcpy(t->TraderID, PyString_AsString(PyObject_GetAttrString(p, "TraderID")));
+  //会员代码
+  strcpy(t->ParticipantID, PyString_AsString(PyObject_GetAttrString(p, "ParticipantID")));
 
   return t;
 };
@@ -5187,6 +5082,173 @@ CThostFtdcMarketDataBaseField * from_CThostFtdcMarketDataBaseField(PyObject * p)
   t->PreOpenInterest =   PyFloat_AsDouble(PyObject_GetAttrString(p, "PreOpenInterest"));
   //上次结算价
   t->PreSettlementPrice =   PyFloat_AsDouble(PyObject_GetAttrString(p, "PreSettlementPrice"));
+
+  return t;
+};
+
+//冲正请求
+PyObject * new_CThostFtdcReqRepealField(CThostFtdcReqRepealField * p){
+  if(p==NULL)
+      return Py_None;
+  return PyObject_CallMethod(mod, (char*)"CThostFtdcReqRepealField", (char*)"ssscisciissicsssisicicscsssssscccsdssdccisicsisdds",
+p->BrokerBranchID, p->UserID, p->BankPassWord, p->BankRepealFlag, p->RepealedTimes, p->TradeTime, p->VerifyCertNoFlag, p->TID, p->FutureRepealSerial, p->AccountID, p->BankAccount, p->InstallID, p->SecuPwdFlag, p->CustomerName, p->TradeCode, p->BankBranchID, p->SessionID, p->BankID, p->PlateSerial, p->BankPwdFlag, p->RequestID, p->CustType, p->IdentifiedCardNo, p->FeePayFlag, p->BankSerial, p->OperNo, p->TradingDay, p->BankSecuAcc, p->BrokerID, p->DeviceID, p->TransferStatus, p->BrokerRepealFlag, p->IdCardType, p->Password, p->FutureFetchAmount, p->TradeDate, p->CurrencyID, p->BrokerFee, p->BankAccType, p->LastFragment, p->FutureSerial, p->BankRepealSerial, p->RepealTimeInterval, p->BankSecuAccType, p->BrokerIDByBank, p->PlateRepealSerial, p->Message, p->CustFee, p->TradeAmount, p->Digest);
+}
+CThostFtdcReqRepealField * from_CThostFtdcReqRepealField(PyObject * p){
+  CThostFtdcReqRepealField *t = (CThostFtdcReqRepealField *)calloc(1, sizeof(CThostFtdcReqRepealField));
+  memset(t,0,sizeof(CThostFtdcReqRepealField));
+  //期商分支机构代码
+  strcpy(t->BrokerBranchID, PyString_AsString(PyObject_GetAttrString(p, "BrokerBranchID")));
+  //用户标识
+  strcpy(t->UserID, PyString_AsString(PyObject_GetAttrString(p, "UserID")));
+  //银行密码
+  strcpy(t->BankPassWord, PyString_AsString(PyObject_GetAttrString(p, "BankPassWord")));
+  //银行冲正标志
+  //enum类型
+  //THOST_FTDC_BRF_BankWaitingRepeal -> '1', 银行待自动冲正
+  //THOST_FTDC_BRF_BankNotNeedRepeal -> '0', 银行无需自动冲正
+  //THOST_FTDC_BRF_BankBeenRepealed -> '2', 银行已自动冲正
+  t->BankRepealFlag =   PyString_AsString(PyObject_GetAttrString(p, "BankRepealFlag"))[0];
+  //已经冲正次数
+  t->RepealedTimes =   PyInt_AsLong(PyObject_GetAttrString(p, "RepealedTimes"));
+  //交易时间
+  strcpy(t->TradeTime, PyString_AsString(PyObject_GetAttrString(p, "TradeTime")));
+  //验证客户证件号码标志
+  //enum类型
+  //THOST_FTDC_YNI_No -> '1', 否
+  //THOST_FTDC_YNI_Yes -> '0', 是
+  t->VerifyCertNoFlag =   PyString_AsString(PyObject_GetAttrString(p, "VerifyCertNoFlag"))[0];
+  //交易ID
+  t->TID =   PyInt_AsLong(PyObject_GetAttrString(p, "TID"));
+  //被冲正期货流水号
+  t->FutureRepealSerial =   PyInt_AsLong(PyObject_GetAttrString(p, "FutureRepealSerial"));
+  //投资者帐号
+  strcpy(t->AccountID, PyString_AsString(PyObject_GetAttrString(p, "AccountID")));
+  //银行帐号
+  strcpy(t->BankAccount, PyString_AsString(PyObject_GetAttrString(p, "BankAccount")));
+  //安装编号
+  t->InstallID =   PyInt_AsLong(PyObject_GetAttrString(p, "InstallID"));
+  //期货资金密码核对标志
+  //enum类型
+  //THOST_FTDC_BPWDF_BlankCheck -> '1', 明文核对
+  //THOST_FTDC_BPWDF_NoCheck -> '0', 不核对
+  //THOST_FTDC_BPWDF_EncryptCheck -> '2', 密文核对
+  t->SecuPwdFlag =   PyString_AsString(PyObject_GetAttrString(p, "SecuPwdFlag"))[0];
+  //客户姓名
+  strcpy(t->CustomerName, PyString_AsString(PyObject_GetAttrString(p, "CustomerName")));
+  //业务功能码
+  strcpy(t->TradeCode, PyString_AsString(PyObject_GetAttrString(p, "TradeCode")));
+  //银行分支机构代码
+  strcpy(t->BankBranchID, PyString_AsString(PyObject_GetAttrString(p, "BankBranchID")));
+  //会话号
+  t->SessionID =   PyInt_AsLong(PyObject_GetAttrString(p, "SessionID"));
+  //银行代码
+  strcpy(t->BankID, PyString_AsString(PyObject_GetAttrString(p, "BankID")));
+  //银期平台消息流水号
+  t->PlateSerial =   PyInt_AsLong(PyObject_GetAttrString(p, "PlateSerial"));
+  //银行密码标志
+  //enum类型
+  //THOST_FTDC_BPWDF_BlankCheck -> '1', 明文核对
+  //THOST_FTDC_BPWDF_NoCheck -> '0', 不核对
+  //THOST_FTDC_BPWDF_EncryptCheck -> '2', 密文核对
+  t->BankPwdFlag =   PyString_AsString(PyObject_GetAttrString(p, "BankPwdFlag"))[0];
+  //请求编号
+  t->RequestID =   PyInt_AsLong(PyObject_GetAttrString(p, "RequestID"));
+  //客户类型
+  //enum类型
+  //THOST_FTDC_CUSTT_Institution -> '1', 机构户
+  //THOST_FTDC_CUSTT_Person -> '0', 自然人
+  t->CustType =   PyString_AsString(PyObject_GetAttrString(p, "CustType"))[0];
+  //证件号码
+  strcpy(t->IdentifiedCardNo, PyString_AsString(PyObject_GetAttrString(p, "IdentifiedCardNo")));
+  //费用支付标志
+  //enum类型
+  //THOST_FTDC_FPF_BEN -> '0', 由受益方支付费用
+  //THOST_FTDC_FPF_SHA -> '2', 由发送方支付发起的费用，受益方支付接受的费用
+  //THOST_FTDC_FPF_OUR -> '1', 由发送方支付费用
+  t->FeePayFlag =   PyString_AsString(PyObject_GetAttrString(p, "FeePayFlag"))[0];
+  //银行流水号
+  strcpy(t->BankSerial, PyString_AsString(PyObject_GetAttrString(p, "BankSerial")));
+  //交易柜员
+  strcpy(t->OperNo, PyString_AsString(PyObject_GetAttrString(p, "OperNo")));
+  //交易系统日期
+  strcpy(t->TradingDay, PyString_AsString(PyObject_GetAttrString(p, "TradingDay")));
+  //期货单位帐号
+  strcpy(t->BankSecuAcc, PyString_AsString(PyObject_GetAttrString(p, "BankSecuAcc")));
+  //期商代码
+  strcpy(t->BrokerID, PyString_AsString(PyObject_GetAttrString(p, "BrokerID")));
+  //渠道标志
+  strcpy(t->DeviceID, PyString_AsString(PyObject_GetAttrString(p, "DeviceID")));
+  //转账交易状态
+  //enum类型
+  //THOST_FTDC_TRFS_Normal -> '0', 正常
+  //THOST_FTDC_TRFS_Repealed -> '1', 被冲正
+  t->TransferStatus =   PyString_AsString(PyObject_GetAttrString(p, "TransferStatus"))[0];
+  //期商冲正标志
+  //enum类型
+  //THOST_FTDC_BRORF_BrokerNotNeedRepeal -> '0', 期商无需自动冲正
+  //THOST_FTDC_BRORF_BrokerBeenRepealed -> '2', 期商已自动冲正
+  //THOST_FTDC_BRORF_BrokerWaitingRepeal -> '1', 期商待自动冲正
+  t->BrokerRepealFlag =   PyString_AsString(PyObject_GetAttrString(p, "BrokerRepealFlag"))[0];
+  //证件类型
+  //enum类型
+  //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
+  //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
+  //THOST_FTDC_ICT_IDCard -> '1', 身份证
+  //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
+  //THOST_FTDC_ICT_OtherCard -> 'x', 其他证件
+  //THOST_FTDC_ICT_PoliceIDCard -> '3', 警官证
+  //THOST_FTDC_ICT_Passport -> '6', 护照
+  //THOST_FTDC_ICT_EID -> '0', 组织机构代码
+  //THOST_FTDC_ICT_HomeComingCard -> '8', 回乡证
+  //THOST_FTDC_ICT_HouseholdRegister -> '5', 户口簿
+  //THOST_FTDC_ICT_SoldierIDCard -> '4', 士兵证
+  t->IdCardType =   PyString_AsString(PyObject_GetAttrString(p, "IdCardType"))[0];
+  //期货密码
+  strcpy(t->Password, PyString_AsString(PyObject_GetAttrString(p, "Password")));
+  //期货可取金额
+  t->FutureFetchAmount =   PyFloat_AsDouble(PyObject_GetAttrString(p, "FutureFetchAmount"));
+  //交易日期
+  strcpy(t->TradeDate, PyString_AsString(PyObject_GetAttrString(p, "TradeDate")));
+  //币种代码
+  strcpy(t->CurrencyID, PyString_AsString(PyObject_GetAttrString(p, "CurrencyID")));
+  //应收期货公司费用
+  t->BrokerFee =   PyFloat_AsDouble(PyObject_GetAttrString(p, "BrokerFee"));
+  //银行帐号类型
+  //enum类型
+  //THOST_FTDC_BAT_SavingCard -> '2', 储蓄卡
+  //THOST_FTDC_BAT_CreditCard -> '3', 信用卡
+  //THOST_FTDC_BAT_BankBook -> '1', 银行存折
+  t->BankAccType =   PyString_AsString(PyObject_GetAttrString(p, "BankAccType"))[0];
+  //最后分片标志
+  //enum类型
+  //THOST_FTDC_LF_No -> '1', 不是最后分片
+  //THOST_FTDC_LF_Yes -> '0', 是最后分片
+  t->LastFragment =   PyString_AsString(PyObject_GetAttrString(p, "LastFragment"))[0];
+  //期货公司流水号
+  t->FutureSerial =   PyInt_AsLong(PyObject_GetAttrString(p, "FutureSerial"));
+  //被冲正银行流水号
+  strcpy(t->BankRepealSerial, PyString_AsString(PyObject_GetAttrString(p, "BankRepealSerial")));
+  //冲正时间间隔
+  t->RepealTimeInterval =   PyInt_AsLong(PyObject_GetAttrString(p, "RepealTimeInterval"));
+  //期货单位帐号类型
+  //enum类型
+  //THOST_FTDC_BAT_SavingCard -> '2', 储蓄卡
+  //THOST_FTDC_BAT_CreditCard -> '3', 信用卡
+  //THOST_FTDC_BAT_BankBook -> '1', 银行存折
+  t->BankSecuAccType =   PyString_AsString(PyObject_GetAttrString(p, "BankSecuAccType"))[0];
+  //期货公司银行编码
+  strcpy(t->BrokerIDByBank, PyString_AsString(PyObject_GetAttrString(p, "BrokerIDByBank")));
+  //被冲正平台流水号
+  t->PlateRepealSerial =   PyInt_AsLong(PyObject_GetAttrString(p, "PlateRepealSerial"));
+  //发送方给接收方的消息
+  strcpy(t->Message, PyString_AsString(PyObject_GetAttrString(p, "Message")));
+  //应收客户费用
+  t->CustFee =   PyFloat_AsDouble(PyObject_GetAttrString(p, "CustFee"));
+  //转帐金额
+  t->TradeAmount =   PyFloat_AsDouble(PyObject_GetAttrString(p, "TradeAmount"));
+  //摘要
+  strcpy(t->Digest, PyString_AsString(PyObject_GetAttrString(p, "Digest")));
 
   return t;
 };
@@ -5335,6 +5397,7 @@ CThostFtdcQryBrokerUserEventField * from_CThostFtdcQryBrokerUserEventField(PyObj
   strcpy(t->BrokerID, PyString_AsString(PyObject_GetAttrString(p, "BrokerID")));
   //用户事件类型
   //enum类型
+  //THOST_FTDC_UET_Authenticate -> '6', 客户端认证
   //THOST_FTDC_UET_Login -> '1', 登录
   //THOST_FTDC_UET_TradingError -> '4', 交易失败
   //THOST_FTDC_UET_UpdatePassword -> '5', 修改密码
@@ -5585,6 +5648,7 @@ CThostFtdcVerifyCustInfoField * from_CThostFtdcVerifyCustInfoField(PyObject * p)
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
@@ -5856,6 +5920,26 @@ CThostFtdcParkedOrderField * from_CThostFtdcParkedOrderField(PyObject * p){
   return t;
 };
 
+//经济公司是否有在本标示的交易权限
+PyObject * new_CThostFtdcBrokerUserRightAssignField(CThostFtdcBrokerUserRightAssignField * p){
+  if(p==NULL)
+      return Py_None;
+  return PyObject_CallMethod(mod, (char*)"CThostFtdcBrokerUserRightAssignField", (char*)"isi",
+p->DRIdentityID, p->BrokerID, p->Tradeable);
+}
+CThostFtdcBrokerUserRightAssignField * from_CThostFtdcBrokerUserRightAssignField(PyObject * p){
+  CThostFtdcBrokerUserRightAssignField *t = (CThostFtdcBrokerUserRightAssignField *)calloc(1, sizeof(CThostFtdcBrokerUserRightAssignField));
+  memset(t,0,sizeof(CThostFtdcBrokerUserRightAssignField));
+  //交易中心代码
+  t->DRIdentityID =   PyInt_AsLong(PyObject_GetAttrString(p, "DRIdentityID"));
+  //应用单元代码
+  strcpy(t->BrokerID, PyString_AsString(PyObject_GetAttrString(p, "BrokerID")));
+  //能否交易
+  t->Tradeable =   PyInt_AsLong(PyObject_GetAttrString(p, "Tradeable"));
+
+  return t;
+};
+
 //报单操作
 PyObject * new_CThostFtdcOrderActionField(CThostFtdcOrderActionField * p){
   if(p==NULL)
@@ -5953,8 +6037,8 @@ CThostFtdcPartBrokerField * from_CThostFtdcPartBrokerField(PyObject * p){
 PyObject * new_CThostFtdcReqOpenAccountField(CThostFtdcReqOpenAccountField * p){
   if(p==NULL)
       return Py_None;
-  return PyObject_CallMethod(mod, (char*)"CThostFtdcReqOpenAccountField", (char*)"csssscisssicssssisicccssssssccssssccscsssss",
-p->MoneyAccountStatus, p->BrokerBranchID, p->BankPassWord, p->Telephone, p->IdentifiedCardNo, p->VerifyCertNoFlag, p->TID, p->AccountID, p->BankAccount, p->Fax, p->InstallID, p->SecuPwdFlag, p->CustomerName, p->CountryCode, p->TradeCode, p->BankBranchID, p->SessionID, p->Address, p->PlateSerial, p->BankPwdFlag, p->CustType, p->Gender, p->BankID, p->BankSerial, p->OperNo, p->TradingDay, p->BankSecuAcc, p->BrokerID, p->CashExchangeCode, p->IdCardType, p->Password, p->MobilePhone, p->TradeDate, p->CurrencyID, p->BankAccType, p->LastFragment, p->ZipCode, p->BankSecuAccType, p->BrokerIDByBank, p->TradeTime, p->EMail, p->Digest, p->DeviceID);
+  return PyObject_CallMethod(mod, (char*)"CThostFtdcReqOpenAccountField", (char*)"csssscisssisssssisiccssssscsccssssccscscsss",
+p->MoneyAccountStatus, p->BrokerBranchID, p->BankPassWord, p->Telephone, p->TradeTime, p->VerifyCertNoFlag, p->TID, p->AccountID, p->BankAccount, p->Fax, p->InstallID, p->CustomerName, p->CountryCode, p->TradeCode, p->BankSecuAcc, p->BankBranchID, p->SessionID, p->Address, p->PlateSerial, p->BankPwdFlag, p->CustType, p->IdentifiedCardNo, p->BankID, p->BankSerial, p->OperNo, p->TradingDay, p->Gender, p->BrokerID, p->CashExchangeCode, p->IdCardType, p->Password, p->MobilePhone, p->TradeDate, p->CurrencyID, p->BankAccType, p->LastFragment, p->ZipCode, p->BankSecuAccType, p->BrokerIDByBank, p->SecuPwdFlag, p->EMail, p->Digest, p->DeviceID);
 }
 CThostFtdcReqOpenAccountField * from_CThostFtdcReqOpenAccountField(PyObject * p){
   CThostFtdcReqOpenAccountField *t = (CThostFtdcReqOpenAccountField *)calloc(1, sizeof(CThostFtdcReqOpenAccountField));
@@ -5970,8 +6054,8 @@ CThostFtdcReqOpenAccountField * from_CThostFtdcReqOpenAccountField(PyObject * p)
   strcpy(t->BankPassWord, PyString_AsString(PyObject_GetAttrString(p, "BankPassWord")));
   //电话号码
   strcpy(t->Telephone, PyString_AsString(PyObject_GetAttrString(p, "Telephone")));
-  //证件号码
-  strcpy(t->IdentifiedCardNo, PyString_AsString(PyObject_GetAttrString(p, "IdentifiedCardNo")));
+  //交易时间
+  strcpy(t->TradeTime, PyString_AsString(PyObject_GetAttrString(p, "TradeTime")));
   //验证客户证件号码标志
   //enum类型
   //THOST_FTDC_YNI_No -> '1', 否
@@ -5987,18 +6071,14 @@ CThostFtdcReqOpenAccountField * from_CThostFtdcReqOpenAccountField(PyObject * p)
   strcpy(t->Fax, PyString_AsString(PyObject_GetAttrString(p, "Fax")));
   //安装编号
   t->InstallID =   PyInt_AsLong(PyObject_GetAttrString(p, "InstallID"));
-  //期货资金密码核对标志
-  //enum类型
-  //THOST_FTDC_BPWDF_BlankCheck -> '1', 明文核对
-  //THOST_FTDC_BPWDF_NoCheck -> '0', 不核对
-  //THOST_FTDC_BPWDF_EncryptCheck -> '2', 密文核对
-  t->SecuPwdFlag =   PyString_AsString(PyObject_GetAttrString(p, "SecuPwdFlag"))[0];
   //客户姓名
   strcpy(t->CustomerName, PyString_AsString(PyObject_GetAttrString(p, "CustomerName")));
   //国家代码
   strcpy(t->CountryCode, PyString_AsString(PyObject_GetAttrString(p, "CountryCode")));
   //业务功能码
   strcpy(t->TradeCode, PyString_AsString(PyObject_GetAttrString(p, "TradeCode")));
+  //期货单位帐号
+  strcpy(t->BankSecuAcc, PyString_AsString(PyObject_GetAttrString(p, "BankSecuAcc")));
   //银行分支机构代码
   strcpy(t->BankBranchID, PyString_AsString(PyObject_GetAttrString(p, "BankBranchID")));
   //会话号
@@ -6018,12 +6098,8 @@ CThostFtdcReqOpenAccountField * from_CThostFtdcReqOpenAccountField(PyObject * p)
   //THOST_FTDC_CUSTT_Institution -> '1', 机构户
   //THOST_FTDC_CUSTT_Person -> '0', 自然人
   t->CustType =   PyString_AsString(PyObject_GetAttrString(p, "CustType"))[0];
-  //性别
-  //enum类型
-  //THOST_FTDC_GD_Unknown -> '0', 未知状态
-  //THOST_FTDC_GD_Female -> '2', 女
-  //THOST_FTDC_GD_Male -> '1', 男
-  t->Gender =   PyString_AsString(PyObject_GetAttrString(p, "Gender"))[0];
+  //证件号码
+  strcpy(t->IdentifiedCardNo, PyString_AsString(PyObject_GetAttrString(p, "IdentifiedCardNo")));
   //银行代码
   strcpy(t->BankID, PyString_AsString(PyObject_GetAttrString(p, "BankID")));
   //银行流水号
@@ -6032,8 +6108,12 @@ CThostFtdcReqOpenAccountField * from_CThostFtdcReqOpenAccountField(PyObject * p)
   strcpy(t->OperNo, PyString_AsString(PyObject_GetAttrString(p, "OperNo")));
   //交易系统日期
   strcpy(t->TradingDay, PyString_AsString(PyObject_GetAttrString(p, "TradingDay")));
-  //期货单位帐号
-  strcpy(t->BankSecuAcc, PyString_AsString(PyObject_GetAttrString(p, "BankSecuAcc")));
+  //性别
+  //enum类型
+  //THOST_FTDC_GD_Unknown -> '0', 未知状态
+  //THOST_FTDC_GD_Female -> '2', 女
+  //THOST_FTDC_GD_Male -> '1', 男
+  t->Gender =   PyString_AsString(PyObject_GetAttrString(p, "Gender"))[0];
   //期商代码
   strcpy(t->BrokerID, PyString_AsString(PyObject_GetAttrString(p, "BrokerID")));
   //汇钞标志
@@ -6044,6 +6124,7 @@ CThostFtdcReqOpenAccountField * from_CThostFtdcReqOpenAccountField(PyObject * p)
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
@@ -6084,8 +6165,12 @@ CThostFtdcReqOpenAccountField * from_CThostFtdcReqOpenAccountField(PyObject * p)
   t->BankSecuAccType =   PyString_AsString(PyObject_GetAttrString(p, "BankSecuAccType"))[0];
   //期货公司银行编码
   strcpy(t->BrokerIDByBank, PyString_AsString(PyObject_GetAttrString(p, "BrokerIDByBank")));
-  //交易时间
-  strcpy(t->TradeTime, PyString_AsString(PyObject_GetAttrString(p, "TradeTime")));
+  //期货资金密码核对标志
+  //enum类型
+  //THOST_FTDC_BPWDF_BlankCheck -> '1', 明文核对
+  //THOST_FTDC_BPWDF_NoCheck -> '0', 不核对
+  //THOST_FTDC_BPWDF_EncryptCheck -> '2', 密文核对
+  t->SecuPwdFlag =   PyString_AsString(PyObject_GetAttrString(p, "SecuPwdFlag"))[0];
   //电子邮件
   strcpy(t->EMail, PyString_AsString(PyObject_GetAttrString(p, "EMail")));
   //摘要
@@ -6207,6 +6292,7 @@ CThostFtdcInvestorField * from_CThostFtdcInvestorField(PyObject * p){
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
@@ -6349,6 +6435,7 @@ CThostFtdcAccountregisterField * from_CThostFtdcAccountregisterField(PyObject * 
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
@@ -6636,13 +6723,13 @@ p->DestBrokerID, p->DestDRIdentityID, p->OrigDRIdentityID, p->OrigBrokerID);
 CThostFtdcDRTransferField * from_CThostFtdcDRTransferField(PyObject * p){
   CThostFtdcDRTransferField *t = (CThostFtdcDRTransferField *)calloc(1, sizeof(CThostFtdcDRTransferField));
   memset(t,0,sizeof(CThostFtdcDRTransferField));
-  //目标经纪公司代码
+  //目标易用单元代码
   strcpy(t->DestBrokerID, PyString_AsString(PyObject_GetAttrString(p, "DestBrokerID")));
-  //目标交易中心标识号
+  //目标交易中心代码
   t->DestDRIdentityID =   PyInt_AsLong(PyObject_GetAttrString(p, "DestDRIdentityID"));
-  //原交易中心标识号
+  //原交易中心代码
   t->OrigDRIdentityID =   PyInt_AsLong(PyObject_GetAttrString(p, "OrigDRIdentityID"));
-  //原经纪公司代码
+  //原应用单元代码
   strcpy(t->OrigBrokerID, PyString_AsString(PyObject_GetAttrString(p, "OrigBrokerID")));
 
   return t;
@@ -7320,6 +7407,7 @@ CThostFtdcTransferSerialField * from_CThostFtdcTransferSerialField(PyObject * p)
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
@@ -7748,6 +7836,7 @@ CThostFtdcRspTransferField * from_CThostFtdcRspTransferField(PyObject * p){
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
@@ -8031,6 +8120,7 @@ CThostFtdcBrokerUserEventField * from_CThostFtdcBrokerUserEventField(PyObject * 
   strcpy(t->EventDate, PyString_AsString(PyObject_GetAttrString(p, "EventDate")));
   //用户事件类型
   //enum类型
+  //THOST_FTDC_UET_Authenticate -> '6', 客户端认证
   //THOST_FTDC_UET_Login -> '1', 登录
   //THOST_FTDC_UET_TradingError -> '4', 交易失败
   //THOST_FTDC_UET_UpdatePassword -> '5', 修改密码
@@ -8447,6 +8537,7 @@ CThostFtdcReqQueryTradeResultBySerialField * from_CThostFtdcReqQueryTradeResultB
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证
@@ -8578,6 +8669,7 @@ CThostFtdcNotifyQueryAccountField * from_CThostFtdcNotifyQueryAccountField(PyObj
   //证件类型
   //enum类型
   //THOST_FTDC_ICT_LicenseNo -> '9', 营业执照号
+  //THOST_FTDC_ICT_TaxNo -> 'A', 税务登记号
   //THOST_FTDC_ICT_OfficerIDCard -> '2', 军官证
   //THOST_FTDC_ICT_IDCard -> '1', 身份证
   //THOST_FTDC_ICT_TaiwanCompatriotIDCard -> '7', 台胞证

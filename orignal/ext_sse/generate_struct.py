@@ -209,8 +209,8 @@ PyObject * register_struct(PyObject * self, PyObject * args);
 
 h_types = '../ctp_sse/api/trade/linux64/public/ThostFtdcUserApiDataTypeSSE.h'
 h_structs = '../ctp_sse/api/trade/linux64/public/ThostFtdcUserApiStructSSE.h'
-py_types = 'UserApiStruct.py'
-py_structs = 'UserApiType.py'
+py_structs = 'UserApiStruct.py'
+py_types = 'UserApiType.py'
 basename_wrapper = 'struct'
 generate_interface(h_types,
                    h_structs,
@@ -221,8 +221,8 @@ generate_interface(h_types,
 
 h_types = '../ctp_sse/api/trade/linux64/public/ThostFtdcLevel2UserApiDataType.h'
 h_structs = '../ctp_sse/api/trade/linux64/public/ThostFtdcLevel2UserApiStruct.h'
-py_types = 'Level2ApiStruct.py'
-py_structs = 'Level2ApiType.py'
+py_structs = 'Level2ApiStruct.py'
+py_types = 'Level2ApiType.py'
 basename_wrapper = 'l2struct'
 generate_interface(h_types,
                    h_structs,

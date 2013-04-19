@@ -234,7 +234,7 @@ class MdSpiDelegate(MdSpi):
         self.user_login(self.broker_id, self.investor_id, self.passwd)
 
     def user_login(self, broker_id, investor_id, passwd):
-        req = ustruct.ReqUserLogin(BrokerID=broker_id, UserID=investor_id, Password=passwd)
+        req = ustruct.dcReqUserLogin(BrokerID=broker_id, UserID=investor_id, Password=passwd)
         r=self.api.ReqUserLogin(req,self.agent.inc_request_id())
 
     def OnRspUserLogin(self, userlogin, info, rid, is_last):
@@ -250,7 +250,9 @@ class MdSpiDelegate(MdSpi):
             self.subscribe_market_data(self.instruments)
 
     def subscribe_market_data(self, instruments):
-        self.api.SubscribeMarketData(list(instruments))
+        #self.api.SubscribeMarketData(list(instruments))
+        self.api.SubscribeMarketData(['600036'], "SSE")
+        self.api.SubscribeMarketData(['000001'], "SZE")
 
     def OnRtnDepthMarketData(self, depth_market_data):
         #print depth_market_data.BidPrice1,depth_market_data.BidVolume1,depth_market_data.AskPrice1,depth_market_data.AskVolume1,depth_market_data.LastPrice,depth_market_data.Volume,depth_market_data.UpdateTime,depth_market_data.UpdateMillisec,depth_market_data.InstrumentID

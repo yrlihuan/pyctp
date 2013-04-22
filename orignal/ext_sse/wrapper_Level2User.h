@@ -34,9 +34,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #include <Python.h>
 #endif
 
-#include "ThostFtdcL2ApiSSE.h"
+#include "ThostFtdcLevel2UserApi.h"
 
-class MySpiWrapper : public CThostFtdcL2Spi
+_USING_LEVEL2_NS_
+
+class MySpiWrapper : public CThostFtdcLevel2UserSpi
 {
  public:
   MySpiWrapper(PyObject * parent);
@@ -46,7 +48,7 @@ class MySpiWrapper : public CThostFtdcL2Spi
   virtual void OnRspUserLogout(CThostFtdcUserLogoutField* pUserLogout, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
   virtual void OnRspSubNGTSIndex(CThostFtdcSpecificSecurityField* pSpecificSecurity, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
   virtual void OnRspSubLevel2MarketData(CThostFtdcSpecificSecurityField* pSpecificSecurity, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
-  virtual ~ CThostFtdcLevel2UserSpi();
+  virtual ~MySpiWrapper();
   virtual void OnHeartBeatWarning(int nTimeLapse);
   virtual void OnRspError(CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);
   virtual void OnRspUserLogin(CThostFtdcRspUserLoginField* pRspUserLogin, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast);

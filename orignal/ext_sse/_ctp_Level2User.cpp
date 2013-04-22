@@ -32,9 +32,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #include <Python.h>
 #endif
 
-#include "ThostFtdcL2ApiSSE.h"
-#include "wrapper_L2.h"
-#include "struct.h"
+#include "ThostFtdcLevel2UserApi.h"
+#include "wrapper_Level2User.h"
+#include "l2struct.h"
 
 /*
 #if defined(ISLIB) && defined(WIN32)
@@ -50,19 +50,19 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 
 //using namespace std;  
 
-static PyObject* create_L2Api(PyObject* self, PyObject *args)
+static PyObject* create_Level2UserApi(PyObject* self, PyObject *args)
 {
   char * flowpath;
   bool IsUsingUdp;
 
   PyArg_ParseTuple(args, "sb", &flowpath, &IsUsingUdp);
-  void *p = CThostFtdcL2Api::CreateFtdcL2Api(flowpath, IsUsingUdp);
+  void *p = CThostFtdcLevel2UserApi::CreateFtdcLevel2UserApi(flowpath, IsUsingUdp);
   return PyInt_FromLong((long)p);
 }
 
 
-static PyObject* L2_UnSubscribeLevel2MarketData(PyObject * self, PyObject * args){
-  CThostFtdcL2Api * user = (CThostFtdcL2Api *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+static PyObject* Level2User_UnSubscribeLevel2MarketData(PyObject * self, PyObject * args){
+  CThostFtdcLevel2UserApi * user = (CThostFtdcLevel2UserApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * py_pSecurityList = PyTuple_GET_ITEM(args, 1);
   CThostFtdcSpecificSecurityField* pSecurityList = from_CThostFtdcSpecificSecurityField(py_pSecurityList);
   PyObject * py_nCount = PyTuple_GET_ITEM(args, 2);
@@ -72,8 +72,8 @@ static PyObject* L2_UnSubscribeLevel2MarketData(PyObject * self, PyObject * args
   return ret;
 }
 
-static PyObject* L2_ReqUserLogout(PyObject * self, PyObject * args){
-  CThostFtdcL2Api * user = (CThostFtdcL2Api *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+static PyObject* Level2User_ReqUserLogout(PyObject * self, PyObject * args){
+  CThostFtdcLevel2UserApi * user = (CThostFtdcLevel2UserApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * py_pUserLogout = PyTuple_GET_ITEM(args, 1);
   CThostFtdcUserLogoutField* pUserLogout = from_CThostFtdcUserLogoutField(py_pUserLogout);
   PyObject * py_nRequestID = PyTuple_GET_ITEM(args, 2);
@@ -83,14 +83,14 @@ static PyObject* L2_ReqUserLogout(PyObject * self, PyObject * args){
   return ret;
 }
 
-static PyObject* L2_Join(PyObject * self, PyObject * args){
-  CThostFtdcL2Api * user = (CThostFtdcL2Api *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+static PyObject* Level2User_Join(PyObject * self, PyObject * args){
+  CThostFtdcLevel2UserApi * user = (CThostFtdcLevel2UserApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * ret = Py_BuildValue("i", user->Join());
   return ret;
 }
 
-static PyObject* L2_SubscribeLevel2MarketData(PyObject * self, PyObject * args){
-  CThostFtdcL2Api * user = (CThostFtdcL2Api *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+static PyObject* Level2User_SubscribeLevel2MarketData(PyObject * self, PyObject * args){
+  CThostFtdcLevel2UserApi * user = (CThostFtdcLevel2UserApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * py_pSecurityList = PyTuple_GET_ITEM(args, 1);
   CThostFtdcSpecificSecurityField* pSecurityList = from_CThostFtdcSpecificSecurityField(py_pSecurityList);
   PyObject * py_nCount = PyTuple_GET_ITEM(args, 2);
@@ -100,8 +100,8 @@ static PyObject* L2_SubscribeLevel2MarketData(PyObject * self, PyObject * args){
   return ret;
 }
 
-static PyObject* L2_RegisterFront(PyObject * self, PyObject * args){
-  CThostFtdcL2Api * user = (CThostFtdcL2Api *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+static PyObject* Level2User_RegisterFront(PyObject * self, PyObject * args){
+  CThostFtdcLevel2UserApi * user = (CThostFtdcLevel2UserApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * py_pszFrontAddress = PyTuple_GET_ITEM(args, 1);
   char* pszFrontAddress = PyString_AsString(py_pszFrontAddress);
   user->RegisterFront(pszFrontAddress);
@@ -111,8 +111,8 @@ static PyObject* L2_RegisterFront(PyObject * self, PyObject * args){
   return Py_None;
 }
 
-static PyObject* L2_Init(PyObject * self, PyObject * args){
-  CThostFtdcL2Api * user = (CThostFtdcL2Api *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+static PyObject* Level2User_Init(PyObject * self, PyObject * args){
+  CThostFtdcLevel2UserApi * user = (CThostFtdcLevel2UserApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   user->Init();
 
 
@@ -120,8 +120,8 @@ static PyObject* L2_Init(PyObject * self, PyObject * args){
   return Py_None;
 }
 
-static PyObject* L2_ReqUserLogin(PyObject * self, PyObject * args){
-  CThostFtdcL2Api * user = (CThostFtdcL2Api *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+static PyObject* Level2User_ReqUserLogin(PyObject * self, PyObject * args){
+  CThostFtdcLevel2UserApi * user = (CThostFtdcLevel2UserApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * py_pReqUserLoginField = PyTuple_GET_ITEM(args, 1);
   CThostFtdcReqUserLoginField* pReqUserLoginField = from_CThostFtdcReqUserLoginField(py_pReqUserLoginField);
   PyObject * py_nRequestID = PyTuple_GET_ITEM(args, 2);
@@ -131,8 +131,8 @@ static PyObject* L2_ReqUserLogin(PyObject * self, PyObject * args){
   return ret;
 }
 
-static PyObject* L2_Release(PyObject * self, PyObject * args){
-  CThostFtdcL2Api * user = (CThostFtdcL2Api *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+static PyObject* Level2User_Release(PyObject * self, PyObject * args){
+  CThostFtdcLevel2UserApi * user = (CThostFtdcLevel2UserApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   user->Release();
 
 
@@ -140,8 +140,8 @@ static PyObject* L2_Release(PyObject * self, PyObject * args){
   return Py_None;
 }
 
-static PyObject* L2_SubscribePublicTopic(PyObject * self, PyObject * args){
-  CThostFtdcL2Api * user = (CThostFtdcL2Api *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+static PyObject* Level2User_SubscribePublicTopic(PyObject * self, PyObject * args){
+  CThostFtdcLevel2UserApi * user = (CThostFtdcLevel2UserApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * py_nResumeType = PyTuple_GET_ITEM(args, 1);
   THOST_TE_RESUME_TYPE nResumeType = (THOST_TE_RESUME_TYPE)PyInt_AsLong(py_nResumeType);
   user->SubscribePublicTopic(nResumeType);
@@ -151,14 +151,14 @@ static PyObject* L2_SubscribePublicTopic(PyObject * self, PyObject * args){
   return Py_None;
 }
 
-static PyObject* L2_GetTradingDay(PyObject * self, PyObject * args){
-  CThostFtdcL2Api * user = (CThostFtdcL2Api *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+static PyObject* Level2User_GetTradingDay(PyObject * self, PyObject * args){
+  CThostFtdcLevel2UserApi * user = (CThostFtdcLevel2UserApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * ret = Py_BuildValue("s", user->GetTradingDay());
   return ret;
 }
 
-static PyObject* L2_UnSubscribeNGTSIndex(PyObject * self, PyObject * args){
-  CThostFtdcL2Api * user = (CThostFtdcL2Api *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+static PyObject* Level2User_UnSubscribeNGTSIndex(PyObject * self, PyObject * args){
+  CThostFtdcLevel2UserApi * user = (CThostFtdcLevel2UserApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * py_pSecurityList = PyTuple_GET_ITEM(args, 1);
   CThostFtdcSpecificSecurityField* pSecurityList = from_CThostFtdcSpecificSecurityField(py_pSecurityList);
   PyObject * py_nCount = PyTuple_GET_ITEM(args, 2);
@@ -168,8 +168,8 @@ static PyObject* L2_UnSubscribeNGTSIndex(PyObject * self, PyObject * args){
   return ret;
 }
 
-static PyObject* L2_SubscribeNGTSIndex(PyObject * self, PyObject * args){
-  CThostFtdcL2Api * user = (CThostFtdcL2Api *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+static PyObject* Level2User_SubscribeNGTSIndex(PyObject * self, PyObject * args){
+  CThostFtdcLevel2UserApi * user = (CThostFtdcLevel2UserApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * py_pSecurityList = PyTuple_GET_ITEM(args, 1);
   CThostFtdcSpecificSecurityField* pSecurityList = from_CThostFtdcSpecificSecurityField(py_pSecurityList);
   PyObject * py_nCount = PyTuple_GET_ITEM(args, 2);
@@ -179,8 +179,8 @@ static PyObject* L2_SubscribeNGTSIndex(PyObject * self, PyObject * args){
   return ret;
 }
 
-static PyObject* L2_RegisterSpi(PyObject * self, PyObject * args){
-  CThostFtdcL2Api * user = (CThostFtdcL2Api *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+static PyObject* Level2User_RegisterSpi(PyObject * self, PyObject * args){
+  CThostFtdcLevel2UserApi * user = (CThostFtdcLevel2UserApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * py_pSpi = PyTuple_GET_ITEM(args, 1);
   CThostFtdcLevel2UserSpi* pSpi = new MySpiWrapper(py_pSpi);
   user->RegisterSpi(pSpi);
@@ -190,30 +190,30 @@ static PyObject* L2_RegisterSpi(PyObject * self, PyObject * args){
   return Py_None;
 }
 
-extern "C" void init_ctp_L2()
+extern "C" void init_ctp_Level2User()
 {
    static PyMethodDef mbMethods[] = {
-     {"create_L2Api", create_L2Api, METH_VARARGS},
+     {"create_Level2UserApi", create_Level2UserApi, METH_VARARGS},
      {"register_struct", register_struct, METH_VARARGS},
 
-     {"UnSubscribeLevel2MarketData", L2_UnSubscribeLevel2MarketData, METH_VARARGS} ,
-     {"ReqUserLogout", L2_ReqUserLogout, METH_VARARGS} ,
-     {"Join", L2_Join, METH_VARARGS} ,
-     {"SubscribeLevel2MarketData", L2_SubscribeLevel2MarketData, METH_VARARGS} ,
-     {"RegisterFront", L2_RegisterFront, METH_VARARGS} ,
-     {"Init", L2_Init, METH_VARARGS} ,
-     {"ReqUserLogin", L2_ReqUserLogin, METH_VARARGS} ,
-     {"Release", L2_Release, METH_VARARGS} ,
-     {"SubscribePublicTopic", L2_SubscribePublicTopic, METH_VARARGS} ,
-     {"GetTradingDay", L2_GetTradingDay, METH_VARARGS} ,
-     {"UnSubscribeNGTSIndex", L2_UnSubscribeNGTSIndex, METH_VARARGS} ,
-     {"SubscribeNGTSIndex", L2_SubscribeNGTSIndex, METH_VARARGS} ,
-     {"RegisterSpi", L2_RegisterSpi, METH_VARARGS} ,
+     {"UnSubscribeLevel2MarketData", Level2User_UnSubscribeLevel2MarketData, METH_VARARGS} ,
+     {"ReqUserLogout", Level2User_ReqUserLogout, METH_VARARGS} ,
+     {"Join", Level2User_Join, METH_VARARGS} ,
+     {"SubscribeLevel2MarketData", Level2User_SubscribeLevel2MarketData, METH_VARARGS} ,
+     {"RegisterFront", Level2User_RegisterFront, METH_VARARGS} ,
+     {"Init", Level2User_Init, METH_VARARGS} ,
+     {"ReqUserLogin", Level2User_ReqUserLogin, METH_VARARGS} ,
+     {"Release", Level2User_Release, METH_VARARGS} ,
+     {"SubscribePublicTopic", Level2User_SubscribePublicTopic, METH_VARARGS} ,
+     {"GetTradingDay", Level2User_GetTradingDay, METH_VARARGS} ,
+     {"UnSubscribeNGTSIndex", Level2User_UnSubscribeNGTSIndex, METH_VARARGS} ,
+     {"SubscribeNGTSIndex", Level2User_SubscribeNGTSIndex, METH_VARARGS} ,
+     {"RegisterSpi", Level2User_RegisterSpi, METH_VARARGS} ,
 
      {NULL, NULL, NULL} /*sentinel，哨兵，用来标识结束*/
    };
 
-   PyObject *m = Py_InitModule("_ctp_L2", mbMethods);
+   PyObject *m = Py_InitModule("_ctp_Level2User", mbMethods);
 
    PyEval_InitThreads();
 }

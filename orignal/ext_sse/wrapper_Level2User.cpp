@@ -22,8 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 02110-1301 USA
 */
 
-#include "struct.h"
-#include "wrapper_L2.h"
+#include "l2struct.h"
+#include "wrapper_Level2User.h"
         
 MySpiWrapper::MySpiWrapper(PyObject * parent):CThostFtdcLevel2UserSpi(){
   py_spi = parent;
@@ -86,7 +86,7 @@ void MySpiWrapper::OnRspSubLevel2MarketData(CThostFtdcSpecificSecurityField* pSp
   PyGILState_Release(gstate);
 }
 
-~ MySpiWrapper::CThostFtdcLevel2UserSpi(){
+MySpiWrapper::~MySpiWrapper(){
   PyGILState_STATE gstate;
   gstate=PyGILState_Ensure();
 

@@ -132,11 +132,11 @@ class MdApi:
         return _ctp_Md.GetTradingDay(self.api_ptr, )
 
 
-    def SubscribeMarketData(self, InstrumentIDs):
+    def SubscribeMarketData(self, InstrumentIDs, exchangeId):
         """订阅/退订行情。
         @param ppInstrumentIDs list of 合约ID
         """
-        return _ctp_Md.SubscribeMarketData(self.api_ptr, InstrumentIDs)
+        return _ctp_Md.SubscribeMarketData(self.api_ptr, InstrumentIDs, exchangeId)
 
     def RegisterSpi(self, pSpi):
         '''注册回调接口

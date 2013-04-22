@@ -131,6 +131,7 @@ import logging
 import thread
 import threading
 import bisect
+import datetime as dt
 
 from base import *
 from dac import ATR,ATR1,STREND,STREND1,MA,MA1,MACD,MACD1,date2week
@@ -251,17 +252,21 @@ class MdSpiDelegate(MdSpi):
 
     def subscribe_market_data(self, instruments):
         #self.api.SubscribeMarketData(list(instruments))
-        self.api.SubscribeMarketData(['600036'], "SSE")
-        self.api.SubscribeMarketData(['000001'], "SZE")
+        self.api.SubscribeMarketData(['600036', '600100', '600038'], "SSE")
+        self.api.SubscribeMarketData(['000001', '000002', '000003'], "SZE")
 
     def OnRtnDepthMarketData(self, depth_market_data):
         #print depth_market_data.BidPrice1,depth_market_data.BidVolume1,depth_market_data.AskPrice1,depth_market_data.AskVolume1,depth_market_data.LastPrice,depth_market_data.Volume,depth_market_data.UpdateTime,depth_market_data.UpdateMillisec,depth_market_data.InstrumentID
         #print 'on data......\n',
         #with mylock:
+        d = depth_market_data
+        self.logger.info(u"MD: 收到行情. price, %s. bid1, %s. ask1, %s. bidv1, %s, askv1, %s." % (d.LastPrice, d.BidPrice1, d.AskPrice1, d.BidVolume1, d.AskVolume1))
+        self.logger.info(d)
         try:
             #mylock.acquire()
             #self.logger.debug(u'获得锁.................,mylock.id=%s' % id(mylock))        
-            if depth_market_data.LastPrice > 999999 or depth_market_data.LastPrice < 10:
+            # if depth_market_data.LastPrice > 999999 or depth_market_data.LastPrice < 10:
+            if depth_market_data.LastPrice > 999999 or depth_market_data.LastPrice < 0.01:
                 self.logger.warning(u'MD:收到的行情数据有误:%s,LastPrice=:%s' %(depth_market_data.InstrumentID,depth_market_data.LastPrice))
             if depth_market_data.InstrumentID not in self.instruments:
                 self.logger.warning(u'MD:收到未订阅的行情:%s' %(depth_market_data.InstrumentID,))
@@ -304,9 +309,15 @@ class MdSpiDelegate(MdSpi):
         try:
             #rev的后四个字段在模拟行情中经常出错
             rev = BaseObject(instrument = market_data.InstrumentID,date=self.agent.scur_day,bid_price=0,bid_volume=0,ask_price=0,ask_volume=0)
-            rev.min1 = int(market_data.UpdateTime[:2]+market_data.UpdateTime[3:5])
-            rev.sec = int(market_data.UpdateTime[-2:])
-            rev.msec = int(market_data.UpdateMillisec)
+            #rev.min1 = int(market_data.UpdateTime[:2]+market_data.UpdateTime[3:5])
+            #rev.sec = int(market_data.UpdateTime[-2:])
+            #rev.msec = int(market_data.UpdateMillisec)
+            
+            # Level1行情里面没有时间戳
+            d = dt.datetime.now()
+            rev.min1 = d.hour * 100 + d.minute
+            rev.sec = d.second
+            rev.msec = 0
             rev.holding = int(market_data.OpenInterest+0.1)
             rev.dvolume = market_data.Volume
             rev.price = int(market_data.LastPrice*10+0.1)
@@ -1632,7 +1643,7 @@ class SaveAgent(Agent):
             logging.info(u'接收到不在时间范围的合约数据:%s:%s' % (inst,ctick.min1))
             return False
         dinst = self.instruments[inst]#.data
-        print inst,ctick.min1
+        print inst,ctick.min1,dinst
         ctick.iorder = dinst.get_order(ctick.min1)
         if (ctick.iorder < dinst.data.cur_min.viorder and ctick.date == dinst.data.cur_min.vdate) or ctick.date < dinst.data.cur_min.vdate:
             #print ctick.date,ctick.time,dinst.data.cur_min.vdate,dinst.data.cur_min.vtime

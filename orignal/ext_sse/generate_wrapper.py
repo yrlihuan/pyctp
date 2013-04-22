@@ -36,6 +36,8 @@ class Parse:
         self.file_data = f.readlines()
         f.close()
 
+        self.use_CZQ_prefix = "SSE" in fn
+
         self.locale = locale
         self.parse(locale)
 
@@ -117,6 +119,7 @@ class Parse:
         #generate spi
 
         prefix=self.prefix
+        czq_prefix = self.use_CZQ_prefix and "CZQ" or "C"
 
         f=codecs.open("wrapper_%s.cpp" % self.prefix,'w', "utf-8")
         f.write('/*\n'+__doc__+'*/\n')
@@ -152,12 +155,12 @@ class %sSpi:
 
 #include "ThostFtdc%sApiSSE.h"
 
-class MySpiWrapper : public CThostFtdc%sSpi
+class MySpiWrapper : public %sThostFtdc%sSpi
 {
  public:
   MySpiWrapper(PyObject * parent);
 
-""" % (self.prefix, self.prefix))
+""" % (self.prefix, czq_prefix, self.prefix))
         f.write(u"""
 #include "struct.h"
 #include "wrapper_%s.h"
@@ -230,6 +233,7 @@ MySpiWrapper::MySpiWrapper(PyObject * parent):%s(){
     def generate_wrapper_api(self, api):
         "产生api部分封装"
         prefix = self.prefix
+        czq_prefix = self.use_CZQ_prefix and "CZQ" or "C"
         f=codecs.open('_ctp_%s.cpp' % prefix, 'w', "utf-8")
         f.write(u'/*\n'+__doc__+'*/\n')
         f2=codecs.open('%sApi.py' % prefix,'a+', "utf-8")
@@ -283,11 +287,11 @@ static PyObject* create_%sApi(PyObject* self, PyObject *args)
   bool IsUsingUdp;
 
   PyArg_ParseTuple(args, "sb", &flowpath, &IsUsingUdp);
-  void *p = CThostFtdc%sApi::CreateFtdc%sApi(flowpath, IsUsingUdp);
+  void *p = %sThostFtdc%sApi::CreateFtdc%sApi(flowpath, IsUsingUdp);
   return PyInt_FromLong((long)p);
 }
 
-""" % (prefix, prefix, prefix, prefix, prefix))
+""" % (prefix, prefix, prefix, czq_prefix, prefix, prefix))
         
         methods = self.struct[api]
         for i in methods:
@@ -295,7 +299,7 @@ static PyObject* create_%sApi(PyObject* self, PyObject *args)
                 f.write(u"""
 static PyObject * Md_%s(PyObject* self, PyObject * args)
 {
-  CThostFtdcMdApi * user = (CThostFtdcMdApi *)PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+  %sThostFtdcMdApi * user = (%sThostFtdcMdApi *)PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * instruments = PyTuple_GET_ITEM(args, 1);
 
   int l = PySequence_Length(instruments);
@@ -315,7 +319,7 @@ static PyObject * Md_%s(PyObject* self, PyObject * args)
   Py_INCREF(Py_None);
   return Py_None;
 }
-""" % (i,i))
+""" % (i,czq_prefix, czq_prefix, i))
                 f2.write(u'''
     def %s(self, InstrumentIDs):
         """订阅/退订行情。
@@ -327,9 +331,8 @@ static PyObject * Md_%s(PyObject* self, PyObject * args)
                 continue
             f.write(u"""
 static PyObject* %s_%s(PyObject * self, PyObject * args){
-  CThostFtdc%sApi * user = (CThostFtdc%sApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
-""" % (prefix, i,
-       prefix, prefix))
+  %sThostFtdc%sApi * user = (%sThostFtdc%sApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+""" % (prefix, i, czq_prefix, prefix, czq_prefix, prefix))
 
             args=methods[i]
 
@@ -394,7 +397,7 @@ static PyObject* %s_%s(PyObject * self, PyObject * args){
                 f.write(u"  return ret;\n}\n")
             
         f.write(u"""
-extern "C" __declspec(dllexport) void init_ctp_%s()
+extern "C" void init_ctp_%s()
 {
    static PyMethodDef mbMethods[] = {
      {"create_%sApi", create_%sApi, METH_VARARGS},
@@ -430,7 +433,7 @@ def test2(locale='utf-8'):
     a=Parse("../ctp_sse/api/trade/linux64/public/ThostFtdcMdApiSSE.h", "Md",locale)
     a.generate_wrapper()
 
-    a=Parse("../ctp_sse/api/trade/linux64/public/ThostFtdcLevel2UserApi.h", "L2", locale)
+    a=Parse("../ctp_sse/api/trade/linux64/public/ThostFtdcLevel2UserApi.h", "Level2User", locale)
     a.generate_wrapper()
 
 test2('utf-8')

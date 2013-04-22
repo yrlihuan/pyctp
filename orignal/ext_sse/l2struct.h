@@ -36,6 +36,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 
 #include "../ctp_sse/api/trade/linux64/public/ThostFtdcLevel2UserApiStruct.h"
 
+_USING_LEVEL2_NS_
+
 PyObject * register_struct(PyObject * self, PyObject * args);
 PyObject * new_CThostFtdcL2MarketDataOffer3Field(CThostFtdcL2MarketDataOffer3Field * p);
 CThostFtdcL2MarketDataOffer3Field * from_CThostFtdcL2MarketDataOffer3Field(PyObject * p);

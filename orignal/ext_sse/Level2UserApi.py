@@ -23,13 +23,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 02110-1301 USA
 """
 
-import _ctp_L2
+import _ctp_Level2User
 import os
 import UserApiStruct
 
-_ctp_L2.register_struct(UserApiStruct)
+_ctp_Level2User.register_struct(UserApiStruct)
 
-class L2Spi:
+class Level2UserSpi:
     def register_api(self, api):
         self.api=api
 
@@ -93,54 +93,54 @@ class L2Spi:
         pass
 
 
-class L2Api:
+class Level2UserApi:
     @staticmethod
-    def CreateL2Api(FlowPath="", IsUsingUdp=False):
+    def CreateLevel2UserApi(FlowPath="", IsUsingUdp=False):
         if FlowPath:
             FlowPath=os.path.abspath(FlowPath)
-        api_ptr=_ctp_L2.create_L2Api(FlowPath, IsUsingUdp)
-        return L2Api(api_ptr)
+        api_ptr=_ctp_Level2User.create_Level2UserApi(FlowPath, IsUsingUdp)
+        return Level2UserApi(api_ptr)
 
     def __init__(self, api_ptr):
         self.api_ptr = api_ptr
 
     def UnSubscribeLevel2MarketData(self, pSecurityList, nCount):
         ''''''
-        return _ctp_L2.UnSubscribeLevel2MarketData(self.api_ptr, pSecurityList, nCount)
+        return _ctp_Level2User.UnSubscribeLevel2MarketData(self.api_ptr, pSecurityList, nCount)
 
     def ReqUserLogout(self, pUserLogout, nRequestID):
         '''登出请求'''
-        return _ctp_L2.ReqUserLogout(self.api_ptr, pUserLogout, nRequestID)
+        return _ctp_Level2User.ReqUserLogout(self.api_ptr, pUserLogout, nRequestID)
 
     def Join(self, ):
         '''等待接口线程结束运行
 @return 线程退出代码'''
-        return _ctp_L2.Join(self.api_ptr, )
+        return _ctp_Level2User.Join(self.api_ptr, )
 
     def SubscribeLevel2MarketData(self, pSecurityList, nCount):
         ''''''
-        return _ctp_L2.SubscribeLevel2MarketData(self.api_ptr, pSecurityList, nCount)
+        return _ctp_Level2User.SubscribeLevel2MarketData(self.api_ptr, pSecurityList, nCount)
 
     def RegisterFront(self, pszFrontAddress):
         '''注册前置机网络地址
 @param pszFrontAddress：前置机网络地址。
 @remark 网络地址的格式为：“protocol://ipaddress:port”，如：”tcp://127.0.0.1:17001”。
 @remark “tcp”代表传输协议，“127.0.0.1”代表服务器地址。”17001”代表服务器端口号。'''
-        return _ctp_L2.RegisterFront(self.api_ptr, pszFrontAddress)
+        return _ctp_Level2User.RegisterFront(self.api_ptr, pszFrontAddress)
 
     def Init(self, ):
         '''初始化
 @remark 初始化运行环境,只有调用后,接口才开始工作'''
-        return _ctp_L2.Init(self.api_ptr, )
+        return _ctp_Level2User.Init(self.api_ptr, )
 
     def ReqUserLogin(self, pReqUserLoginField, nRequestID):
         '''用户登录请求'''
-        return _ctp_L2.ReqUserLogin(self.api_ptr, pReqUserLoginField, nRequestID)
+        return _ctp_Level2User.ReqUserLogin(self.api_ptr, pReqUserLoginField, nRequestID)
 
     def Release(self, ):
         '''删除接口对象本身
 @remark 不再使用本接口对象时,调用该函数删除接口对象'''
-        return _ctp_L2.Release(self.api_ptr, )
+        return _ctp_Level2User.Release(self.api_ptr, )
 
     def SubscribePublicTopic(self, nResumeType):
         '''订阅公共流。
@@ -149,26 +149,26 @@ class L2Api:
         THOST_TERT_RESUME:从上次收到的续传
         THOST_TERT_QUICK:只传送登录后公共流的内容
 @remark 该方法要在Init方法前调用。若不调用则不会收到公共流的数据。'''
-        return _ctp_L2.SubscribePublicTopic(self.api_ptr, nResumeType)
+        return _ctp_Level2User.SubscribePublicTopic(self.api_ptr, nResumeType)
 
     def GetTradingDay(self, ):
         '''获取当前交易日
 @retrun 获取到的交易日
 @remark 只有登录成功后,才能得到正确的交易日'''
-        return _ctp_L2.GetTradingDay(self.api_ptr, )
+        return _ctp_Level2User.GetTradingDay(self.api_ptr, )
 
     def UnSubscribeNGTSIndex(self, pSecurityList, nCount):
         ''''''
-        return _ctp_L2.UnSubscribeNGTSIndex(self.api_ptr, pSecurityList, nCount)
+        return _ctp_Level2User.UnSubscribeNGTSIndex(self.api_ptr, pSecurityList, nCount)
 
     def SubscribeNGTSIndex(self, pSecurityList, nCount):
         ''''''
-        return _ctp_L2.SubscribeNGTSIndex(self.api_ptr, pSecurityList, nCount)
+        return _ctp_Level2User.SubscribeNGTSIndex(self.api_ptr, pSecurityList, nCount)
 
     def RegisterSpi(self, pSpi):
         '''注册回调接口
 @param pSpi 派生自回调接口类的实例'''
-        ret = _ctp_L2.RegisterSpi(self.api_ptr, pSpi)
+        ret = _ctp_Level2User.RegisterSpi(self.api_ptr, pSpi)
         pSpi.register_api(self)
         return ret
 

@@ -64,12 +64,19 @@ static PyObject* create_Level2UserApi(PyObject* self, PyObject *args)
 static PyObject* Level2User_UnSubscribeLevel2MarketData(PyObject * self, PyObject * args){
   CThostFtdcLevel2UserApi * user = (CThostFtdcLevel2UserApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * py_pSecurityList = PyTuple_GET_ITEM(args, 1);
-  CThostFtdcSpecificSecurityField* pSecurityList = from_CThostFtdcSpecificSecurityField(py_pSecurityList);
-  PyObject * py_nCount = PyTuple_GET_ITEM(args, 2);
-  int nCount = PyInt_AsLong(py_nCount);
-  PyObject * ret = Py_BuildValue("i", user->UnSubscribeLevel2MarketData(pSecurityList, nCount));
-  free(pSecurityList);
+
+  int l = PySequence_Length(py_pSecurityList);
+  CThostFtdcSpecificSecurityField* pp =(CThostFtdcSpecificSecurityField*)calloc(l, sizeof(CThostFtdcSpecificSecurityField));
+  for (int i = 0; i < l; ++i) {
+    CThostFtdcSpecificSecurityField* security = from_CThostFtdcSpecificSecurityField(PySequence_GetItem(py_pSecurityList, i));
+    memcpy(pp+i, security, sizeof(CThostFtdcSpecificSecurityField));
+    free(security);
+  }
+
+  PyObject * ret = Py_BuildValue("i", user->UnSubscribeLevel2MarketData(pp, l));
+  free(pp);
   return ret;
+
 }
 
 static PyObject* Level2User_ReqUserLogout(PyObject * self, PyObject * args){
@@ -92,11 +99,17 @@ static PyObject* Level2User_Join(PyObject * self, PyObject * args){
 static PyObject* Level2User_SubscribeLevel2MarketData(PyObject * self, PyObject * args){
   CThostFtdcLevel2UserApi * user = (CThostFtdcLevel2UserApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * py_pSecurityList = PyTuple_GET_ITEM(args, 1);
-  CThostFtdcSpecificSecurityField* pSecurityList = from_CThostFtdcSpecificSecurityField(py_pSecurityList);
-  PyObject * py_nCount = PyTuple_GET_ITEM(args, 2);
-  int nCount = PyInt_AsLong(py_nCount);
-  PyObject * ret = Py_BuildValue("i", user->SubscribeLevel2MarketData(pSecurityList, nCount));
-  free(pSecurityList);
+
+  int l = PySequence_Length(py_pSecurityList);
+  CThostFtdcSpecificSecurityField* pp =(CThostFtdcSpecificSecurityField*)calloc(l, sizeof(CThostFtdcSpecificSecurityField));
+  for (int i = 0; i < l; ++i) {
+    CThostFtdcSpecificSecurityField* security = from_CThostFtdcSpecificSecurityField(PySequence_GetItem(py_pSecurityList, i));
+    memcpy(pp+i, security, sizeof(CThostFtdcSpecificSecurityField));
+    free(security);
+  }
+
+  PyObject * ret = Py_BuildValue("i", user->SubscribeLevel2MarketData(pp, l));
+  free(pp);
   return ret;
 }
 
@@ -160,23 +173,37 @@ static PyObject* Level2User_GetTradingDay(PyObject * self, PyObject * args){
 static PyObject* Level2User_UnSubscribeNGTSIndex(PyObject * self, PyObject * args){
   CThostFtdcLevel2UserApi * user = (CThostFtdcLevel2UserApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * py_pSecurityList = PyTuple_GET_ITEM(args, 1);
-  CThostFtdcSpecificSecurityField* pSecurityList = from_CThostFtdcSpecificSecurityField(py_pSecurityList);
-  PyObject * py_nCount = PyTuple_GET_ITEM(args, 2);
-  int nCount = PyInt_AsLong(py_nCount);
-  PyObject * ret = Py_BuildValue("i", user->UnSubscribeNGTSIndex(pSecurityList, nCount));
-  free(pSecurityList);
+
+  int l = PySequence_Length(py_pSecurityList);
+  CThostFtdcSpecificSecurityField* pp =(CThostFtdcSpecificSecurityField*)calloc(l, sizeof(CThostFtdcSpecificSecurityField));
+  for (int i = 0; i < l; ++i) {
+    CThostFtdcSpecificSecurityField* security = from_CThostFtdcSpecificSecurityField(PySequence_GetItem(py_pSecurityList, i));
+    memcpy(pp+i, security, sizeof(CThostFtdcSpecificSecurityField));
+    free(security);
+  }
+
+  PyObject * ret = Py_BuildValue("i", user->UnSubscribeNGTSIndex(pp, l));
+  free(pp);
   return ret;
+
 }
 
 static PyObject* Level2User_SubscribeNGTSIndex(PyObject * self, PyObject * args){
   CThostFtdcLevel2UserApi * user = (CThostFtdcLevel2UserApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * py_pSecurityList = PyTuple_GET_ITEM(args, 1);
-  CThostFtdcSpecificSecurityField* pSecurityList = from_CThostFtdcSpecificSecurityField(py_pSecurityList);
-  PyObject * py_nCount = PyTuple_GET_ITEM(args, 2);
-  int nCount = PyInt_AsLong(py_nCount);
-  PyObject * ret = Py_BuildValue("i", user->SubscribeNGTSIndex(pSecurityList, nCount));
-  free(pSecurityList);
+
+  int l = PySequence_Length(py_pSecurityList);
+  CThostFtdcSpecificSecurityField* pp =(CThostFtdcSpecificSecurityField*)calloc(l, sizeof(CThostFtdcSpecificSecurityField));
+  for (int i = 0; i < l; ++i) {
+    CThostFtdcSpecificSecurityField* security = from_CThostFtdcSpecificSecurityField(PySequence_GetItem(py_pSecurityList, i));
+    memcpy(pp+i, security, sizeof(CThostFtdcSpecificSecurityField));
+    free(security);
+  }
+
+  PyObject * ret = Py_BuildValue("i", user->SubscribeNGTSIndex(pp, l));
+  free(pp);
   return ret;
+
 }
 
 static PyObject* Level2User_RegisterSpi(PyObject * self, PyObject * args){

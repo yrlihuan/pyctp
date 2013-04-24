@@ -25,9 +25,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 
 import _ctp_Level2User
 import os
-import UserApiStruct
+import Level2ApiStruct
 
-_ctp_Level2User.register_struct(UserApiStruct)
+_ctp_Level2User.register_struct(Level2ApiStruct)
 
 class Level2UserSpi:
     def register_api(self, api):

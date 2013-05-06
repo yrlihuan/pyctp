@@ -23,66 +23,57 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 02110-1301 USA
 """
 
-import _ctp_Md
+import _ctp_Md_future
 import os
 import UserApiStruct
 
-_ctp_Md.register_struct(UserApiStruct)
+_ctp_Md_future.register_struct(UserApiStruct)
 
 class MdSpi:
     def register_api(self, api):
         self.api=api
 
     def OnFrontDisconnected(self, nReason):
-        '''
-µ±¿Í»§¶ËÓë½»Ò×ºóÌ¨Í¨ĞÅÁ¬½Ó¶Ï¿ªÊ±£¬¸Ã·½·¨±»µ÷ÓÃ¡£µ±·¢ÉúÕâ¸öÇé¿öºó£¬API»á×Ô¶¯ÖØĞÂÁ¬½Ó£¬¿Í»§¶Ë¿É²»×ö´¦Àí¡£
-@param nReason ´íÎóÔ­Òò
-        0x1001 ÍøÂç¶ÁÊ§°Ü
-        0x1002 ÍøÂçĞ´Ê§°Ü
-        0x2001 ½ÓÊÕĞÄÌø³¬Ê±
-        0x2002 ·¢ËÍĞÄÌøÊ§°Ü
-        0x2003 ÊÕµ½´íÎó±¨ÎÄ'''
+        '''å½“å®¢æˆ·ç«¯ä¸äº¤æ˜“åå°é€šä¿¡è¿æ¥æ–­å¼€æ—¶ï¼Œè¯¥æ–¹æ³•è¢«è°ƒç”¨ã€‚å½“å‘ç”Ÿè¿™ä¸ªæƒ…å†µåï¼ŒAPIä¼šè‡ªåŠ¨é‡æ–°è¿æ¥ï¼Œå®¢æˆ·ç«¯å¯ä¸åšå¤„ç†ã€‚
+@param nReason é”™è¯¯åŸå› 
+        0x1001 ç½‘ç»œè¯»å¤±è´¥
+        0x1002 ç½‘ç»œå†™å¤±è´¥
+        0x2001 æ¥æ”¶å¿ƒè·³è¶…æ—¶
+        0x2002 å‘é€å¿ƒè·³å¤±è´¥
+        0x2003 æ”¶åˆ°é”™è¯¯æŠ¥æ–‡'''
         pass
 
     def OnRspUserLogout(self, pUserLogout, pRspInfo, nRequestID, bIsLast):
-        '''
-µÇ³öÇëÇóÏìÓ¦'''
+        '''ç™»å‡ºè¯·æ±‚å“åº”'''
         pass
 
     def OnRtnDepthMarketData(self, pDepthMarketData):
-        '''
-Éî¶ÈĞĞÇéÍ¨Öª'''
+        '''æ·±åº¦è¡Œæƒ…é€šçŸ¥'''
         pass
 
     def OnRspSubMarketData(self, pSpecificInstrument, pRspInfo, nRequestID, bIsLast):
-        '''
-¶©ÔÄĞĞÇéÓ¦´ğ'''
+        '''è®¢é˜…è¡Œæƒ…åº”ç­”'''
         pass
 
     def OnRspUnSubMarketData(self, pSpecificInstrument, pRspInfo, nRequestID, bIsLast):
-        '''
-È¡Ïû¶©ÔÄĞĞÇéÓ¦´ğ'''
+        '''å–æ¶ˆè®¢é˜…è¡Œæƒ…åº”ç­”'''
         pass
 
     def OnHeartBeatWarning(self, nTimeLapse):
-        '''
-ĞÄÌø³¬Ê±¾¯¸æ¡£µ±³¤Ê±¼äÎ´ÊÕµ½±¨ÎÄÊ±£¬¸Ã·½·¨±»µ÷ÓÃ¡£
-@param nTimeLapse ¾àÀëÉÏ´Î½ÓÊÕ±¨ÎÄµÄÊ±¼ä'''
+        '''å¿ƒè·³è¶…æ—¶è­¦å‘Šã€‚å½“é•¿æ—¶é—´æœªæ”¶åˆ°æŠ¥æ–‡æ—¶ï¼Œè¯¥æ–¹æ³•è¢«è°ƒç”¨ã€‚
+@param nTimeLapse è·ç¦»ä¸Šæ¬¡æ¥æ”¶æŠ¥æ–‡çš„æ—¶é—´'''
         pass
 
     def OnRspError(self, pRspInfo, nRequestID, bIsLast):
-        '''
-´íÎóÓ¦´ğ'''
+        '''é”™è¯¯åº”ç­”'''
         pass
 
     def OnRspUserLogin(self, pRspUserLogin, pRspInfo, nRequestID, bIsLast):
-        '''
-µÇÂ¼ÇëÇóÏìÓ¦'''
+        '''ç™»å½•è¯·æ±‚å“åº”'''
         pass
 
     def OnFrontConnected(self, ):
-        '''
-µ±¿Í»§¶ËÓë½»Ò×ºóÌ¨½¨Á¢ÆğÍ¨ĞÅÁ¬½ÓÊ±£¨»¹Î´µÇÂ¼Ç°£©£¬¸Ã·½·¨±»µ÷ÓÃ¡£'''
+        '''å½“å®¢æˆ·ç«¯ä¸äº¤æ˜“åå°å»ºç«‹èµ·é€šä¿¡è¿æ¥æ—¶ï¼ˆè¿˜æœªç™»å½•å‰ï¼‰ï¼Œè¯¥æ–¹æ³•è¢«è°ƒç”¨ã€‚'''
         pass
 
 
@@ -91,76 +82,66 @@ class MdApi:
     def CreateMdApi(FlowPath="", IsUsingUdp=False):
         if FlowPath:
             FlowPath=os.path.abspath(FlowPath)
-        api_ptr=_ctp_Md.create_MdApi(FlowPath, IsUsingUdp)
+        api_ptr=_ctp_Md_future.create_MdApi(FlowPath, IsUsingUdp)
         return MdApi(api_ptr)
 
     def __init__(self, api_ptr):
         self.api_ptr = api_ptr
 
     def ReqUserLogout(self, pUserLogout, nRequestID):
-        '''
-µÇ³öÇëÇó'''
-        return _ctp_Md.ReqUserLogout(self.api_ptr, pUserLogout, nRequestID)
+        '''ç™»å‡ºè¯·æ±‚'''
+        return _ctp_Md_future.ReqUserLogout(self.api_ptr, pUserLogout, nRequestID)
 
     def Join(self, ):
-        '''
-µÈ´ı½Ó¿ÚÏß³Ì½áÊøÔËĞĞ
-@return Ïß³ÌÍË³ö´úÂë'''
-        return _ctp_Md.Join(self.api_ptr, )
+        '''ç­‰å¾…æ¥å£çº¿ç¨‹ç»“æŸè¿è¡Œ
+@return çº¿ç¨‹é€€å‡ºä»£ç '''
+        return _ctp_Md_future.Join(self.api_ptr, )
 
 
     def UnSubscribeMarketData(self, InstrumentIDs):
+        """è®¢é˜…/é€€è®¢è¡Œæƒ…ã€‚
+        @param ppInstrumentIDs list of åˆçº¦ID
         """
-        ¶©ÔÄ/ÍË¶©ĞĞÇé¡£
-        @param ppInstrumentIDs list of ºÏÔ¼ID
-        """
-        return _ctp_Md.UnSubscribeMarketData(self.api_ptr, InstrumentIDs)
+        return _ctp_Md_future.UnSubscribeMarketData(self.api_ptr, InstrumentIDs)
 
     def RegisterFront(self, pszFrontAddress):
-        '''
-×¢²áÇ°ÖÃ»úÍøÂçµØÖ·
-@param pszFrontAddress£ºÇ°ÖÃ»úÍøÂçµØÖ·¡£
-@remark ÍøÂçµØÖ·µÄ¸ñÊ½Îª£º¡°protocol://ipaddress:port¡±£¬Èç£º¡±tcp://127.0.0.1:17001¡±¡£
-@remark ¡°tcp¡±´ú±í´«ÊäĞ­Òé£¬¡°127.0.0.1¡±´ú±í·şÎñÆ÷µØÖ·¡£¡±17001¡±´ú±í·şÎñÆ÷¶Ë¿ÚºÅ¡£'''
-        return _ctp_Md.RegisterFront(self.api_ptr, pszFrontAddress)
+        '''æ³¨å†Œå‰ç½®æœºç½‘ç»œåœ°å€
+@param pszFrontAddressï¼šå‰ç½®æœºç½‘ç»œåœ°å€ã€‚
+@remark ç½‘ç»œåœ°å€çš„æ ¼å¼ä¸ºï¼šâ€œprotocol://ipaddress:portâ€ï¼Œå¦‚ï¼šâ€tcp://127.0.0.1:17001â€ã€‚
+@remark â€œtcpâ€ä»£è¡¨ä¼ è¾“åè®®ï¼Œâ€œ127.0.0.1â€ä»£è¡¨æœåŠ¡å™¨åœ°å€ã€‚â€17001â€ä»£è¡¨æœåŠ¡å™¨ç«¯å£å·ã€‚'''
+        return _ctp_Md_future.RegisterFront(self.api_ptr, pszFrontAddress)
 
     def Init(self, ):
-        '''
-³õÊ¼»¯
-@remark ³õÊ¼»¯ÔËĞĞ»·¾³,Ö»ÓĞµ÷ÓÃºó,½Ó¿Ú²Å¿ªÊ¼¹¤×÷'''
-        return _ctp_Md.Init(self.api_ptr, )
+        '''åˆå§‹åŒ–
+@remark åˆå§‹åŒ–è¿è¡Œç¯å¢ƒ,åªæœ‰è°ƒç”¨å,æ¥å£æ‰å¼€å§‹å·¥ä½œ'''
+        return _ctp_Md_future.Init(self.api_ptr, )
 
     def ReqUserLogin(self, pReqUserLoginField, nRequestID):
-        '''
-ÓÃ»§µÇÂ¼ÇëÇó'''
-        return _ctp_Md.ReqUserLogin(self.api_ptr, pReqUserLoginField, nRequestID)
+        '''ç”¨æˆ·ç™»å½•è¯·æ±‚'''
+        return _ctp_Md_future.ReqUserLogin(self.api_ptr, pReqUserLoginField, nRequestID)
 
     def Release(self, ):
-        '''
-É¾³ı½Ó¿Ú¶ÔÏó±¾Éí
-@remark ²»ÔÙÊ¹ÓÃ±¾½Ó¿Ú¶ÔÏóÊ±,µ÷ÓÃ¸Ãº¯ÊıÉ¾³ı½Ó¿Ú¶ÔÏó'''
-        return _ctp_Md.Release(self.api_ptr, )
+        '''åˆ é™¤æ¥å£å¯¹è±¡æœ¬èº«
+@remark ä¸å†ä½¿ç”¨æœ¬æ¥å£å¯¹è±¡æ—¶,è°ƒç”¨è¯¥å‡½æ•°åˆ é™¤æ¥å£å¯¹è±¡'''
+        return _ctp_Md_future.Release(self.api_ptr, )
 
     def GetTradingDay(self, ):
-        '''
-»ñÈ¡µ±Ç°½»Ò×ÈÕ
-@retrun »ñÈ¡µ½µÄ½»Ò×ÈÕ
-@remark Ö»ÓĞµÇÂ¼³É¹¦ºó,²ÅÄÜµÃµ½ÕıÈ·µÄ½»Ò×ÈÕ'''
-        return _ctp_Md.GetTradingDay(self.api_ptr, )
+        '''è·å–å½“å‰äº¤æ˜“æ—¥
+@retrun è·å–åˆ°çš„äº¤æ˜“æ—¥
+@remark åªæœ‰ç™»å½•æˆåŠŸå,æ‰èƒ½å¾—åˆ°æ­£ç¡®çš„äº¤æ˜“æ—¥'''
+        return _ctp_Md_future.GetTradingDay(self.api_ptr, )
 
 
     def SubscribeMarketData(self, InstrumentIDs):
+        """è®¢é˜…/é€€è®¢è¡Œæƒ…ã€‚
+        @param ppInstrumentIDs list of åˆçº¦ID
         """
-        ¶©ÔÄ/ÍË¶©ĞĞÇé¡£
-        @param ppInstrumentIDs list of ºÏÔ¼ID
-        """
-        return _ctp_Md.SubscribeMarketData(self.api_ptr, InstrumentIDs)
+        return _ctp_Md_future.SubscribeMarketData(self.api_ptr, InstrumentIDs)
 
     def RegisterSpi(self, pSpi):
-        '''
-×¢²á»Øµ÷½Ó¿Ú
-@param pSpi ÅÉÉú×Ô»Øµ÷½Ó¿ÚÀàµÄÊµÀı'''
-        ret = _ctp_Md.RegisterSpi(self.api_ptr, pSpi)
+        '''æ³¨å†Œå›è°ƒæ¥å£
+@param pSpi æ´¾ç”Ÿè‡ªå›è°ƒæ¥å£ç±»çš„å®ä¾‹'''
+        ret = _ctp_Md_future.RegisterSpi(self.api_ptr, pSpi)
         pSpi.register_api(self)
         return ret
 

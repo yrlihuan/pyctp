@@ -25,12 +25,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 "分析CTP接口文件，产生对应的.cpp和py封装代码"
 
 import re
+import codecs
 
 class Parse:
     "分析cpp头文件结构"
     def __init__(self, fn, prefix,locale='utf-8'):
         self.prefix=prefix
-        f=file(fn)
+        f=codecs.open(fn, "r", "utf-8")
         self.file_data = f.readlines()
         f.close()
 
@@ -73,7 +74,7 @@ class Parse:
             l=fd[p].strip()
             if not l.startswith('///'): break
             #data.append(l[3:].decode('utf-8'))
-            data.append(l[3:].decode(locale))
+            data.append(l[3:])
         data.reverse()
         return data
 
@@ -117,18 +118,18 @@ class Parse:
 
         prefix=self.prefix
 
-        f=file("wrapper_%s.cpp" % self.prefix,'w')
+        f=codecs.open("wrapper_%s.cpp" % self.prefix,"w","utf-8")
         f.write('/*\n'+__doc__+'*/\n')
-        f2=file('wrapper_%s.h' % self.prefix, 'w')
+        f2=codecs.open('wrapper_%s.h' % self.prefix,"w","utf-8")
         f2.write('/*\n'+__doc__+'*/\n')
-        f3=file('%sApi.py' % prefix,'w')
+        f3=codecs.open('%sApi.py' % prefix,"w","utf-8")
         f3.write(u'#-*- coding=utf-8 -*-\n"""\n'+__doc__+'"""\n')
         f3.write(u"""
-import _ctp_%s
+import _ctp_%s_future
 import os
 import UserApiStruct
 
-_ctp_%s.register_struct(UserApiStruct)
+_ctp_%s_future.register_struct(UserApiStruct)
 
 class %sSpi:
     def register_api(self, api):
@@ -231,9 +232,9 @@ MySpiWrapper::MySpiWrapper(PyObject * parent):%s(){
     def generate_wrapper_api(self, api):
         "产生api部分封装"
         prefix = self.prefix
-        f=file('_ctp_%s.cpp' % prefix, 'w')
+        f=codecs.open('_ctp_%s.cpp' % prefix, 'w', "utf-8")
         f.write(u'/*\n'+__doc__+'*/\n')
-        f2=file('%sApi.py' % prefix,'a+')
+        f2=codecs.open('%sApi.py' % prefix,'a+',"utf-8")
 
         f2.write(u'''
 class %sApi:
@@ -241,7 +242,7 @@ class %sApi:
     def Create%sApi(FlowPath="", IsUsingUdp=False):
         if FlowPath:
             FlowPath=os.path.abspath(FlowPath)
-        api_ptr=_ctp_%s.create_%sApi(FlowPath, IsUsingUdp)
+        api_ptr=_ctp_%s_future.create_%sApi(FlowPath, IsUsingUdp)
         return %sApi(api_ptr)
 
     def __init__(self, api_ptr):
@@ -319,7 +320,7 @@ static PyObject * Md_%s(PyObject* self, PyObject * args)
         """订阅/退订行情。
         @param ppInstrumentIDs list of 合约ID
         """
-        return _ctp_Md.%s(self.api_ptr, InstrumentIDs)
+        return _ctp_Md_future.%s(self.api_ptr, InstrumentIDs)
 
 ''' % (i,i))
                 continue
@@ -335,12 +336,12 @@ static PyObject* %s_%s(PyObject * self, PyObject * args){
             #f2.write(u"        '''%s'''\n" % "\n".join(methods[i]['comment']).encode('utf-8'))
             f2.write(u"        '''%s'''\n" % "\n".join(methods[i]['comment']))            
             if "RegisterSpi" == i: # 针对这个调用打个补丁
-                f2.write(u"        ret = _ctp_%s.%s(self.api_ptr, %s)\n" % (prefix, i,
+                f2.write(u"        ret = _ctp_%s_future.%s(self.api_ptr, %s)\n" % (prefix, i,
                                                                            ", ".join([x['name'] for x in args['func_args']])))
                 f2.write(u"        %s.register_api(self)\n" % args['func_args'][0]['name'])
                 f2.write(u"        return ret\n\n")
             else:
-                f2.write(u"        return _ctp_%s.%s(self.api_ptr, %s)\n\n" % (prefix, i,
+                f2.write(u"        return _ctp_%s_future.%s(self.api_ptr, %s)\n\n" % (prefix, i,
                                                                             ", ".join([x['name'] for x in args['func_args']])))
                 
             for j in range(len(args['func_args'])):
@@ -390,7 +391,7 @@ static PyObject* %s_%s(PyObject * self, PyObject * args){
                 f.write(u"  return ret;\n}\n")
             
         f.write(u"""
-extern "C" __declspec(dllexport) void init_ctp_%s()
+extern "C" void init_ctp_%s_future()
 {
    static PyMethodDef mbMethods[] = {
      {"create_%sApi", create_%sApi, METH_VARARGS},
@@ -401,7 +402,7 @@ extern "C" __declspec(dllexport) void init_ctp_%s()
      {NULL, NULL, NULL} /*sentinel，哨兵，用来标识结束*/
    };
 
-   PyObject *m = Py_InitModule("_ctp_%s", mbMethods);
+   PyObject *m = Py_InitModule("_ctp_%s_future", mbMethods);
 
    PyEval_InitThreads();
 }
@@ -420,9 +421,9 @@ def test(locale='utf-8'):
 #test('gbk')
 
 def test2(locale='utf-8'):
-    a=Parse("../inc/ThostFtdcTraderApi.h", "Trader",locale)
+    a=Parse("../ctp/api/trade/linux64/public/ThostFtdcTraderApi.h", "Trader",locale)
     a.generate_wrapper()
-    a=Parse("../inc/ThostFtdcMdApi.h", "Md",locale)
+    a=Parse("../ctp/api/trade/linux64/public/ThostFtdcMdApi.h", "Md",locale)
     a.generate_wrapper()
 
-test2('gbk')    #上期直接下载的文件是gbk编码
+test2('utf-8')    #上期直接下载的文件是gbk编码

@@ -2,7 +2,7 @@
 
 from distutils.core import setup, Extension
 
-_ctp_Md = Extension('_ctp_Md',
+_ctp_Md = Extension('_ctp_Md_future',
                     define_macros = [('MAJOR_VERSION', '1'),
                                      ('MINOR_VERSION', '0')],
                     include_dirs = ['../ctp', '../ctp/api/trade/linux64/public'],
@@ -10,7 +10,7 @@ _ctp_Md = Extension('_ctp_Md',
                     library_dirs = ['../ctp/api/trade/linux64/lib/'],
                     sources = ['_ctp_Md.cpp', 'struct.cpp', 'wrapper_Md.cpp'])
 
-_ctp_Trader = Extension('_ctp_Trader',
+_ctp_Trader = Extension('_ctp_Trader_future',
                     define_macros = [('MAJOR_VERSION', '1'),
                                      ('MINOR_VERSION', '0')],
                     include_dirs = ['../ctp', '../ctp/api/trade/linux64/public'],

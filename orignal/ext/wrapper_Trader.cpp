@@ -614,6 +614,17 @@ void MySpiWrapper::OnRspQueryBankAccountMoneyByFuture(CThostFtdcReqQueryAccountF
   PyGILState_Release(gstate);
 }
 
+void MySpiWrapper::OnRspAuthenticate(CThostFtdcRspAuthenticateField* pRspAuthenticateField, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast){
+  PyGILState_STATE gstate;
+  gstate=PyGILState_Ensure();
+
+  if (!PyObject_CallMethod(py_spi, (char*)"OnRspAuthenticate", (char*)"NNib", new_CThostFtdcRspAuthenticateField(pRspAuthenticateField), new_CThostFtdcRspInfoField(pRspInfo), nRequestID, bIsLast)){
+    PyErr_Print();
+  }
+
+  PyGILState_Release(gstate);
+}
+
 void MySpiWrapper::OnRspQueryMaxOrderVolume(CThostFtdcQueryMaxOrderVolumeField* pQueryMaxOrderVolume, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast){
   PyGILState_STATE gstate;
   gstate=PyGILState_Ensure();

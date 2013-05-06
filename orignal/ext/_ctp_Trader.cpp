@@ -22,6 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 02110-1301 USA
 */
 
+#pragma warning(disable : 4996)
+
 //#include <Python.h>
 #ifdef _DEBUG
 #undef _DEBUG   //links to pythonxx.lib
@@ -378,6 +380,17 @@ static PyObject* Trader_ReqQryParkedOrderAction(PyObject * self, PyObject * args
   return ret;
 }
 
+static PyObject* Trader_ReqAuthenticate(PyObject * self, PyObject * args){
+  CThostFtdcTraderApi * user = (CThostFtdcTraderApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
+  PyObject * py_pReqAuthenticateField = PyTuple_GET_ITEM(args, 1);
+  CThostFtdcReqAuthenticateField* pReqAuthenticateField = from_CThostFtdcReqAuthenticateField(py_pReqAuthenticateField);
+  PyObject * py_nRequestID = PyTuple_GET_ITEM(args, 2);
+  int nRequestID = PyInt_AsLong(py_nRequestID);
+  PyObject * ret = Py_BuildValue("i", user->ReqAuthenticate(pReqAuthenticateField, nRequestID));
+  free(pReqAuthenticateField);
+  return ret;
+}
+
 static PyObject* Trader_ReqOrderInsert(PyObject * self, PyObject * args){
   CThostFtdcTraderApi * user = (CThostFtdcTraderApi *) PyInt_AsLong(PyTuple_GET_ITEM(args, 0));
   PyObject * py_pInputOrder = PyTuple_GET_ITEM(args, 1);
@@ -596,7 +609,7 @@ static PyObject* Trader_SubscribePrivateTopic(PyObject * self, PyObject * args){
   return Py_None;
 }
 
-extern "C" void init_ctp_Trader()
+extern "C" void init_ctp_Trader_future()
 {
    static PyMethodDef mbMethods[] = {
      {"create_TraderApi", create_TraderApi, METH_VARARGS},
@@ -632,6 +645,7 @@ extern "C" void init_ctp_Trader()
      {"ReqQueryBankAccountMoneyByFuture", Trader_ReqQueryBankAccountMoneyByFuture, METH_VARARGS} ,
      {"Join", Trader_Join, METH_VARARGS} ,
      {"ReqQryParkedOrderAction", Trader_ReqQryParkedOrderAction, METH_VARARGS} ,
+     {"ReqAuthenticate", Trader_ReqAuthenticate, METH_VARARGS} ,
      {"ReqOrderInsert", Trader_ReqOrderInsert, METH_VARARGS} ,
      {"ReqQrySettlementInfo", Trader_ReqQrySettlementInfo, METH_VARARGS} ,
      {"ReqQryInstrument", Trader_ReqQryInstrument, METH_VARARGS} ,
@@ -656,7 +670,7 @@ extern "C" void init_ctp_Trader()
      {NULL, NULL, NULL} /*sentinel，哨兵，用来标识结束*/
    };
 
-   PyObject *m = Py_InitModule("_ctp_Trader", mbMethods);
+   PyObject *m = Py_InitModule("_ctp_Trader_future", mbMethods);
 
    PyEval_InitThreads();
 }

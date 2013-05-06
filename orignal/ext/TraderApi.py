@@ -23,381 +23,313 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 02110-1301 USA
 """
 
-import _ctp_Trader
+import _ctp_Trader_future
 import os
 import UserApiStruct
 
-_ctp_Trader.register_struct(UserApiStruct)
+_ctp_Trader_future.register_struct(UserApiStruct)
 
 class TraderSpi:
     def register_api(self, api):
         self.api=api
 
     def OnRtnChangeAccountByBank(self, pChangeAccount):
-        '''
-ÒøĞĞ·¢Æğ±ä¸üÒøĞĞÕËºÅÍ¨Öª'''
+        '''é“¶è¡Œå‘èµ·å˜æ›´é“¶è¡Œè´¦å·é€šçŸ¥'''
         pass
 
     def OnRspQryInstrument(self, pInstrument, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯ºÏÔ¼ÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢åˆçº¦å“åº”'''
         pass
 
     def OnErrRtnFutureToBankByFuture(self, pReqTransfer, pRspInfo):
-        '''
-ÆÚ»õ·¢ÆğÆÚ»õ×Ê½ğ×ªÒøĞĞ´íÎó»Ø±¨'''
+        '''æœŸè´§å‘èµ·æœŸè´§èµ„é‡‘è½¬é“¶è¡Œé”™è¯¯å›æŠ¥'''
         pass
 
     def OnRspQryInstrumentMarginRate(self, pInstrumentMarginRate, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯ºÏÔ¼±£Ö¤½ğÂÊÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢åˆçº¦ä¿è¯é‡‘ç‡å“åº”'''
         pass
 
     def OnFrontDisconnected(self, nReason):
-        '''
-µ±¿Í»§¶ËÓë½»Ò×ºóÌ¨Í¨ĞÅÁ¬½Ó¶Ï¿ªÊ±£¬¸Ã·½·¨±»µ÷ÓÃ¡£µ±·¢ÉúÕâ¸öÇé¿öºó£¬API»á×Ô¶¯ÖØĞÂÁ¬½Ó£¬¿Í»§¶Ë¿É²»×ö´¦Àí¡£
-@param nReason ´íÎóÔ­Òò
-        0x1001 ÍøÂç¶ÁÊ§°Ü
-        0x1002 ÍøÂçĞ´Ê§°Ü
-        0x2001 ½ÓÊÕĞÄÌø³¬Ê±
-        0x2002 ·¢ËÍĞÄÌøÊ§°Ü
-        0x2003 ÊÕµ½´íÎó±¨ÎÄ'''
+        '''å½“å®¢æˆ·ç«¯ä¸äº¤æ˜“åå°é€šä¿¡è¿æ¥æ–­å¼€æ—¶ï¼Œè¯¥æ–¹æ³•è¢«è°ƒç”¨ã€‚å½“å‘ç”Ÿè¿™ä¸ªæƒ…å†µåï¼ŒAPIä¼šè‡ªåŠ¨é‡æ–°è¿æ¥ï¼Œå®¢æˆ·ç«¯å¯ä¸åšå¤„ç†ã€‚
+@param nReason é”™è¯¯åŸå› 
+        0x1001 ç½‘ç»œè¯»å¤±è´¥
+        0x1002 ç½‘ç»œå†™å¤±è´¥
+        0x2001 æ¥æ”¶å¿ƒè·³è¶…æ—¶
+        0x2002 å‘é€å¿ƒè·³å¤±è´¥
+        0x2003 æ”¶åˆ°é”™è¯¯æŠ¥æ–‡'''
         pass
 
     def OnRspQryExchange(self, pExchange, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯½»Ò×ËùÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢äº¤æ˜“æ‰€å“åº”'''
         pass
 
     def OnRspOrderAction(self, pInputOrderAction, pRspInfo, nRequestID, bIsLast):
-        '''
-±¨µ¥²Ù×÷ÇëÇóÏìÓ¦'''
+        '''æŠ¥å•æ“ä½œè¯·æ±‚å“åº”'''
         pass
 
     def OnErrRtnRepealBankToFutureByFutureManual(self, pReqRepeal, pRspInfo):
-        '''
-ÏµÍ³ÔËĞĞÊ±ÆÚ»õ¶ËÊÖ¹¤·¢Æğ³åÕıÒøĞĞ×ªÆÚ»õ´íÎó»Ø±¨'''
+        '''ç³»ç»Ÿè¿è¡Œæ—¶æœŸè´§ç«¯æ‰‹å·¥å‘èµ·å†²æ­£é“¶è¡Œè½¬æœŸè´§é”™è¯¯å›æŠ¥'''
         pass
 
     def OnErrRtnBankToFutureByFuture(self, pReqTransfer, pRspInfo):
-        '''
-ÆÚ»õ·¢ÆğÒøĞĞ×Ê½ğ×ªÆÚ»õ´íÎó»Ø±¨'''
+        '''æœŸè´§å‘èµ·é“¶è¡Œèµ„é‡‘è½¬æœŸè´§é”™è¯¯å›æŠ¥'''
         pass
 
     def OnRtnFromFutureToBankByBank(self, pRspTransfer):
-        '''
-ÒøĞĞ·¢ÆğÆÚ»õ×Ê½ğ×ªÒøĞĞÍ¨Öª'''
+        '''é“¶è¡Œå‘èµ·æœŸè´§èµ„é‡‘è½¬é“¶è¡Œé€šçŸ¥'''
         pass
 
     def OnRspQryInvestor(self, pInvestor, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯Í¶×ÊÕßÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢æŠ•èµ„è€…å“åº”'''
         pass
 
     def OnRspRemoveParkedOrder(self, pRemoveParkedOrder, pRspInfo, nRequestID, bIsLast):
-        '''
-É¾³ıÔ¤Âñµ¥ÏìÓ¦'''
+        '''åˆ é™¤é¢„åŸ‹å•å“åº”'''
         pass
 
     def OnRspQryTransferBank(self, pTransferBank, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯×ªÕÊÒøĞĞÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢è½¬å¸é“¶è¡Œå“åº”'''
         pass
 
     def OnRspQryBrokerTradingAlgos(self, pBrokerTradingAlgos, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯¾­¼Í¹«Ë¾½»Ò×Ëã·¨ÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢ç»çºªå…¬å¸äº¤æ˜“ç®—æ³•å“åº”'''
         pass
 
     def OnRspQrySettlementInfo(self, pSettlementInfo, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯Í¶×ÊÕß½áËã½á¹ûÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢æŠ•èµ„è€…ç»“ç®—ç»“æœå“åº”'''
         pass
 
     def OnRtnRepealFromFutureToBankByBank(self, pRspRepeal):
-        '''
-ÒøĞĞ·¢Æğ³åÕıÆÚ»õ×ªÒøĞĞÍ¨Öª'''
+        '''é“¶è¡Œå‘èµ·å†²æ­£æœŸè´§è½¬é“¶è¡Œé€šçŸ¥'''
         pass
 
     def OnRtnOpenAccountByBank(self, pOpenAccount):
-        '''
-ÒøĞĞ·¢ÆğÒøÆÚ¿ª»§Í¨Öª'''
+        '''é“¶è¡Œå‘èµ·é“¶æœŸå¼€æˆ·é€šçŸ¥'''
         pass
 
     def OnRspError(self, pRspInfo, nRequestID, bIsLast):
-        '''
-´íÎóÓ¦´ğ'''
+        '''é”™è¯¯åº”ç­”'''
         pass
 
     def OnRspQryCFMMCTradingAccountKey(self, pCFMMCTradingAccountKey, pRspInfo, nRequestID, bIsLast):
-        '''
-²éÑ¯±£Ö¤½ğ¼à¹ÜÏµÍ³¾­¼Í¹«Ë¾×Ê½ğÕË»§ÃÜÔ¿ÏìÓ¦'''
+        '''æŸ¥è¯¢ä¿è¯é‡‘ç›‘ç®¡ç³»ç»Ÿç»çºªå…¬å¸èµ„é‡‘è´¦æˆ·å¯†é’¥å“åº”'''
         pass
 
     def OnRspUserLogin(self, pRspUserLogin, pRspInfo, nRequestID, bIsLast):
-        '''
-µÇÂ¼ÇëÇóÏìÓ¦'''
+        '''ç™»å½•è¯·æ±‚å“åº”'''
         pass
 
     def OnRtnRepealFromFutureToBankByFuture(self, pRspRepeal):
-        '''
-ÆÚ»õ·¢Æğ³åÕıÆÚ»õ×ªÒøĞĞÇëÇó£¬ÒøĞĞ´¦ÀíÍê±Ïºó±¨ÅÌ·¢»ØµÄÍ¨Öª'''
+        '''æœŸè´§å‘èµ·å†²æ­£æœŸè´§è½¬é“¶è¡Œè¯·æ±‚ï¼Œé“¶è¡Œå¤„ç†å®Œæ¯•åæŠ¥ç›˜å‘å›çš„é€šçŸ¥'''
         pass
 
     def OnRspParkedOrderAction(self, pParkedOrderAction, pRspInfo, nRequestID, bIsLast):
-        '''
-Ô¤Âñ³·µ¥Â¼ÈëÇëÇóÏìÓ¦'''
+        '''é¢„åŸ‹æ’¤å•å½•å…¥è¯·æ±‚å“åº”'''
         pass
 
     def OnErrRtnOrderAction(self, pOrderAction, pRspInfo):
-        '''
-±¨µ¥²Ù×÷´íÎó»Ø±¨'''
+        '''æŠ¥å•æ“ä½œé”™è¯¯å›æŠ¥'''
         pass
 
     def OnRtnCancelAccountByBank(self, pCancelAccount):
-        '''
-ÒøĞĞ·¢ÆğÒøÆÚÏú»§Í¨Öª'''
+        '''é“¶è¡Œå‘èµ·é“¶æœŸé”€æˆ·é€šçŸ¥'''
         pass
 
     def OnRtnInstrumentStatus(self, pInstrumentStatus):
-        '''
-ºÏÔ¼½»Ò××´Ì¬Í¨Öª'''
+        '''åˆçº¦äº¤æ˜“çŠ¶æ€é€šçŸ¥'''
         pass
 
     def OnRspQryContractBank(self, pContractBank, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯Ç©Ô¼ÒøĞĞÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢ç­¾çº¦é“¶è¡Œå“åº”'''
         pass
 
     def OnRspOrderInsert(self, pInputOrder, pRspInfo, nRequestID, bIsLast):
-        '''
-±¨µ¥Â¼ÈëÇëÇóÏìÓ¦'''
+        '''æŠ¥å•å½•å…¥è¯·æ±‚å“åº”'''
         pass
 
     def OnRspQryEWarrantOffset(self, pEWarrantOffset, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯²Öµ¥ÕÛµÖĞÅÏ¢ÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢ä»“å•æŠ˜æŠµä¿¡æ¯å“åº”'''
         pass
 
     def OnRspUserPasswordUpdate(self, pUserPasswordUpdate, pRspInfo, nRequestID, bIsLast):
-        '''
-ÓÃ»§¿ÚÁî¸üĞÂÇëÇóÏìÓ¦'''
+        '''ç”¨æˆ·å£ä»¤æ›´æ–°è¯·æ±‚å“åº”'''
         pass
 
     def OnRspParkedOrderInsert(self, pParkedOrder, pRspInfo, nRequestID, bIsLast):
-        '''
-Ô¤Âñµ¥Â¼ÈëÇëÇóÏìÓ¦'''
+        '''é¢„åŸ‹å•å½•å…¥è¯·æ±‚å“åº”'''
         pass
 
     def OnRtnTradingNotice(self, pTradingNoticeInfo):
-        '''
-½»Ò×Í¨Öª'''
+        '''äº¤æ˜“é€šçŸ¥'''
         pass
 
     def OnRspFromBankToFutureByFuture(self, pReqTransfer, pRspInfo, nRequestID, bIsLast):
-        '''
-ÆÚ»õ·¢ÆğÒøĞĞ×Ê½ğ×ªÆÚ»õÓ¦´ğ'''
+        '''æœŸè´§å‘èµ·é“¶è¡Œèµ„é‡‘è½¬æœŸè´§åº”ç­”'''
         pass
 
     def OnRspQryInvestorPositionCombineDetail(self, pInvestorPositionCombineDetail, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯Í¶×ÊÕß³Ö²ÖÃ÷Ï¸ÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢æŠ•èµ„è€…æŒä»“æ˜ç»†å“åº”'''
         pass
 
     def OnRspFromFutureToBankByFuture(self, pReqTransfer, pRspInfo, nRequestID, bIsLast):
-        '''
-ÆÚ»õ·¢ÆğÆÚ»õ×Ê½ğ×ªÒøĞĞÓ¦´ğ'''
+        '''æœŸè´§å‘èµ·æœŸè´§èµ„é‡‘è½¬é“¶è¡Œåº”ç­”'''
         pass
 
     def OnHeartBeatWarning(self, nTimeLapse):
-        '''
-ĞÄÌø³¬Ê±¾¯¸æ¡£µ±³¤Ê±¼äÎ´ÊÕµ½±¨ÎÄÊ±£¬¸Ã·½·¨±»µ÷ÓÃ¡£
-@param nTimeLapse ¾àÀëÉÏ´Î½ÓÊÕ±¨ÎÄµÄÊ±¼ä'''
+        '''å¿ƒè·³è¶…æ—¶è­¦å‘Šã€‚å½“é•¿æ—¶é—´æœªæ”¶åˆ°æŠ¥æ–‡æ—¶ï¼Œè¯¥æ–¹æ³•è¢«è°ƒç”¨ã€‚
+@param nTimeLapse è·ç¦»ä¸Šæ¬¡æ¥æ”¶æŠ¥æ–‡çš„æ—¶é—´'''
         pass
 
     def OnErrRtnQueryBankBalanceByFuture(self, pReqQueryAccount, pRspInfo):
-        '''
-ÆÚ»õ·¢Æğ²éÑ¯ÒøĞĞÓà¶î´íÎó»Ø±¨'''
+        '''æœŸè´§å‘èµ·æŸ¥è¯¢é“¶è¡Œä½™é¢é”™è¯¯å›æŠ¥'''
         pass
 
     def OnRspQryAccountregister(self, pAccountregister, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯ÒøÆÚÇ©Ô¼¹ØÏµÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢é“¶æœŸç­¾çº¦å…³ç³»å“åº”'''
         pass
 
     def OnRspQryTradingCode(self, pTradingCode, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯½»Ò×±àÂëÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢äº¤æ˜“ç¼–ç å“åº”'''
         pass
 
     def OnRtnErrorConditionalOrder(self, pErrorConditionalOrder):
-        '''
-ÌáÊ¾Ìõ¼şµ¥Ğ£Ñé´íÎó'''
+        '''æç¤ºæ¡ä»¶å•æ ¡éªŒé”™è¯¯'''
         pass
 
     def OnRtnFromBankToFutureByFuture(self, pRspTransfer):
-        '''
-ÆÚ»õ·¢ÆğÒøĞĞ×Ê½ğ×ªÆÚ»õÍ¨Öª'''
+        '''æœŸè´§å‘èµ·é“¶è¡Œèµ„é‡‘è½¬æœŸè´§é€šçŸ¥'''
         pass
 
     def OnRspQrySettlementInfoConfirm(self, pSettlementInfoConfirm, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯½áËãĞÅÏ¢È·ÈÏÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢ç»“ç®—ä¿¡æ¯ç¡®è®¤å“åº”'''
         pass
 
     def OnRtnQueryBankBalanceByFuture(self, pNotifyQueryAccount):
-        '''
-ÆÚ»õ·¢Æğ²éÑ¯ÒøĞĞÓà¶îÍ¨Öª'''
+        '''æœŸè´§å‘èµ·æŸ¥è¯¢é“¶è¡Œä½™é¢é€šçŸ¥'''
         pass
 
     def OnRtnOrder(self, pOrder):
-        '''
-±¨µ¥Í¨Öª'''
+        '''æŠ¥å•é€šçŸ¥'''
         pass
 
     def OnRspQryTransferSerial(self, pTransferSerial, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯×ªÕÊÁ÷Ë®ÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢è½¬å¸æµæ°´å“åº”'''
         pass
 
     def OnRspQryInvestorPosition(self, pInvestorPosition, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯Í¶×ÊÕß³Ö²ÖÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢æŠ•èµ„è€…æŒä»“å“åº”'''
         pass
 
     def OnRspUserLogout(self, pUserLogout, pRspInfo, nRequestID, bIsLast):
-        '''
-µÇ³öÇëÇóÏìÓ¦'''
+        '''ç™»å‡ºè¯·æ±‚å“åº”'''
         pass
 
     def OnErrRtnRepealFutureToBankByFutureManual(self, pReqRepeal, pRspInfo):
-        '''
-ÏµÍ³ÔËĞĞÊ±ÆÚ»õ¶ËÊÖ¹¤·¢Æğ³åÕıÆÚ»õ×ªÒøĞĞ´íÎó»Ø±¨'''
+        '''ç³»ç»Ÿè¿è¡Œæ—¶æœŸè´§ç«¯æ‰‹å·¥å‘èµ·å†²æ­£æœŸè´§è½¬é“¶è¡Œé”™è¯¯å›æŠ¥'''
         pass
 
     def OnRspQryInvestorPositionDetail(self, pInvestorPositionDetail, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯Í¶×ÊÕß³Ö²ÖÃ÷Ï¸ÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢æŠ•èµ„è€…æŒä»“æ˜ç»†å“åº”'''
         pass
 
     def OnRtnFromBankToFutureByBank(self, pRspTransfer):
-        '''
-ÒøĞĞ·¢ÆğÒøĞĞ×Ê½ğ×ªÆÚ»õÍ¨Öª'''
+        '''é“¶è¡Œå‘èµ·é“¶è¡Œèµ„é‡‘è½¬æœŸè´§é€šçŸ¥'''
         pass
 
     def OnRspQryParkedOrderAction(self, pParkedOrderAction, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯Ô¤Âñ³·µ¥ÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢é¢„åŸ‹æ’¤å•å“åº”'''
         pass
 
     def OnRspQryBrokerTradingParams(self, pBrokerTradingParams, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯¾­¼Í¹«Ë¾½»Ò×²ÎÊıÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢ç»çºªå…¬å¸äº¤æ˜“å‚æ•°å“åº”'''
         pass
 
     def OnRspQryParkedOrder(self, pParkedOrder, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯Ô¤Âñµ¥ÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢é¢„åŸ‹å•å“åº”'''
         pass
 
     def OnRspQueryBankAccountMoneyByFuture(self, pReqQueryAccount, pRspInfo, nRequestID, bIsLast):
-        '''
-ÆÚ»õ·¢Æğ²éÑ¯ÒøĞĞÓà¶îÓ¦´ğ'''
+        '''æœŸè´§å‘èµ·æŸ¥è¯¢é“¶è¡Œä½™é¢åº”ç­”'''
+        pass
+
+    def OnRspAuthenticate(self, pRspAuthenticateField, pRspInfo, nRequestID, bIsLast):
+        '''å®¢æˆ·ç«¯è®¤è¯å“åº”'''
         pass
 
     def OnRspQueryMaxOrderVolume(self, pQueryMaxOrderVolume, pRspInfo, nRequestID, bIsLast):
-        '''
-²éÑ¯×î´ó±¨µ¥ÊıÁ¿ÏìÓ¦'''
+        '''æŸ¥è¯¢æœ€å¤§æŠ¥å•æ•°é‡å“åº”'''
         pass
 
     def OnRtnTrade(self, pTrade):
-        '''
-³É½»Í¨Öª'''
+        '''æˆäº¤é€šçŸ¥'''
         pass
 
     def OnErrRtnOrderInsert(self, pInputOrder, pRspInfo):
-        '''
-±¨µ¥Â¼Èë´íÎó»Ø±¨'''
+        '''æŠ¥å•å½•å…¥é”™è¯¯å›æŠ¥'''
         pass
 
     def OnRspQryTradingNotice(self, pTradingNotice, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯½»Ò×Í¨ÖªÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢äº¤æ˜“é€šçŸ¥å“åº”'''
         pass
 
     def OnRtnRepealFromBankToFutureByFuture(self, pRspRepeal):
-        '''
-ÆÚ»õ·¢Æğ³åÕıÒøĞĞ×ªÆÚ»õÇëÇó£¬ÒøĞĞ´¦ÀíÍê±Ïºó±¨ÅÌ·¢»ØµÄÍ¨Öª'''
+        '''æœŸè´§å‘èµ·å†²æ­£é“¶è¡Œè½¬æœŸè´§è¯·æ±‚ï¼Œé“¶è¡Œå¤„ç†å®Œæ¯•åæŠ¥ç›˜å‘å›çš„é€šçŸ¥'''
         pass
 
     def OnRspQryNotice(self, pNotice, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯¿Í»§Í¨ÖªÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢å®¢æˆ·é€šçŸ¥å“åº”'''
         pass
 
     def OnRspQryTradingAccount(self, pTradingAccount, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯×Ê½ğÕË»§ÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢èµ„é‡‘è´¦æˆ·å“åº”'''
         pass
 
     def OnRspTradingAccountPasswordUpdate(self, pTradingAccountPasswordUpdate, pRspInfo, nRequestID, bIsLast):
-        '''
-×Ê½ğÕË»§¿ÚÁî¸üĞÂÇëÇóÏìÓ¦'''
+        '''èµ„é‡‘è´¦æˆ·å£ä»¤æ›´æ–°è¯·æ±‚å“åº”'''
         pass
 
     def OnRtnRepealFromFutureToBankByFutureManual(self, pRspRepeal):
-        '''
-ÏµÍ³ÔËĞĞÊ±ÆÚ»õ¶ËÊÖ¹¤·¢Æğ³åÕıÆÚ»õ×ªÒøĞĞÇëÇó£¬ÒøĞĞ´¦ÀíÍê±Ïºó±¨ÅÌ·¢»ØµÄÍ¨Öª'''
+        '''ç³»ç»Ÿè¿è¡Œæ—¶æœŸè´§ç«¯æ‰‹å·¥å‘èµ·å†²æ­£æœŸè´§è½¬é“¶è¡Œè¯·æ±‚ï¼Œé“¶è¡Œå¤„ç†å®Œæ¯•åæŠ¥ç›˜å‘å›çš„é€šçŸ¥'''
         pass
 
     def OnRspSettlementInfoConfirm(self, pSettlementInfoConfirm, pRspInfo, nRequestID, bIsLast):
-        '''
-Í¶×ÊÕß½áËã½á¹ûÈ·ÈÏÏìÓ¦'''
+        '''æŠ•èµ„è€…ç»“ç®—ç»“æœç¡®è®¤å“åº”'''
         pass
 
     def OnRtnRepealFromBankToFutureByFutureManual(self, pRspRepeal):
-        '''
-ÏµÍ³ÔËĞĞÊ±ÆÚ»õ¶ËÊÖ¹¤·¢Æğ³åÕıÒøĞĞ×ªÆÚ»õÇëÇó£¬ÒøĞĞ´¦ÀíÍê±Ïºó±¨ÅÌ·¢»ØµÄÍ¨Öª'''
+        '''ç³»ç»Ÿè¿è¡Œæ—¶æœŸè´§ç«¯æ‰‹å·¥å‘èµ·å†²æ­£é“¶è¡Œè½¬æœŸè´§è¯·æ±‚ï¼Œé“¶è¡Œå¤„ç†å®Œæ¯•åæŠ¥ç›˜å‘å›çš„é€šçŸ¥'''
         pass
 
     def OnRtnFromFutureToBankByFuture(self, pRspTransfer):
-        '''
-ÆÚ»õ·¢ÆğÆÚ»õ×Ê½ğ×ªÒøĞĞÍ¨Öª'''
+        '''æœŸè´§å‘èµ·æœŸè´§èµ„é‡‘è½¬é“¶è¡Œé€šçŸ¥'''
         pass
 
     def OnRspQryDepthMarketData(self, pDepthMarketData, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯ĞĞÇéÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢è¡Œæƒ…å“åº”'''
         pass
 
     def OnRspRemoveParkedOrderAction(self, pRemoveParkedOrderAction, pRspInfo, nRequestID, bIsLast):
-        '''
-É¾³ıÔ¤Âñ³·µ¥ÏìÓ¦'''
+        '''åˆ é™¤é¢„åŸ‹æ’¤å•å“åº”'''
         pass
 
     def OnFrontConnected(self, ):
-        '''
-µ±¿Í»§¶ËÓë½»Ò×ºóÌ¨½¨Á¢ÆğÍ¨ĞÅÁ¬½ÓÊ±£¨»¹Î´µÇÂ¼Ç°£©£¬¸Ã·½·¨±»µ÷ÓÃ¡£'''
+        '''å½“å®¢æˆ·ç«¯ä¸äº¤æ˜“åå°å»ºç«‹èµ·é€šä¿¡è¿æ¥æ—¶ï¼ˆè¿˜æœªç™»å½•å‰ï¼‰ï¼Œè¯¥æ–¹æ³•è¢«è°ƒç”¨ã€‚'''
         pass
 
     def OnRspQryInstrumentCommissionRate(self, pInstrumentCommissionRate, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯ºÏÔ¼ÊÖĞø·ÑÂÊÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢åˆçº¦æ‰‹ç»­è´¹ç‡å“åº”'''
         pass
 
     def OnRtnRepealFromBankToFutureByBank(self, pRspRepeal):
-        '''
-ÒøĞĞ·¢Æğ³åÕıÒøĞĞ×ªÆÚ»õÍ¨Öª'''
+        '''é“¶è¡Œå‘èµ·å†²æ­£é“¶è¡Œè½¬æœŸè´§é€šçŸ¥'''
         pass
 
     def OnRspQryOrder(self, pOrder, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯±¨µ¥ÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢æŠ¥å•å“åº”'''
         pass
 
     def OnRspQryTrade(self, pTrade, pRspInfo, nRequestID, bIsLast):
-        '''
-ÇëÇó²éÑ¯³É½»ÏìÓ¦'''
+        '''è¯·æ±‚æŸ¥è¯¢æˆäº¤å“åº”'''
         pass
 
 
@@ -406,280 +338,234 @@ class TraderApi:
     def CreateTraderApi(FlowPath="", IsUsingUdp=False):
         if FlowPath:
             FlowPath=os.path.abspath(FlowPath)
-        api_ptr=_ctp_Trader.create_TraderApi(FlowPath, IsUsingUdp)
+        api_ptr=_ctp_Trader_future.create_TraderApi(FlowPath, IsUsingUdp)
         return TraderApi(api_ptr)
 
     def __init__(self, api_ptr):
         self.api_ptr = api_ptr
 
     def ReqQryTradingAccount(self, pQryTradingAccount, nRequestID):
-        '''
-ÇëÇó²éÑ¯×Ê½ğÕË»§'''
-        return _ctp_Trader.ReqQryTradingAccount(self.api_ptr, pQryTradingAccount, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢èµ„é‡‘è´¦æˆ·'''
+        return _ctp_Trader_future.ReqQryTradingAccount(self.api_ptr, pQryTradingAccount, nRequestID)
 
     def ReqQryExchange(self, pQryExchange, nRequestID):
-        '''
-ÇëÇó²éÑ¯½»Ò×Ëù'''
-        return _ctp_Trader.ReqQryExchange(self.api_ptr, pQryExchange, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢äº¤æ˜“æ‰€'''
+        return _ctp_Trader_future.ReqQryExchange(self.api_ptr, pQryExchange, nRequestID)
 
     def ReqUserPasswordUpdate(self, pUserPasswordUpdate, nRequestID):
-        '''
-ÓÃ»§¿ÚÁî¸üĞÂÇëÇó'''
-        return _ctp_Trader.ReqUserPasswordUpdate(self.api_ptr, pUserPasswordUpdate, nRequestID)
+        '''ç”¨æˆ·å£ä»¤æ›´æ–°è¯·æ±‚'''
+        return _ctp_Trader_future.ReqUserPasswordUpdate(self.api_ptr, pUserPasswordUpdate, nRequestID)
 
     def ReqQryTradingNotice(self, pQryTradingNotice, nRequestID):
-        '''
-ÇëÇó²éÑ¯½»Ò×Í¨Öª'''
-        return _ctp_Trader.ReqQryTradingNotice(self.api_ptr, pQryTradingNotice, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢äº¤æ˜“é€šçŸ¥'''
+        return _ctp_Trader_future.ReqQryTradingNotice(self.api_ptr, pQryTradingNotice, nRequestID)
 
     def ReqQryTrade(self, pQryTrade, nRequestID):
-        '''
-ÇëÇó²éÑ¯³É½»'''
-        return _ctp_Trader.ReqQryTrade(self.api_ptr, pQryTrade, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢æˆäº¤'''
+        return _ctp_Trader_future.ReqQryTrade(self.api_ptr, pQryTrade, nRequestID)
 
     def ReqQueryMaxOrderVolume(self, pQueryMaxOrderVolume, nRequestID):
-        '''
-²éÑ¯×î´ó±¨µ¥ÊıÁ¿ÇëÇó'''
-        return _ctp_Trader.ReqQueryMaxOrderVolume(self.api_ptr, pQueryMaxOrderVolume, nRequestID)
+        '''æŸ¥è¯¢æœ€å¤§æŠ¥å•æ•°é‡è¯·æ±‚'''
+        return _ctp_Trader_future.ReqQueryMaxOrderVolume(self.api_ptr, pQueryMaxOrderVolume, nRequestID)
 
     def ReqSettlementInfoConfirm(self, pSettlementInfoConfirm, nRequestID):
-        '''
-Í¶×ÊÕß½áËã½á¹ûÈ·ÈÏ'''
-        return _ctp_Trader.ReqSettlementInfoConfirm(self.api_ptr, pSettlementInfoConfirm, nRequestID)
+        '''æŠ•èµ„è€…ç»“ç®—ç»“æœç¡®è®¤'''
+        return _ctp_Trader_future.ReqSettlementInfoConfirm(self.api_ptr, pSettlementInfoConfirm, nRequestID)
 
     def ReqQryInvestorPosition(self, pQryInvestorPosition, nRequestID):
-        '''
-ÇëÇó²éÑ¯Í¶×ÊÕß³Ö²Ö'''
-        return _ctp_Trader.ReqQryInvestorPosition(self.api_ptr, pQryInvestorPosition, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢æŠ•èµ„è€…æŒä»“'''
+        return _ctp_Trader_future.ReqQryInvestorPosition(self.api_ptr, pQryInvestorPosition, nRequestID)
 
     def ReqQryBrokerTradingAlgos(self, pQryBrokerTradingAlgos, nRequestID):
-        '''
-ÇëÇó²éÑ¯¾­¼Í¹«Ë¾½»Ò×Ëã·¨'''
-        return _ctp_Trader.ReqQryBrokerTradingAlgos(self.api_ptr, pQryBrokerTradingAlgos, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢ç»çºªå…¬å¸äº¤æ˜“ç®—æ³•'''
+        return _ctp_Trader_future.ReqQryBrokerTradingAlgos(self.api_ptr, pQryBrokerTradingAlgos, nRequestID)
 
     def ReqQryOrder(self, pQryOrder, nRequestID):
-        '''
-ÇëÇó²éÑ¯±¨µ¥'''
-        return _ctp_Trader.ReqQryOrder(self.api_ptr, pQryOrder, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢æŠ¥å•'''
+        return _ctp_Trader_future.ReqQryOrder(self.api_ptr, pQryOrder, nRequestID)
 
     def Init(self, ):
-        '''
-³õÊ¼»¯
-@remark ³õÊ¼»¯ÔËĞĞ»·¾³,Ö»ÓĞµ÷ÓÃºó,½Ó¿Ú²Å¿ªÊ¼¹¤×÷'''
-        return _ctp_Trader.Init(self.api_ptr, )
+        '''åˆå§‹åŒ–
+@remark åˆå§‹åŒ–è¿è¡Œç¯å¢ƒ,åªæœ‰è°ƒç”¨å,æ¥å£æ‰å¼€å§‹å·¥ä½œ'''
+        return _ctp_Trader_future.Init(self.api_ptr, )
 
     def ReqQryTradingCode(self, pQryTradingCode, nRequestID):
-        '''
-ÇëÇó²éÑ¯½»Ò×±àÂë'''
-        return _ctp_Trader.ReqQryTradingCode(self.api_ptr, pQryTradingCode, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢äº¤æ˜“ç¼–ç '''
+        return _ctp_Trader_future.ReqQryTradingCode(self.api_ptr, pQryTradingCode, nRequestID)
 
     def ReqUserLogin(self, pReqUserLoginField, nRequestID):
-        '''
-ÓÃ»§µÇÂ¼ÇëÇó'''
-        return _ctp_Trader.ReqUserLogin(self.api_ptr, pReqUserLoginField, nRequestID)
+        '''ç”¨æˆ·ç™»å½•è¯·æ±‚'''
+        return _ctp_Trader_future.ReqUserLogin(self.api_ptr, pReqUserLoginField, nRequestID)
 
     def ReqFromFutureToBankByFuture(self, pReqTransfer, nRequestID):
-        '''
-ÆÚ»õ·¢ÆğÆÚ»õ×Ê½ğ×ªÒøĞĞÇëÇó'''
-        return _ctp_Trader.ReqFromFutureToBankByFuture(self.api_ptr, pReqTransfer, nRequestID)
+        '''æœŸè´§å‘èµ·æœŸè´§èµ„é‡‘è½¬é“¶è¡Œè¯·æ±‚'''
+        return _ctp_Trader_future.ReqFromFutureToBankByFuture(self.api_ptr, pReqTransfer, nRequestID)
 
     def RegisterSpi(self, pSpi):
-        '''
-×¢²á»Øµ÷½Ó¿Ú
-@param pSpi ÅÉÉú×Ô»Øµ÷½Ó¿ÚÀàµÄÊµÀı'''
-        ret = _ctp_Trader.RegisterSpi(self.api_ptr, pSpi)
+        '''æ³¨å†Œå›è°ƒæ¥å£
+@param pSpi æ´¾ç”Ÿè‡ªå›è°ƒæ¥å£ç±»çš„å®ä¾‹'''
+        ret = _ctp_Trader_future.RegisterSpi(self.api_ptr, pSpi)
         pSpi.register_api(self)
         return ret
 
     def SubscribePublicTopic(self, nResumeType):
-        '''
-¶©ÔÄ¹«¹²Á÷¡£
-@param nResumeType ¹«¹²Á÷ÖØ´«·½Ê½
-        THOST_TERT_RESTART:´Ó±¾½»Ò×ÈÕ¿ªÊ¼ÖØ´«
-        THOST_TERT_RESUME:´ÓÉÏ´ÎÊÕµ½µÄĞø´«
-        THOST_TERT_QUICK:Ö»´«ËÍµÇÂ¼ºó¹«¹²Á÷µÄÄÚÈİ
-@remark ¸Ã·½·¨ÒªÔÚInit·½·¨Ç°µ÷ÓÃ¡£Èô²»µ÷ÓÃÔò²»»áÊÕµ½¹«¹²Á÷µÄÊı¾İ¡£'''
-        return _ctp_Trader.SubscribePublicTopic(self.api_ptr, nResumeType)
+        '''è®¢é˜…å…¬å…±æµã€‚
+@param nResumeType å…¬å…±æµé‡ä¼ æ–¹å¼
+        THOST_TERT_RESTART:ä»æœ¬äº¤æ˜“æ—¥å¼€å§‹é‡ä¼ 
+        THOST_TERT_RESUME:ä»ä¸Šæ¬¡æ”¶åˆ°çš„ç»­ä¼ 
+        THOST_TERT_QUICK:åªä¼ é€ç™»å½•åå…¬å…±æµçš„å†…å®¹
+@remark è¯¥æ–¹æ³•è¦åœ¨Initæ–¹æ³•å‰è°ƒç”¨ã€‚è‹¥ä¸è°ƒç”¨åˆ™ä¸ä¼šæ”¶åˆ°å…¬å…±æµçš„æ•°æ®ã€‚'''
+        return _ctp_Trader_future.SubscribePublicTopic(self.api_ptr, nResumeType)
 
     def GetTradingDay(self, ):
-        '''
-»ñÈ¡µ±Ç°½»Ò×ÈÕ
-@retrun »ñÈ¡µ½µÄ½»Ò×ÈÕ
-@remark Ö»ÓĞµÇÂ¼³É¹¦ºó,²ÅÄÜµÃµ½ÕıÈ·µÄ½»Ò×ÈÕ'''
-        return _ctp_Trader.GetTradingDay(self.api_ptr, )
+        '''è·å–å½“å‰äº¤æ˜“æ—¥
+@retrun è·å–åˆ°çš„äº¤æ˜“æ—¥
+@remark åªæœ‰ç™»å½•æˆåŠŸå,æ‰èƒ½å¾—åˆ°æ­£ç¡®çš„äº¤æ˜“æ—¥'''
+        return _ctp_Trader_future.GetTradingDay(self.api_ptr, )
 
     def ReqFromBankToFutureByFuture(self, pReqTransfer, nRequestID):
-        '''
-ÆÚ»õ·¢ÆğÒøĞĞ×Ê½ğ×ªÆÚ»õÇëÇó'''
-        return _ctp_Trader.ReqFromBankToFutureByFuture(self.api_ptr, pReqTransfer, nRequestID)
+        '''æœŸè´§å‘èµ·é“¶è¡Œèµ„é‡‘è½¬æœŸè´§è¯·æ±‚'''
+        return _ctp_Trader_future.ReqFromBankToFutureByFuture(self.api_ptr, pReqTransfer, nRequestID)
 
     def ReqQryTransferSerial(self, pQryTransferSerial, nRequestID):
-        '''
-ÇëÇó²éÑ¯×ªÕÊÁ÷Ë®'''
-        return _ctp_Trader.ReqQryTransferSerial(self.api_ptr, pQryTransferSerial, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢è½¬å¸æµæ°´'''
+        return _ctp_Trader_future.ReqQryTransferSerial(self.api_ptr, pQryTransferSerial, nRequestID)
 
     def ReqUserLogout(self, pUserLogout, nRequestID):
-        '''
-µÇ³öÇëÇó'''
-        return _ctp_Trader.ReqUserLogout(self.api_ptr, pUserLogout, nRequestID)
+        '''ç™»å‡ºè¯·æ±‚'''
+        return _ctp_Trader_future.ReqUserLogout(self.api_ptr, pUserLogout, nRequestID)
 
     def ReqQryBrokerTradingParams(self, pQryBrokerTradingParams, nRequestID):
-        '''
-ÇëÇó²éÑ¯¾­¼Í¹«Ë¾½»Ò×²ÎÊı'''
-        return _ctp_Trader.ReqQryBrokerTradingParams(self.api_ptr, pQryBrokerTradingParams, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢ç»çºªå…¬å¸äº¤æ˜“å‚æ•°'''
+        return _ctp_Trader_future.ReqQryBrokerTradingParams(self.api_ptr, pQryBrokerTradingParams, nRequestID)
 
     def ReqQrySettlementInfoConfirm(self, pQrySettlementInfoConfirm, nRequestID):
-        '''
-ÇëÇó²éÑ¯½áËãĞÅÏ¢È·ÈÏ'''
-        return _ctp_Trader.ReqQrySettlementInfoConfirm(self.api_ptr, pQrySettlementInfoConfirm, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢ç»“ç®—ä¿¡æ¯ç¡®è®¤'''
+        return _ctp_Trader_future.ReqQrySettlementInfoConfirm(self.api_ptr, pQrySettlementInfoConfirm, nRequestID)
 
     def ReqQryNotice(self, pQryNotice, nRequestID):
-        '''
-ÇëÇó²éÑ¯¿Í»§Í¨Öª'''
-        return _ctp_Trader.ReqQryNotice(self.api_ptr, pQryNotice, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢å®¢æˆ·é€šçŸ¥'''
+        return _ctp_Trader_future.ReqQryNotice(self.api_ptr, pQryNotice, nRequestID)
 
     def ReqParkedOrderInsert(self, pParkedOrder, nRequestID):
-        '''
-Ô¤Âñµ¥Â¼ÈëÇëÇó'''
-        return _ctp_Trader.ReqParkedOrderInsert(self.api_ptr, pParkedOrder, nRequestID)
+        '''é¢„åŸ‹å•å½•å…¥è¯·æ±‚'''
+        return _ctp_Trader_future.ReqParkedOrderInsert(self.api_ptr, pParkedOrder, nRequestID)
 
     def ReqQryContractBank(self, pQryContractBank, nRequestID):
-        '''
-ÇëÇó²éÑ¯Ç©Ô¼ÒøĞĞ'''
-        return _ctp_Trader.ReqQryContractBank(self.api_ptr, pQryContractBank, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢ç­¾çº¦é“¶è¡Œ'''
+        return _ctp_Trader_future.ReqQryContractBank(self.api_ptr, pQryContractBank, nRequestID)
 
     def ReqQryInvestorPositionCombineDetail(self, pQryInvestorPositionCombineDetail, nRequestID):
-        '''
-ÇëÇó²éÑ¯Í¶×ÊÕß³Ö²ÖÃ÷Ï¸'''
-        return _ctp_Trader.ReqQryInvestorPositionCombineDetail(self.api_ptr, pQryInvestorPositionCombineDetail, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢æŠ•èµ„è€…æŒä»“æ˜ç»†'''
+        return _ctp_Trader_future.ReqQryInvestorPositionCombineDetail(self.api_ptr, pQryInvestorPositionCombineDetail, nRequestID)
 
     def ReqParkedOrderAction(self, pParkedOrderAction, nRequestID):
-        '''
-Ô¤Âñ³·µ¥Â¼ÈëÇëÇó'''
-        return _ctp_Trader.ReqParkedOrderAction(self.api_ptr, pParkedOrderAction, nRequestID)
+        '''é¢„åŸ‹æ’¤å•å½•å…¥è¯·æ±‚'''
+        return _ctp_Trader_future.ReqParkedOrderAction(self.api_ptr, pParkedOrderAction, nRequestID)
 
     def ReqQueryBankAccountMoneyByFuture(self, pReqQueryAccount, nRequestID):
-        '''
-ÆÚ»õ·¢Æğ²éÑ¯ÒøĞĞÓà¶îÇëÇó'''
-        return _ctp_Trader.ReqQueryBankAccountMoneyByFuture(self.api_ptr, pReqQueryAccount, nRequestID)
+        '''æœŸè´§å‘èµ·æŸ¥è¯¢é“¶è¡Œä½™é¢è¯·æ±‚'''
+        return _ctp_Trader_future.ReqQueryBankAccountMoneyByFuture(self.api_ptr, pReqQueryAccount, nRequestID)
 
     def Join(self, ):
-        '''
-µÈ´ı½Ó¿ÚÏß³Ì½áÊøÔËĞĞ
-@return Ïß³ÌÍË³ö´úÂë'''
-        return _ctp_Trader.Join(self.api_ptr, )
+        '''ç­‰å¾…æ¥å£çº¿ç¨‹ç»“æŸè¿è¡Œ
+@return çº¿ç¨‹é€€å‡ºä»£ç '''
+        return _ctp_Trader_future.Join(self.api_ptr, )
 
     def ReqQryParkedOrderAction(self, pQryParkedOrderAction, nRequestID):
-        '''
-ÇëÇó²éÑ¯Ô¤Âñ³·µ¥'''
-        return _ctp_Trader.ReqQryParkedOrderAction(self.api_ptr, pQryParkedOrderAction, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢é¢„åŸ‹æ’¤å•'''
+        return _ctp_Trader_future.ReqQryParkedOrderAction(self.api_ptr, pQryParkedOrderAction, nRequestID)
+
+    def ReqAuthenticate(self, pReqAuthenticateField, nRequestID):
+        '''å®¢æˆ·ç«¯è®¤è¯è¯·æ±‚'''
+        return _ctp_Trader_future.ReqAuthenticate(self.api_ptr, pReqAuthenticateField, nRequestID)
 
     def ReqOrderInsert(self, pInputOrder, nRequestID):
-        '''
-±¨µ¥Â¼ÈëÇëÇó'''
-        return _ctp_Trader.ReqOrderInsert(self.api_ptr, pInputOrder, nRequestID)
+        '''æŠ¥å•å½•å…¥è¯·æ±‚'''
+        return _ctp_Trader_future.ReqOrderInsert(self.api_ptr, pInputOrder, nRequestID)
 
     def ReqQrySettlementInfo(self, pQrySettlementInfo, nRequestID):
-        '''
-ÇëÇó²éÑ¯Í¶×ÊÕß½áËã½á¹û'''
-        return _ctp_Trader.ReqQrySettlementInfo(self.api_ptr, pQrySettlementInfo, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢æŠ•èµ„è€…ç»“ç®—ç»“æœ'''
+        return _ctp_Trader_future.ReqQrySettlementInfo(self.api_ptr, pQrySettlementInfo, nRequestID)
 
     def ReqQryInstrument(self, pQryInstrument, nRequestID):
-        '''
-ÇëÇó²éÑ¯ºÏÔ¼'''
-        return _ctp_Trader.ReqQryInstrument(self.api_ptr, pQryInstrument, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢åˆçº¦'''
+        return _ctp_Trader_future.ReqQryInstrument(self.api_ptr, pQryInstrument, nRequestID)
 
     def ReqOrderAction(self, pInputOrderAction, nRequestID):
-        '''
-±¨µ¥²Ù×÷ÇëÇó'''
-        return _ctp_Trader.ReqOrderAction(self.api_ptr, pInputOrderAction, nRequestID)
+        '''æŠ¥å•æ“ä½œè¯·æ±‚'''
+        return _ctp_Trader_future.ReqOrderAction(self.api_ptr, pInputOrderAction, nRequestID)
 
     def ReqQryInstrumentCommissionRate(self, pQryInstrumentCommissionRate, nRequestID):
-        '''
-ÇëÇó²éÑ¯ºÏÔ¼ÊÖĞø·ÑÂÊ'''
-        return _ctp_Trader.ReqQryInstrumentCommissionRate(self.api_ptr, pQryInstrumentCommissionRate, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢åˆçº¦æ‰‹ç»­è´¹ç‡'''
+        return _ctp_Trader_future.ReqQryInstrumentCommissionRate(self.api_ptr, pQryInstrumentCommissionRate, nRequestID)
 
     def Release(self, ):
-        '''
-É¾³ı½Ó¿Ú¶ÔÏó±¾Éí
-@remark ²»ÔÙÊ¹ÓÃ±¾½Ó¿Ú¶ÔÏóÊ±,µ÷ÓÃ¸Ãº¯ÊıÉ¾³ı½Ó¿Ú¶ÔÏó'''
-        return _ctp_Trader.Release(self.api_ptr, )
+        '''åˆ é™¤æ¥å£å¯¹è±¡æœ¬èº«
+@remark ä¸å†ä½¿ç”¨æœ¬æ¥å£å¯¹è±¡æ—¶,è°ƒç”¨è¯¥å‡½æ•°åˆ é™¤æ¥å£å¯¹è±¡'''
+        return _ctp_Trader_future.Release(self.api_ptr, )
 
     def ReqQryInstrumentMarginRate(self, pQryInstrumentMarginRate, nRequestID):
-        '''
-ÇëÇó²éÑ¯ºÏÔ¼±£Ö¤½ğÂÊ'''
-        return _ctp_Trader.ReqQryInstrumentMarginRate(self.api_ptr, pQryInstrumentMarginRate, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢åˆçº¦ä¿è¯é‡‘ç‡'''
+        return _ctp_Trader_future.ReqQryInstrumentMarginRate(self.api_ptr, pQryInstrumentMarginRate, nRequestID)
 
     def ReqQryInvestor(self, pQryInvestor, nRequestID):
-        '''
-ÇëÇó²éÑ¯Í¶×ÊÕß'''
-        return _ctp_Trader.ReqQryInvestor(self.api_ptr, pQryInvestor, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢æŠ•èµ„è€…'''
+        return _ctp_Trader_future.ReqQryInvestor(self.api_ptr, pQryInvestor, nRequestID)
 
     def ReqQryDepthMarketData(self, pQryDepthMarketData, nRequestID):
-        '''
-ÇëÇó²éÑ¯ĞĞÇé'''
-        return _ctp_Trader.ReqQryDepthMarketData(self.api_ptr, pQryDepthMarketData, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢è¡Œæƒ…'''
+        return _ctp_Trader_future.ReqQryDepthMarketData(self.api_ptr, pQryDepthMarketData, nRequestID)
 
     def RegisterFront(self, pszFrontAddress):
-        '''
-×¢²áÇ°ÖÃ»úÍøÂçµØÖ·
-@param pszFrontAddress£ºÇ°ÖÃ»úÍøÂçµØÖ·¡£
-@remark ÍøÂçµØÖ·µÄ¸ñÊ½Îª£º¡°protocol://ipaddress:port¡±£¬Èç£º¡±tcp://127.0.0.1:17001¡±¡£
-@remark ¡°tcp¡±´ú±í´«ÊäĞ­Òé£¬¡°127.0.0.1¡±´ú±í·şÎñÆ÷µØÖ·¡£¡±17001¡±´ú±í·şÎñÆ÷¶Ë¿ÚºÅ¡£'''
-        return _ctp_Trader.RegisterFront(self.api_ptr, pszFrontAddress)
+        '''æ³¨å†Œå‰ç½®æœºç½‘ç»œåœ°å€
+@param pszFrontAddressï¼šå‰ç½®æœºç½‘ç»œåœ°å€ã€‚
+@remark ç½‘ç»œåœ°å€çš„æ ¼å¼ä¸ºï¼šâ€œprotocol://ipaddress:portâ€ï¼Œå¦‚ï¼šâ€tcp://127.0.0.1:17001â€ã€‚
+@remark â€œtcpâ€ä»£è¡¨ä¼ è¾“åè®®ï¼Œâ€œ127.0.0.1â€ä»£è¡¨æœåŠ¡å™¨åœ°å€ã€‚â€17001â€ä»£è¡¨æœåŠ¡å™¨ç«¯å£å·ã€‚'''
+        return _ctp_Trader_future.RegisterFront(self.api_ptr, pszFrontAddress)
 
     def ReqRemoveParkedOrderAction(self, pRemoveParkedOrderAction, nRequestID):
-        '''
-ÇëÇóÉ¾³ıÔ¤Âñ³·µ¥'''
-        return _ctp_Trader.ReqRemoveParkedOrderAction(self.api_ptr, pRemoveParkedOrderAction, nRequestID)
+        '''è¯·æ±‚åˆ é™¤é¢„åŸ‹æ’¤å•'''
+        return _ctp_Trader_future.ReqRemoveParkedOrderAction(self.api_ptr, pRemoveParkedOrderAction, nRequestID)
 
     def ReqQryTransferBank(self, pQryTransferBank, nRequestID):
-        '''
-ÇëÇó²éÑ¯×ªÕÊÒøĞĞ'''
-        return _ctp_Trader.ReqQryTransferBank(self.api_ptr, pQryTransferBank, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢è½¬å¸é“¶è¡Œ'''
+        return _ctp_Trader_future.ReqQryTransferBank(self.api_ptr, pQryTransferBank, nRequestID)
 
     def ReqQryCFMMCTradingAccountKey(self, pQryCFMMCTradingAccountKey, nRequestID):
-        '''
-ÇëÇó²éÑ¯±£Ö¤½ğ¼à¹ÜÏµÍ³¾­¼Í¹«Ë¾×Ê½ğÕË»§ÃÜÔ¿'''
-        return _ctp_Trader.ReqQryCFMMCTradingAccountKey(self.api_ptr, pQryCFMMCTradingAccountKey, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢ä¿è¯é‡‘ç›‘ç®¡ç³»ç»Ÿç»çºªå…¬å¸èµ„é‡‘è´¦æˆ·å¯†é’¥'''
+        return _ctp_Trader_future.ReqQryCFMMCTradingAccountKey(self.api_ptr, pQryCFMMCTradingAccountKey, nRequestID)
 
     def ReqTradingAccountPasswordUpdate(self, pTradingAccountPasswordUpdate, nRequestID):
-        '''
-×Ê½ğÕË»§¿ÚÁî¸üĞÂÇëÇó'''
-        return _ctp_Trader.ReqTradingAccountPasswordUpdate(self.api_ptr, pTradingAccountPasswordUpdate, nRequestID)
+        '''èµ„é‡‘è´¦æˆ·å£ä»¤æ›´æ–°è¯·æ±‚'''
+        return _ctp_Trader_future.ReqTradingAccountPasswordUpdate(self.api_ptr, pTradingAccountPasswordUpdate, nRequestID)
 
     def ReqQryAccountregister(self, pQryAccountregister, nRequestID):
-        '''
-ÇëÇó²éÑ¯ÒøÆÚÇ©Ô¼¹ØÏµ'''
-        return _ctp_Trader.ReqQryAccountregister(self.api_ptr, pQryAccountregister, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢é“¶æœŸç­¾çº¦å…³ç³»'''
+        return _ctp_Trader_future.ReqQryAccountregister(self.api_ptr, pQryAccountregister, nRequestID)
 
     def ReqQryParkedOrder(self, pQryParkedOrder, nRequestID):
-        '''
-ÇëÇó²éÑ¯Ô¤Âñµ¥'''
-        return _ctp_Trader.ReqQryParkedOrder(self.api_ptr, pQryParkedOrder, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢é¢„åŸ‹å•'''
+        return _ctp_Trader_future.ReqQryParkedOrder(self.api_ptr, pQryParkedOrder, nRequestID)
 
     def ReqQryEWarrantOffset(self, pQryEWarrantOffset, nRequestID):
-        '''
-ÇëÇó²éÑ¯²Öµ¥ÕÛµÖĞÅÏ¢'''
-        return _ctp_Trader.ReqQryEWarrantOffset(self.api_ptr, pQryEWarrantOffset, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢ä»“å•æŠ˜æŠµä¿¡æ¯'''
+        return _ctp_Trader_future.ReqQryEWarrantOffset(self.api_ptr, pQryEWarrantOffset, nRequestID)
 
     def ReqQryInvestorPositionDetail(self, pQryInvestorPositionDetail, nRequestID):
-        '''
-ÇëÇó²éÑ¯Í¶×ÊÕß³Ö²ÖÃ÷Ï¸'''
-        return _ctp_Trader.ReqQryInvestorPositionDetail(self.api_ptr, pQryInvestorPositionDetail, nRequestID)
+        '''è¯·æ±‚æŸ¥è¯¢æŠ•èµ„è€…æŒä»“æ˜ç»†'''
+        return _ctp_Trader_future.ReqQryInvestorPositionDetail(self.api_ptr, pQryInvestorPositionDetail, nRequestID)
 
     def ReqRemoveParkedOrder(self, pRemoveParkedOrder, nRequestID):
-        '''
-ÇëÇóÉ¾³ıÔ¤Âñµ¥'''
-        return _ctp_Trader.ReqRemoveParkedOrder(self.api_ptr, pRemoveParkedOrder, nRequestID)
+        '''è¯·æ±‚åˆ é™¤é¢„åŸ‹å•'''
+        return _ctp_Trader_future.ReqRemoveParkedOrder(self.api_ptr, pRemoveParkedOrder, nRequestID)
 
     def SubscribePrivateTopic(self, nResumeType):
-        '''
-¶©ÔÄË½ÓĞÁ÷¡£
-@param nResumeType Ë½ÓĞÁ÷ÖØ´«·½Ê½
-        THOST_TERT_RESTART:´Ó±¾½»Ò×ÈÕ¿ªÊ¼ÖØ´«
-        THOST_TERT_RESUME:´ÓÉÏ´ÎÊÕµ½µÄĞø´«
-        THOST_TERT_QUICK:Ö»´«ËÍµÇÂ¼ºóË½ÓĞÁ÷µÄÄÚÈİ
-@remark ¸Ã·½·¨ÒªÔÚInit·½·¨Ç°µ÷ÓÃ¡£Èô²»µ÷ÓÃÔò²»»áÊÕµ½Ë½ÓĞÁ÷µÄÊı¾İ¡£'''
-        return _ctp_Trader.SubscribePrivateTopic(self.api_ptr, nResumeType)
+        '''è®¢é˜…ç§æœ‰æµã€‚
+@param nResumeType ç§æœ‰æµé‡ä¼ æ–¹å¼
+        THOST_TERT_RESTART:ä»æœ¬äº¤æ˜“æ—¥å¼€å§‹é‡ä¼ 
+        THOST_TERT_RESUME:ä»ä¸Šæ¬¡æ”¶åˆ°çš„ç»­ä¼ 
+        THOST_TERT_QUICK:åªä¼ é€ç™»å½•åç§æœ‰æµçš„å†…å®¹
+@remark è¯¥æ–¹æ³•è¦åœ¨Initæ–¹æ³•å‰è°ƒç”¨ã€‚è‹¥ä¸è°ƒç”¨åˆ™ä¸ä¼šæ”¶åˆ°ç§æœ‰æµçš„æ•°æ®ã€‚'''
+        return _ctp_Trader_future.SubscribePrivateTopic(self.api_ptr, nResumeType)
 

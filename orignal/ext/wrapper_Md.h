@@ -25,6 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #ifndef WRAPPER_H
 #define WRAPPER_H
 
+#pragma warning(disable : 4996)
+
 //#include <Python.h>
 #ifdef _DEBUG
 #undef _DEBUG   //links to pythonxx.lib

@@ -22,6 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 02110-1301 USA
 */
 
+#pragma warning(disable : 4996)
+
 //#include <Python.h>
 #ifdef _DEBUG
 #undef _DEBUG   //links to pythonxx.lib
@@ -172,7 +174,7 @@ static PyObject* Md_RegisterSpi(PyObject * self, PyObject * args){
   return Py_None;
 }
 
-extern "C" void init_ctp_Md()
+extern "C" void init_ctp_Md_future()
 {
    static PyMethodDef mbMethods[] = {
      {"create_MdApi", create_MdApi, METH_VARARGS},
@@ -192,7 +194,7 @@ extern "C" void init_ctp_Md()
      {NULL, NULL, NULL} /*sentinel，哨兵，用来标识结束*/
    };
 
-   PyObject *m = Py_InitModule("_ctp_Md", mbMethods);
+   PyObject *m = Py_InitModule("_ctp_Md_future", mbMethods);
 
    PyEval_InitThreads();
 }
